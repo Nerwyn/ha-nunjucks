@@ -1,2 +1,0 @@
-npm-publish: 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
-npm-read: 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

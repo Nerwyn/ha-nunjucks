@@ -10,7 +10,8 @@
 		"lint": "eslint ./src --fix --ext .ts --config ./.eslintrc.js",
 		"pretty-quick": "pretty-quick",
 		"huskyinstall": "husky install",
-		"build-css": "tcm src"
+		"build-css": "tcm src",
+		"publish": "npm publish"
 	},
 	"author": "Nerwyn",
 	"license": "ISC",
