@@ -2,15 +2,6 @@ import { HomeAssistant } from 'custom-card-helpers';
 
 import { renderTemplate } from '..';
 
-/**
- * @internal
- * @param hass
- * @param condition
- * @param if_true
- * @param if_false
- * @param if_none
- * @returns
- */
 export function _iif(
 	hass: HomeAssistant,
 	condition: string,
