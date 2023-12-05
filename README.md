@@ -16,7 +16,7 @@ A simple wrapper for [nunjucks](https://www.npmjs.com/package/nunjucks) for use 
 
 [Nunjucks](https://mozilla.github.io/nunjucks/) is a templating engine for JavaScript that is heavily inspired by jinja2. Home Assistant uses jinja2 to process templates in card configurations on the backend, so the syntax of jinja2 and Nunjucks is virtually the same. This makes it an excellent alternative for Home Assistant templating for custom cards.
 
-While some Home Assistant native cards support templating for certain fields, implementing proper Home Assistant jinja2 template support in custom cards is difficult. The only custom module that manages to do so (AFAIK) is card-mod, and it's implemenation is hard to port to other projects. This project offers a much easier plug and play solution to adding template support to custom cards.
+While some Home Assistant native cards support templating for certain fields, implementing proper Home Assistant jinja2 template support in custom cards is difficult. The only custom module that manages to do so (AFAIK) is card-mod, and it's implementation is hard to port to other projects. This project offers a much easier plug and play solution to adding template support to custom cards.
 
 ## Usage
 
@@ -38,7 +38,7 @@ Rather than rendering templates on the backend, nunjucks renders templates on th
 
 ## Available Extensions
 
-The catch to this approach of rendering jinja2/nunjucks templates is that we have to reimplement all of the [Home Assistant template extension](https://www.home-assistant.io/docs/configuration/templating/#home-assistant-template-extensions) functions and filters. That's where you come in! If there are functions or filters that you use that are not currently supported, please make a feature request or try adding it to the project yourself and create a pull request.
+The catch to this approach of rendering jinja2/nunjucks templates is that we have to reimplement all of the [Home Assistant template extension](https://www.home-assistant.io/docs/configuration/templating/#home-assistant-template-extensions) functions and filters. If there are functions or filters that you use that are not currently supported, please make a feature request or try adding it to the project yourself and create a pull request.
 
 So far a subset of the Home Assistant template extension functions have been implemented as documented below.
 
