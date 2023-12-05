@@ -28,6 +28,7 @@
 	"author": "Nerwyn",
 	"license": "ISC",
 	"dependencies": {
+		"@types/nunjucks": "^3.2.6",
 		"nunjucks": "^3.2.4"
 	}
 }
