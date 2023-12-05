@@ -1,6 +1,6 @@
 import { HomeAssistant } from 'custom-card-helpers';
 
-import { renderTemplate } from '../ha-nunjucks';
+import { renderTemplate } from '..';
 
 /**
  * @internal
