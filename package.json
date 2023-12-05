@@ -9,7 +9,9 @@
 		"prelint": "tsc --noemit",
 		"lint": "eslint ./src --fix --ext .ts --config ./.eslintrc.js",
 		"pretty-quick": "pretty-quick",
+		"huskyinstall": "husky install",
 		"publish": "npm publish"
+
 	},
 	"author": "Nerwyn",
 	"license": "ISC",
@@ -39,6 +41,7 @@
 		"@typescript-eslint/eslint-plugin": "^6.13.2",
 		"@typescript-eslint/parser": "^6.13.2",
 		"eslint": "^8.55.0",
+		"husky": "^8.0.3",
 		"prettier": "^3.1.0",
 		"pretty-quick": "^3.1.3",
 		"ts-loader": "^9.5.1",
