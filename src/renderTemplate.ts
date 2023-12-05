@@ -11,6 +11,12 @@ import {
 import { _iif } from './utils/iif';
 import { _match_media } from './utils/css';
 
+/**
+ * Render a Home Assistant template string using nunjucks
+ * @param {HomeAssistant} hass The Home Assistant object
+ * @param {string} str The template string to render
+ * @returns {string} The rendered template string if a string was provided, otherwise the unaltered input
+ */
 export function renderTemplate(hass: HomeAssistant, str: string): string {
 	if (
 		typeof str == 'string' &&
@@ -40,7 +46,7 @@ export function renderTemplate(hass: HomeAssistant, str: string): string {
 				condition: string,
 				if_true: string,
 				if_false?: string,
-				if_none?: string
+				if_none?: string,
 			) {
 				return _iif(hass, condition, if_true, if_false, if_none);
 			},
