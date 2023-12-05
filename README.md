@@ -10,7 +10,7 @@
 
 <a href="https://www.buymeacoffee.com/nerwyn" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
-A wrapper for nunjucks for use with Home Assistant frontend custom components to render templates. This repository offers an easy way for developers to add templating support to Home Assistant custom cards.
+A simple wrapper for [nunjucks](https://www.npmjs.com/package/nunjucks) for use with Home Assistant frontend custom components to render [templates](https://www.home-assistant.io/docs/configuration/templating/). This repository offers an easy way for developers to add templating support to Home Assistant custom cards.
 
 ## What is nunjucks?
 
@@ -20,7 +20,13 @@ While some Home Assistant native cards support templating for certain fields, im
 
 ## Usage
 
-Just import `renderTemplate` from `ha-nunjucks` and provide it with the `hass` object and a template string you want to process.
+Install using npm:
+
+```shell
+npm install ha-nunjucks
+```
+
+Then import `renderTemplate` from `ha-nunjucks` and provide it with the `hass` object and a template string you want to process.
 
 ```typescript
 import { renderTemplate } from 'ha-nunjucks';
@@ -28,7 +34,7 @@ import { renderTemplate } from 'ha-nunjucks';
 const renderedString = renderTemplate(this.hass, templateString);
 ```
 
-Rather than rendering templates on the backend, this
+Rather than rendering templates on the backend, nunjucks renders templates on the frontend. This repository uses the Home Assistant object present in all custom cards to read entity state data.
 
 ## Available Extensions
 
@@ -70,9 +76,9 @@ A shorthand for an if else statement.
 
 Functions that are not from the Home Assistant templating documentation
 
-| Name        | Arguments                                                                                            | Description                                                                                                                                           |
-| ----------- | ---------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| match_media | [mediaquery](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_media_queries/Using_media_queries) | Returns the boolean result of the provided [CSS media query](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_media_queries/Using_media_queries). |
+| Name        | Arguments  | Description                                                                                                                                           |
+| ----------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| match_media | mediaquery | Returns the boolean result of the provided [CSS media query](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_media_queries/Using_media_queries). |
 
 [last-commit-shield]: https://img.shields.io/github/last-commit/Nerwyn/ha-nunjucks?style=for-the-badge
 [commits]: https://github.com/Nerwyn/service-call-tile-feature/commits/main
