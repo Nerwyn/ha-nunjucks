@@ -12,6 +12,8 @@
 		"postinstall": "husky install",
 		"build-css": "tcm src"
 	},
+	"author": "Nerwyn",
+	"license": "ISC",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/Nerwyn/ha-nunjucks.git"
@@ -25,8 +27,6 @@
 			"pre-commit": "pretty-quick --staged"
 		}
 	},
-	"author": "Nerwyn",
-	"license": "ISC",
 	"dependencies": {
 		"@types/nunjucks": "^3.2.6",
 		"custom-card-helpers": "^1.9.0",
