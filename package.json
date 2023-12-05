@@ -1,0 +1,33 @@
+{
+	"name": "ha-nunjucks",
+	"version": "0.0.1",
+	"description": "Wrapper for nunjucks for use with Home Assistant frontend custom components to render templates",
+	"main": "./dist/ha-nunjucks.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"build": "npx webpack",
+		"prelint": "tsc --noemit",
+		"lint": "eslint ./src --fix --ext .ts --config ./.eslintrc.js",
+		"pretty-quick": "pretty-quick",
+		"postinstall": "husky install",
+		"build-css": "tcm src"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Nerwyn/ha-nunjucks.git"
+	},
+	"bugs": {
+		"url": "https://github.com/Nerwyn/ha-nunjucks/issues"
+	},
+	"homepage": "https://github.com/Nerwyn/ha-nunjucks#readme",
+	"husky": {
+		"hooks": {
+			"pre-commit": "pretty-quick --staged"
+		}
+	},
+	"author": "Nerwyn",
+	"license": "ISC",
+	"dependencies": {
+		"nunjucks": "^3.2.4"
+	}
+}
