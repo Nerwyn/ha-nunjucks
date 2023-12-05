@@ -1,6 +1,6 @@
 {
 	"name": "ha-nunjucks",
-	"version": "0.0.6",
+	"version": "0.0.13",
 	"description": "Wrapper for nunjucks for use with Home Assistant frontend custom components to render templates",
 	"main": "./dist/index.js",
 	"scripts": {
@@ -9,9 +9,7 @@
 		"prelint": "tsc --noemit",
 		"lint": "eslint ./src --fix --ext .ts --config ./.eslintrc.js",
 		"pretty-quick": "pretty-quick",
-		"huskyinstall": "husky install",
-		"publish": "npm publish"
-
+		"huskyinstall": "husky install"
 	},
 	"author": "Nerwyn",
 	"license": "ISC",

@@ -1,14 +1,11 @@
 # ha-nunjucks
 
-[![GitHub Release][releases-shield]][releases]
 [![License][license-shield]](LICENSE.md)
 ![Project Maintenance][maintenance-shield]
 [![GitHub Activity][last-commit-shield]][commits]
 [![Community Forum][forum-shield]][forum]
 
 [![Github][github]][github]
-
-<a href="https://www.buymeacoffee.com/nerwyn" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
 A simple wrapper for [nunjucks](https://www.npmjs.com/package/nunjucks) for use with Home Assistant frontend custom components to render [templates](https://www.home-assistant.io/docs/configuration/templating/). This repository offers an easy way for developers to add templating support to Home Assistant custom cards.
 
@@ -86,6 +83,4 @@ Functions that are not from the Home Assistant templating documentation
 [forum]: https://community.home-assistant.io/t/ha-nunjucks/
 [license-shield]: https://img.shields.io/github/license/Nerwyn/service-call-tile-feature.svg?style=for-the-badge
 [maintenance-shield]: https://img.shields.io/badge/maintainer-Nerwyn-blue.svg?style=for-the-badge
-[releases-shield]: https://img.shields.io/github/release/Nerwyn/ha-nunjucks.svg?style=for-the-badge
-[releases]: https://github.com/nerwyn/ha-nunjucks/releases
 [github]: https://img.shields.io/github/followers/Nerwyn.svg?style=social
