@@ -16,8 +16,6 @@ jobs:
         run: git config --global user.name ${{ github.actor }}
       - name: Set git user email
         run: git config --global user.email "github-action-${{ github.actor }}.users.noreply.github.com"
-      - name: Set package version to tag name
-        run: npm version ${{ github.event.release.tag_name }}
       - name: Install dependencies and build
         run: npm ci
       - name: Publish package to npm
@@ -25,11 +23,13 @@ jobs:
           if
             [[ ${{ github.event.release.tag_name }} == *'alpha'* ]];
           then
-            npm publish --tag alpha
+            npm version ${{ github.event.release.tag_name }};
+            npm publish --tag alpha;
           elif
             [[ ${{ github.event.release.tag_name }} == *'beta'* ]];
           then
-            npm publish --tag beta
+            npm version ${{ github.event.release.tag_name }};
+            npm publish --tag beta;
           else
             npm publish
           fi
