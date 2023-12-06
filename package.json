@@ -4,7 +4,7 @@
 	"description": "Wrapper for nunjucks for use with Home Assistant frontend custom components to render templates",
 	"main": "./dist/index.js",
 	"scripts": {
-		"test": "jest",
+		"test": "jest --silent=false",
 		"build": "tsc",
 		"prelint": "tsc --noemit",
 		"lint": "eslint ./src --fix --ext .ts --config ./.eslintrc.js",

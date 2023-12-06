@@ -14,7 +14,7 @@ function renderTemplate(hass, str) {
         ((str.includes('{{') && str.includes('}}')) ||
             (str.includes('{%') && str.includes('%}')))) {
         str = (0, nunjucks_1.renderString)(structuredClone(str), (0, context_1.CONTEXT)(hass)).trim();
-        if (str == undefined || str == null) {
+        if ([undefined, null, 'undefined', 'null', 'None'].includes(str)) {
             return '';
         }
         if (/^-?(\d+|\d+\.\d+)$/.test(str)) {

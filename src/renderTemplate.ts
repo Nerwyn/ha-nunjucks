@@ -20,7 +20,7 @@ export function renderTemplate(
 	) {
 		str = renderString(structuredClone(str), CONTEXT(hass)).trim();
 
-		if (str == undefined || str == null) {
+		if ([undefined, null, 'undefined', 'null', 'None'].includes(str)) {
 			return '';
 		}
 

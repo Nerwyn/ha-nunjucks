@@ -10,12 +10,12 @@ function iif(hass, condition, if_true, if_false, if_none) {
 		${if_false !== null && if_false !== void 0 ? if_false : false}
 		{% endif %}
 	`;
-    const rendered = (0, __1.renderTemplate)(hass, template);
-    if (rendered == '' && if_none) {
-        return if_none;
+    if (if_none) {
+        const rendered = (0, __1.renderTemplate)(hass, condition);
+        if ([undefined, null, 'undefined', 'null', 'None'].includes(rendered)) {
+            return if_none;
+        }
     }
-    else {
-        return rendered;
-    }
+    return (0, __1.renderTemplate)(hass, template);
 }
 exports.iif = iif;

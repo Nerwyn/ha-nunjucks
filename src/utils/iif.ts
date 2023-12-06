@@ -17,10 +17,15 @@ export function iif(
 		{% endif %}
 	`;
 
-	const rendered = renderTemplate(hass, template);
-	if (rendered == '' && if_none) {
-		return if_none;
-	} else {
-		return rendered;
+	if (if_none) {
+		const rendered = renderTemplate(hass, condition);
+		if (
+			[undefined, null, 'undefined', 'null', 'None'].includes(
+				rendered as string,
+			)
+		) {
+			return if_none;
+		}
 	}
+	return renderTemplate(hass, template);
 }
