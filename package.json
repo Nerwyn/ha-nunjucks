@@ -1,6 +1,6 @@
 {
 	"name": "ha-nunjucks",
-	"version": "1.1.0",
+	"version": "1.1.0-dev.1",
 	"description": "Wrapper for nunjucks for use with Home Assistant frontend custom components to render templates",
 	"main": "./dist/index.js",
 	"scripts": {
