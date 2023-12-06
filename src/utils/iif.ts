@@ -2,7 +2,7 @@ import { HomeAssistant } from 'custom-card-helpers';
 
 import { renderTemplate } from '..';
 
-export function _iif(
+export function iif(
 	hass: HomeAssistant,
 	condition: string,
 	if_true?: string,

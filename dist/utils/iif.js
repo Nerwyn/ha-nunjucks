@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports._iif = void 0;
+exports.iif = void 0;
 const __1 = require("..");
-function _iif(hass, condition, if_true, if_false, if_none) {
+function iif(hass, condition, if_true, if_false, if_none) {
     const template = `
 		{% if ${condition} %}
 		${if_true !== null && if_true !== void 0 ? if_true : true}
@@ -18,4 +18,4 @@ function _iif(hass, condition, if_true, if_false, if_none) {
         return rendered;
     }
 }
-exports._iif = _iif;
+exports.iif = iif;

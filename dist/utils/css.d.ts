@@ -1,1 +1,1 @@
-export declare function _match_media(mediaquery: string): boolean;
+export declare function match_media(mediaquery: string): boolean;
