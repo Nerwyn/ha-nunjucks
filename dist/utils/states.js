@@ -2,27 +2,47 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.has_value = exports.is_state_attr = exports.state_attr = exports.is_state = exports.states = void 0;
 function states(hass, entity_id) {
-    return hass.states[entity_id].state;
+    try {
+        return hass.states[entity_id].state;
+    }
+    catch (_a) {
+        return undefined;
+    }
 }
 exports.states = states;
 function is_state(hass, entity_id, value) {
-    const state = states(hass, entity_id);
-    if (typeof value == 'string') {
+    try {
+        const state = states(hass, entity_id);
+        if (Array.isArray(value)) {
+            return value.includes(state);
+        }
         return state == value;
     }
-    return value.includes(state);
+    catch (_a) {
+        return false;
+    }
 }
 exports.is_state = is_state;
 function state_attr(hass, entity_id, attribute) {
-    return hass.states[entity_id].attributes[attribute];
+    try {
+        return hass.states[entity_id].attributes[attribute];
+    }
+    catch (_a) {
+        return undefined;
+    }
 }
 exports.state_attr = state_attr;
 function is_state_attr(hass, entity_id, attribute, value) {
-    const stateAttr = state_attr(hass, entity_id, attribute);
-    if (typeof value == 'string') {
+    try {
+        const stateAttr = state_attr(hass, entity_id, attribute);
+        if (Array.isArray(value)) {
+            return value.includes(stateAttr);
+        }
         return stateAttr == value;
     }
-    return value.includes(stateAttr);
+    catch (_a) {
+        return false;
+    }
 }
 exports.is_state_attr = is_state_attr;
 function has_value(hass, entity_id) {

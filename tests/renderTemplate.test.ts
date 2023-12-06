@@ -1,6 +1,7 @@
 import { HomeAssistant } from 'custom-card-helpers';
-import { renderTemplate } from '../src';
+
 import { hassTestObject } from './hass';
+import { renderTemplate } from '../src';
 
 const hass = hassTestObject as unknown as HomeAssistant;
 

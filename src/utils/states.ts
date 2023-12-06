@@ -1,7 +1,11 @@
 import { HomeAssistant } from 'custom-card-helpers';
 
 export function states(hass: HomeAssistant, entity_id: string) {
-	return hass.states[entity_id].state;
+	try {
+		return hass.states[entity_id].state;
+	} catch {
+		return undefined;
+	}
 }
 
 export function is_state(
@@ -9,11 +13,15 @@ export function is_state(
 	entity_id: string,
 	value: string | string[],
 ) {
-	const state = states(hass, entity_id);
-	if (typeof value == 'string') {
+	try {
+		const state = states(hass, entity_id);
+		if (Array.isArray(value)) {
+			return value.includes(state as string);
+		}
 		return state == value;
+	} catch {
+		return false;
 	}
-	return value.includes(state);
 }
 
 export function state_attr(
@@ -21,7 +29,11 @@ export function state_attr(
 	entity_id: string,
 	attribute: string,
 ) {
-	return hass.states[entity_id].attributes[attribute];
+	try {
+		return hass.states[entity_id].attributes[attribute];
+	} catch {
+		return undefined;
+	}
 }
 
 export function is_state_attr(
@@ -30,17 +42,21 @@ export function is_state_attr(
 	attribute: string,
 	value: string | string[],
 ) {
-	const stateAttr = state_attr(hass, entity_id, attribute);
-	if (typeof value == 'string') {
+	try {
+		const stateAttr = state_attr(hass, entity_id, attribute);
+		if (Array.isArray(value)) {
+			return value.includes(stateAttr);
+		}
 		return stateAttr == value;
+	} catch {
+		return false;
 	}
-	return value.includes(stateAttr);
 }
 
 export function has_value(hass: HomeAssistant, entity_id: string) {
 	try {
 		const state = states(hass, entity_id);
-		if ([false, 0, -0, ''].includes(state)) {
+		if ([false, 0, -0, ''].includes(state as string)) {
 			return true;
 		} else {
 			return Boolean(state);

@@ -21,5 +21,18 @@ export const hassTestObject = {
 				supported_features: 0,
 			},
 		},
+		'input_number.volume': {
+			state: 0,
+			attributes: {
+				initial: null,
+				editable: true,
+				min: 0,
+				max: 100,
+				step: 1,
+				mode: 'slider',
+				icon: 'mdi:numeric',
+				friendly_name: 'Volume Slider',
+			},
+		},
 	},
 };
