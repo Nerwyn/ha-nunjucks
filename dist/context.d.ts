@@ -9,6 +9,6 @@ export declare const CONTEXT: (hass: HomeAssistant) => {
     state_attr(entity_id: string, attribute: string): any;
     is_state_attr(entity_id: string, attribute: string, value: string): boolean;
     has_value(entity_id: string): boolean;
-    iif(condition: string, if_true: string, if_false?: string, if_none?: string): string;
+    iif(condition: string, if_true: string, if_false?: string, if_none?: string): string | number | boolean;
     match_media(mediaquery: string): boolean;
 };

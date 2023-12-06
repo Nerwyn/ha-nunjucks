@@ -15,7 +15,16 @@ function renderTemplate(hass, str) {
             (str.includes('{%') && str.includes('%}')))) {
         str = (0, nunjucks_1.renderString)(structuredClone(str), (0, context_1.CONTEXT)(hass)).trim();
         if (str == undefined || str == null) {
-            str = '';
+            return '';
+        }
+        if (/^-?(\d+|\d+\.\d+)$/.test(str)) {
+            return Number(str);
+        }
+        if (str == 'true') {
+            return true;
+        }
+        if (str == 'false') {
+            return false;
         }
     }
     return str;

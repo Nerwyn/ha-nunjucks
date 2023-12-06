@@ -1,15 +1,7 @@
 export const hassTestObject = {
 	states: {
 		'light.lounge': {
-			entity_id: 'light.lounge',
 			state: 'on',
-			last_changed: '2023-12-04 23:48:54.013535+00:00',
-			last_updated: '2023-12-04 23:48:54.013535+00:00',
-			context: {
-				id: 'ABC123',
-				user_id: null,
-				parent_id: null,
-			},
 			attributes: {
 				min_color_temp_kelvin: 2695,
 				max_color_temp_kelvin: 6535,

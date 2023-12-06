@@ -9,7 +9,10 @@ import { CONTEXT } from './context';
  * @param {string} str The template string to render
  * @returns {string} The rendered template string if a string was provided, otherwise the unaltered input
  */
-export function renderTemplate(hass: HomeAssistant, str: string): string {
+export function renderTemplate(
+	hass: HomeAssistant,
+	str: string,
+): string | number | boolean {
 	if (
 		typeof str == 'string' &&
 		((str.includes('{{') && str.includes('}}')) ||
@@ -18,7 +21,18 @@ export function renderTemplate(hass: HomeAssistant, str: string): string {
 		str = renderString(structuredClone(str), CONTEXT(hass)).trim();
 
 		if (str == undefined || str == null) {
-			str = '';
+			return '';
+		}
+
+		if (/^-?(\d+|\d+\.\d+)$/.test(str)) {
+			return Number(str);
+		}
+
+		if (str == 'true') {
+			return true;
+		}
+		if (str == 'false') {
+			return false;
 		}
 	}
 
