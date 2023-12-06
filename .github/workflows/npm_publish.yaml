@@ -12,6 +12,10 @@ jobs:
         with:
           node-version: '18.x'
           registry-url: 'https://registry.npmjs.org'
+      - name: Set git username
+        run: git config --global user.name ${{ github.actor }}
+      - name: Set git user email
+        run: git config --global user.email "github-action-${{ github.actor }}.users.noreply.github.com"
       - name: Set package version to tag name
         run: npm version ${{ github.event.release.tag_name }}
       - name: Install dependencies and build
