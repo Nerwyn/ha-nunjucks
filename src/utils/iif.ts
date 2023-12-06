@@ -9,14 +9,6 @@ export function iif(
 	if_false?: string,
 	if_none?: string,
 ) {
-	const template = `
-		{% if ${condition} %}
-		${if_true ?? true}
-		{% else %}
-		${if_false ?? false}
-		{% endif %}
-	`;
-
 	if (if_none) {
 		const rendered = renderTemplate(hass, condition);
 		if (
@@ -27,5 +19,12 @@ export function iif(
 			return if_none;
 		}
 	}
+	const template = `
+		{% if ${condition} %}
+		${if_true ?? true}
+		{% else %}
+		${if_false ?? false}
+		{% endif %}
+	`;
 	return renderTemplate(hass, template);
 }
