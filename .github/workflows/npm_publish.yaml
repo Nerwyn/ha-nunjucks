@@ -20,7 +20,14 @@ jobs:
         run: npm version ${{ github.event.release.tag_name }}
       - name: Install dependencies and build
         run: npm ci
-      - name: Publish package on npm
-        run: npm publish
+      - name: Publish package to npm
+        run: |
+          if [ contains(${{ github.event.release.tag_name }}, 'alpha') ]; then
+            npm publish --tag alpha
+          elif [ contains(${{ github.event.release.tag_name }}, 'beta') ]; then
+            npm publish --tag beta
+          else
+            npm publish
+          fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
