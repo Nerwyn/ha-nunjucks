@@ -49,6 +49,18 @@ These variables just remap Python built-in constants to JavaScript ones.
 | False  | false      |
 | None   | null       |
 
+### [Frontend Data Hass Object](https://developers.home-assistant.io/docs/frontend/data/)
+
+The frontend data `hass` object has been exposed to users to call upon.
+
+Because entity IDs contain periods in them, it's better to access it using bracket notation like so:
+
+`{{ hass["states"]["light.sunroom_ceiling"]["state"] }}`
+
+You can also use dot notation for everything but the entity ID.
+
+`{{ hass.states["light.sunroom_ceiling"].state }}`
+
 ### [States](https://www.home-assistant.io/docs/configuration/templating/#states)
 
 Functions used to determine an entity's state or an attribute.
