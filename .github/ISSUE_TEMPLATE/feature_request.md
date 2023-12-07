@@ -4,8 +4,9 @@ about: Suggest an idea for this project
 title: ''
 labels: enhancement
 assignees: ''
-
 ---
+
+**Are you requesting that [Home Assistant template extension](https://www.home-assistant.io/docs/configuration/templating/)** be added? Which one?
 
 **Is your feature request related to a problem? Please describe.**
 A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
