@@ -92,7 +92,7 @@ Functions that are not from the Home Assistant templating documentation
 [last-commit-shield]: https://img.shields.io/github/last-commit/Nerwyn/ha-nunjucks?style=for-the-badge
 [commits]: https://github.com/Nerwyn/service-call-tile-feature/commits/main
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge
-[forum]: https://community.home-assistant.io/t/ha-nunjucks/
+[forum]: https://community.home-assistant.io/t/an-easy-way-to-add-templating-support-to-your-custom-front-end-projects/651621
 [license-shield]: https://img.shields.io/github/license/Nerwyn/service-call-tile-feature.svg?style=for-the-badge
 [maintenance-shield]: https://img.shields.io/badge/maintainer-Nerwyn-blue.svg?style=for-the-badge
 [github]: https://img.shields.io/github/followers/Nerwyn.svg?style=social
