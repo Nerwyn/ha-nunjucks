@@ -1,12 +1,8 @@
-import { HomeAssistant } from 'custom-card-helpers';
-
-import { hassTestObject } from '../hass';
+import { hass } from '../hass';
 import { renderTemplate } from '../../src';
 import { iif } from '../../src/utils/iif';
 
-const hass = hassTestObject as unknown as HomeAssistant;
-
-test('Function iif should return true or false if only condition is given', () => {
+test('Function iif should return true or false if only condition is given.', () => {
 	let condition = '"foo" == "foo"';
 	expect(iif(hass, condition)).toBe(true);
 	expect(renderTemplate(hass, `{{ iif(${condition}) }}`)).toBe(true);
@@ -16,7 +12,7 @@ test('Function iif should return true or false if only condition is given', () =
 	expect(renderTemplate(hass, `{{ iif(${condition}) }}`)).toBe(false);
 });
 
-test('Function iif should return if_true if condition is true or false otherwise', () => {
+test('Function iif should return if_true if condition is true or false otherwise.', () => {
 	let condition = '"foo" == "foo"';
 	const isTrue = 'is foo';
 	expect(iif(hass, condition, isTrue)).toBe(isTrue);
@@ -31,7 +27,7 @@ test('Function iif should return if_true if condition is true or false otherwise
 	);
 });
 
-test('Function iif should return if_true if condition is true or if_false otherwise', () => {
+test('Function iif should return if_true if condition is true or if_false otherwise.', () => {
 	let condition = '"foo" == "foo"';
 	const isTrue = 'is foo';
 	const isFalse = 'is not foo';
@@ -53,7 +49,7 @@ test('Function iif should return if_true if condition is true or if_false otherw
 	).toBe(isFalse);
 });
 
-test('Function iif should return is_none if comparison', () => {
+test('Function iif should return is_none if comparison.', () => {
 	const condition = 'None';
 	const isTrue = 'is true';
 	const isFalse = 'is false';

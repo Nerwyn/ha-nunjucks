@@ -33,6 +33,21 @@ const renderedString = renderTemplate(this.hass, templateString);
 
 Rather than rendering templates on the backend, nunjucks renders templates on the frontend. This repository uses the Home Assistant object present in all custom cards to read entity state data.
 
+You can also provide additional context to the `renderTemplate` function to pass to nunjucks if you want to make additional variables or project specific functions available to your users for use in templates.
+
+```typescript
+import { renderTemplate } from 'ha-nunjucks';
+
+const context = {
+  foo: 'bar',
+  doThing(thing: string) {
+    return `doing ${thing}!`;
+  },
+};
+
+const renderedString = renderTemplate(this.hass, templateString, context);
+```
+
 ## Available Extensions
 
 The catch to this approach of rendering jinja2/nunjucks templates is that we have to reimplement all of the [Home Assistant template extension](https://www.home-assistant.io/docs/configuration/templating/#home-assistant-template-extensions) functions and filters. If there are functions or filters that you use that are not currently supported, please make a feature request or try adding it to the project yourself and create a pull request.

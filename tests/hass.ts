@@ -1,4 +1,6 @@
-export const hassTestObject = {
+import { HomeAssistant } from 'custom-card-helpers';
+
+export const hass = {
 	states: {
 		'light.lounge': {
 			state: 'on',
@@ -35,4 +37,4 @@ export const hassTestObject = {
 			},
 		},
 	},
-};
+} as unknown as HomeAssistant;

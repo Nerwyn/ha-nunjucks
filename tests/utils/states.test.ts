@@ -1,6 +1,4 @@
-import { HomeAssistant } from 'custom-card-helpers';
-
-import { hassTestObject } from '../hass';
+import { hass } from '../hass';
 import { renderTemplate } from '../../src';
 import {
 	states,
@@ -10,9 +8,7 @@ import {
 	has_value,
 } from '../../src/utils/states';
 
-const hass = hassTestObject as unknown as HomeAssistant;
-
-test('Function states should return state of an entity', () => {
+test('Function states should return state of an entity.', () => {
 	const value = hass['states']['light.lounge']['state'];
 	expect(states(hass, 'light.lounge')).toBe(value);
 	expect(renderTemplate(hass, '{{ states("light.lounge") }}')).toBe(value);
@@ -21,7 +17,7 @@ test('Function states should return state of an entity', () => {
 	expect(renderTemplate(hass, '{{ states("foobar") }}')).toBe('');
 });
 
-test('Function is_state should return boolean', () => {
+test('Function is_state should return boolean.', () => {
 	const value = hass['states']['light.lounge']['state'];
 	expect(is_state(hass, 'light.lounge', value)).toBe(true);
 	expect(
@@ -37,7 +33,7 @@ test('Function is_state should return boolean', () => {
 	);
 });
 
-test('Function state_attr should return attribute of an entity', () => {
+test('Function state_attr should return attribute of an entity.', () => {
 	let attribute = 'color_mode';
 	let value = hass['states']['light.lounge']['attributes'][attribute];
 	expect(typeof value).toBe('string');
@@ -66,7 +62,7 @@ test('Function state_attr should return attribute of an entity', () => {
 	);
 });
 
-test('Function is_state_attr should return boolean', () => {
+test('Function is_state_attr should return boolean.', () => {
 	let attribute = 'color_mode';
 	let value = hass['states']['light.lounge']['attributes'][attribute];
 	expect(is_state_attr(hass, 'light.lounge', attribute, value)).toBe(true);
@@ -96,7 +92,7 @@ test('Function is_state_attr should return boolean', () => {
 	).toBe(false);
 });
 
-test('Function has_value should return boolean', () => {
+test('Function has_value should return boolean.', () => {
 	let entity = 'light.lounge';
 	expect(has_value(hass, entity)).toBe(true);
 	expect(renderTemplate(hass, `{{ has_value("${entity}") }}`)).toBe(true);
