@@ -8,13 +8,13 @@ import { CONTEXT } from './context';
  * @param {HomeAssistant} hass The Home Assistant object
  * @param {string} str The template string to render
  * @param {object} [context] Additional context to expose to nunjucks
- * @returns {string} The rendered template string if a string was provided, otherwise the unaltered input
+ * @returns {string | boolean} The rendered template string if a string was provided, otherwise the unaltered input
  */
 export function renderTemplate(
 	hass: HomeAssistant,
 	str: string,
 	context?: object,
-): string | number | boolean {
+): string | boolean {
 	if (
 		typeof str == 'string' &&
 		((str.includes('{{') && str.includes('}}')) ||

@@ -4,6 +4,6 @@ import { HomeAssistant } from 'custom-card-helpers';
  * @param {HomeAssistant} hass The Home Assistant object
  * @param {string} str The template string to render
  * @param {object} [context] Additional context to expose to nunjucks
- * @returns {string} The rendered template string if a string was provided, otherwise the unaltered input
+ * @returns {string | boolean} The rendered template string if a string was provided, otherwise the unaltered input
  */
-export declare function renderTemplate(hass: HomeAssistant, str: string, context?: object): string | number | boolean;
+export declare function renderTemplate(hass: HomeAssistant, str: string, context?: object): string | boolean;

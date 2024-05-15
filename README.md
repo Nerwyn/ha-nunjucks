@@ -7,13 +7,13 @@
 
 [![Github][github]][github]
 
-A simple wrapper for [nunjucks](https://www.npmjs.com/package/nunjucks) for use with Home Assistant frontend custom components to render [templates](https://www.home-assistant.io/docs/configuration/templating/). This repository offers an easy way for developers to add templating support to Home Assistant custom cards.
+A simple wrapper for [nunjucks](https://www.npmjs.com/package/nunjucks) for use with Home Assistant frontend custom components to render [templates](https://www.home-assistant.io/docs/configuration/templating/) instanteneously at HTML render time. This repository offers an easy way for developers to add templating support to Home Assistant custom cards.
 
 ## What is nunjucks?
 
 [Nunjucks](https://mozilla.github.io/nunjucks/) is a templating engine for JavaScript that is heavily inspired by jinja2. Home Assistant uses jinja2 to process templates in card configurations on the backend, so the syntax of jinja2 and Nunjucks is virtually the same. This makes it an excellent alternative for Home Assistant templating for custom cards.
 
-While some Home Assistant native cards support templating for certain fields, implementing proper Home Assistant jinja2 template support in custom cards is difficult. The only custom module that manages to do so (AFAIK) is card-mod, and it's implementation is hard to port to other projects. This project offers a much easier plug and play solution to adding template support to custom cards.
+While some Home Assistant native cards support templating for certain fields, implementing proper Home Assistant jinja2 template support in custom cards can be difficult. Additionally Home Assistant jinja2 templates are processed by the Python backend, and can take several seconds to render. Nunjucks templates are processed by the frontend using the frontend [hass](https://developers.home-assistant.io/docs/frontend/data/) object before your custom card's HTML is rendered, making nunjucks templating instanteous and much faster than traditional jinja2 templates.
 
 ## Usage
 
@@ -47,6 +47,14 @@ const context = {
 
 const renderedString = renderTemplate(this.hass, templateString, context);
 ```
+
+### Return Types
+
+`renderTemplate` will return a string unless the result is `true` or `false` (*not* case sensitive), in which case it will return a boolean.
+
+When the return type is expected to be a number, end users should cast these values using the nunjucks `int` or `float` filters to prevent undesired behavior caused by JavaScript forcing operations between disparate variable types. Numbers are not returned by default to prevent leading and zeroes from being truncated from numerical strings.
+
+`renderTemplate` will return an empty string for strings that may have been cast from nullish non-numerical values, such as `undefined`, `null`, and `None` (case sensitive).
 
 ## Available Extensions
 

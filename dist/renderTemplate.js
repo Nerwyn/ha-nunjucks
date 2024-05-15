@@ -8,7 +8,7 @@ const context_1 = require("./context");
  * @param {HomeAssistant} hass The Home Assistant object
  * @param {string} str The template string to render
  * @param {object} [context] Additional context to expose to nunjucks
- * @returns {string} The rendered template string if a string was provided, otherwise the unaltered input
+ * @returns {string | boolean} The rendered template string if a string was provided, otherwise the unaltered input
  */
 function renderTemplate(hass, str, context) {
     if (typeof str == 'string' &&
