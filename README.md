@@ -52,7 +52,7 @@ const renderedString = renderTemplate(this.hass, templateString, context);
 
 `renderTemplate` will return a string unless the result is `true` or `false` (*not* case sensitive), in which case it will return a boolean.
 
-When the return type is expected to be a number, end users should cast these values using the nunjucks `int` or `float` filters to prevent undesired behavior caused by JavaScript forcing operations between disparate variable types. Numbers are not returned by default to prevent leading and zeroes from being truncated from numerical strings.
+When the return type is expected to be a number, end users should cast these values using the nunjucks `int` or `float` filters to prevent undesired behavior caused by JavaScript forcing operations between disparate variable types. Numbers are not returned by default to prevent leading and trailing zeroes from being truncated from numerical strings.
 
 `renderTemplate` will return an empty string for strings that may have been cast from nullish non-numerical values, such as `undefined`, `null`, and `None` (case sensitive).
 
