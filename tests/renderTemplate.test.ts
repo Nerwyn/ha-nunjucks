@@ -65,19 +65,19 @@ test('Returns empty string if result of template is undefined or null, but not i
 	expect(renderTemplate(hass, str)).toBe(false);
 });
 
-test('Return type should be number if original value is a number.', () => {
+test('Return type should be string if original value is a number.', () => {
 	let value = hass['states']['light.lounge']['attributes']['brightness'];
 	let str =
 		'{{ hass["states"]["light.lounge"]["attributes"]["brightness"] }}';
 	expect(typeof value).toBe('number');
 	expect(renderTemplate(hass, str)).toBe(
-		hass['states']['light.lounge']['attributes']['brightness'],
+		hass['states']['light.lounge']['attributes']['brightness'].toString(),
 	);
 
 	value = hass['states']['light.lounge']['attributes']['hs_color'][0];
 	str = '{{ hass["states"]["light.lounge"]["attributes"]["hs_color"][0] }}';
 	expect(typeof value).toBe('number');
-	expect(renderTemplate(hass, str)).toBe(value);
+	expect(renderTemplate(hass, str)).toBe(value.toString());
 });
 
 test('Return type should be boolean if original value is a boolean.', () => {
@@ -117,7 +117,7 @@ test('Users should be able to still use the built in context when adding additio
 
 	let value = hass['states']['light.lounge']['attributes']['min_mireds'];
 	let str = '{{ hass.states["light.lounge"].attributes.min_mireds }}';
-	expect(renderTemplate(hass, str, context)).toBe(value);
+	expect(renderTemplate(hass, str, context)).toBe(value.toString());
 
 	value = `The minimum color temperature is ${hass['states']['light.lounge']['attributes']['min_mireds']} mireds. Also I'm doing my taxes!`;
 	str =

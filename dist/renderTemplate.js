@@ -18,13 +18,10 @@ function renderTemplate(hass, str, context) {
         if ([undefined, null, 'undefined', 'null', 'None'].includes(str)) {
             return '';
         }
-        if (/^-?(\d+|\d+\.\d+)$/.test(str)) {
-            return Number(str);
-        }
-        if (str == 'true') {
+        if (str.toLowerCase() == 'true') {
             return true;
         }
-        if (str == 'false') {
+        if (str.toLowerCase() == 'false') {
             return false;
         }
     }

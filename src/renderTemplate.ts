@@ -29,14 +29,10 @@ export function renderTemplate(
 			return '';
 		}
 
-		if (/^-?(\d+|\d+\.\d+)$/.test(str)) {
-			return Number(str);
-		}
-
-		if (str == 'true') {
+		if (str.toLowerCase() == 'true') {
 			return true;
 		}
-		if (str == 'false') {
+		if (str.toLowerCase() == 'false') {
 			return false;
 		}
 	}

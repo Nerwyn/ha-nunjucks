@@ -54,7 +54,7 @@ test('Function state_attr should return attribute of an entity.', () => {
 			hass,
 			`{{ state_attr("light.lounge", "${attribute}") }}`,
 		),
-	).toBe(value);
+	).toBe(value.toString());
 
 	expect(state_attr(hass, 'foobar', 'foobar')).toBe(undefined);
 	expect(renderTemplate(hass, '{{ state_attr("foobar", "foobar") }}')).toBe(
