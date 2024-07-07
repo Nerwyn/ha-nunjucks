@@ -7,9 +7,10 @@
 		"test": "jest --silent=false",
 		"build": "tsc",
 		"prelint": "tsc --noemit",
-		"lint": "eslint ./src --fix --ext .ts --config ./.eslintrc.js",
-		"pretty-quick": "pretty-quick",
-		"huskyinstall": "husky install"
+		"lint": "eslint ./src --fix --ext .ts --config ./.eslintrc.js"
+	},
+	"lint-staged": {
+		"*": "prettier -w"
 	},
 	"author": "Nerwyn",
 	"license": "ISC",
@@ -40,9 +41,8 @@
 		"@typescript-eslint/eslint-plugin": "latest",
 		"@typescript-eslint/parser": "latest",
 		"eslint": "latest",
-		"husky": "latest",
 		"prettier": "latest",
-		"pretty-quick": "latest",
+		"lint-staged": "latest",
 		"ts-jest": "latest",
 		"ts-loader": "latest",
 		"typescript": "latest"

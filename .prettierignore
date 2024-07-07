@@ -1,0 +1,4 @@
+.prettierignore
+*.sh
+**/githooks
+**/dist
