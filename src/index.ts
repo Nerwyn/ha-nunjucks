@@ -1,1 +1,1 @@
-export * from './renderTemplate';
+export { renderTemplate } from './renderTemplate';
