@@ -7,7 +7,8 @@ export function states(hass, entity_id, rounded, with_unit) {
             rounded = true;
         }
         if (rounded && !isNaN(stateObj.state)) {
-            state = Math.round(state);
+            const precision = parseInt(hass['entities'][entity_id]?.display_precision ?? 0);
+            state = Number(state).toPrecision(precision);
         }
         if (with_unit && stateObj.attributes.unit_of_measurement) {
             state = `${state} ${stateObj.attributes.unit_of_measurement}`;

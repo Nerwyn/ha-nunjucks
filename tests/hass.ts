@@ -60,6 +60,13 @@ export const hass = {
 			platform: 'group',
 			icon: 'mdi:outdoor-lamp',
 		},
+		'input_number.volume': {
+			entity_id: 'input_number.volume',
+			area_id: 'lounge',
+			labels: ['lounge_ceiling_fan'],
+			platform: 'input_number',
+			display_precision: 2,
+		},
 	},
 	devices: {
 		'08d6a7f58fc934fba97d2ec2a66e7bba': {

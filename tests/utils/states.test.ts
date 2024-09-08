@@ -8,7 +8,7 @@ test('states should return state of an entity.', () => {
 	expect(renderTemplate(hass, '{{ states("foobar") }}')).toBe('');
 });
 
-test('states with rounded=True should round state.', () => {
+test('states with rounded=True should round numerical state.', () => {
 	const value = hass['states']['input_number.volume']['state'].toString();
 	expect(renderTemplate(hass, '{{ states("input_number.volume") }}')).toBe(
 		value,
@@ -16,7 +16,7 @@ test('states with rounded=True should round state.', () => {
 
 	expect(
 		renderTemplate(hass, '{{ states("input_number.volume", True) }}'),
-	).toBe(Math.round(value as unknown as number).toString());
+	).toBe('0.40');
 });
 
 test('states with rounded=True should return state as is if state is non-numerical.', () => {
@@ -36,6 +36,14 @@ test('states with with_unit=True should return state with unit_of_measurement at
 		),
 	).toBe(
 		`${value1} ${hass['states']['input_number.volume']['attributes']['unit_of_measurement']}`,
+	);
+	expect(
+		renderTemplate(
+			hass,
+			'{{ states("input_number.volume", undefined, true) }}',
+		),
+	).toBe(
+		`0.40 ${hass['states']['input_number.volume']['attributes']['unit_of_measurement']}`,
 	);
 	const value2 = hass['states']['light.lounge']['state'];
 	expect(

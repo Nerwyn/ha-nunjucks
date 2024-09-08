@@ -4,7 +4,7 @@ export declare const CONTEXT: (hass: HomeAssistant) => {
     False: boolean;
     None: null;
     hass: HomeAssistant;
-    states(entity_id: string, rounded?: boolean, with_unit?: boolean): string | number | undefined;
+    states(entity_id: string, rounded?: boolean, with_unit?: boolean): string | undefined;
     is_state(entity_id: string, value: string): boolean;
     state_attr(entity_id: string, attribute: string): any;
     is_state_attr(entity_id: string, attribute: string, value: string): boolean;

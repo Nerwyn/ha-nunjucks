@@ -14,7 +14,15 @@ export function states(
 			rounded = true;
 		}
 		if (rounded && !isNaN(stateObj.state as unknown as number)) {
-			state = Math.round(state as unknown as number);
+			const precision = parseInt(
+				(
+					hass[
+						'entities' as keyof HomeAssistant
+					] as unknown as Record<string, Record<string, string>>
+				)[entity_id]?.display_precision ?? 0,
+			) as number;
+
+			state = Number(state).toPrecision(precision);
 		}
 		if (with_unit && stateObj.attributes.unit_of_measurement) {
 			state = `${state} ${stateObj.attributes.unit_of_measurement}`;
