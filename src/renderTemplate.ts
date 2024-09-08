@@ -1,7 +1,9 @@
 import { HomeAssistant } from 'custom-card-helpers';
-import { renderString } from 'nunjucks';
+import nunjucks from 'nunjucks';
 
 import { CONTEXT } from './context';
+
+nunjucks.installJinjaCompat();
 
 /**
  * Render a Home Assistant template string using nunjucks
@@ -20,10 +22,12 @@ export function renderTemplate(
 		((str.includes('{{') && str.includes('}}')) ||
 			(str.includes('{%') && str.includes('%}')))
 	) {
-		str = renderString(structuredClone(str), {
-			...CONTEXT(hass),
-			...context,
-		}).trim();
+		str = nunjucks
+			.renderString(structuredClone(str), {
+				...CONTEXT(hass),
+				...context,
+			})
+			.trim();
 
 		if ([undefined, null, 'undefined', 'null', 'None'].includes(str)) {
 			return '';

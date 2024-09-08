@@ -1,8 +1,25 @@
 import { HomeAssistant } from 'custom-card-helpers';
 
-export function states(hass: HomeAssistant, entity_id: string) {
+export function states(
+	hass: HomeAssistant,
+	entity_id: string,
+	rounded?: boolean,
+	with_unit?: boolean,
+) {
 	try {
-		return hass.states[entity_id].state;
+		const stateObj = hass.states[entity_id];
+		let state: string | number | boolean = stateObj.state;
+		// https://www.home-assistant.io/docs/configuration/templating/#formatting-sensor-states
+		if (with_unit && rounded == undefined) {
+			rounded = true;
+		}
+		if (rounded && !isNaN(stateObj.state as unknown as number)) {
+			state = Math.round(state as unknown as number);
+		}
+		if (with_unit && stateObj.attributes.unit_of_measurement) {
+			state = `${state} ${stateObj.attributes.unit_of_measurement}`;
+		}
+		return state;
 	} catch {
 		return undefined;
 	}
@@ -44,6 +61,13 @@ export function is_state_attr(
 ) {
 	try {
 		const stateAttr = state_attr(hass, entity_id, attribute);
+		if (
+			typeof value == 'string' &&
+			value.startsWith('[') &&
+			value.endsWith(']')
+		) {
+			value = JSON.parse(value);
+		}
 		if (Array.isArray(value)) {
 			return value.includes(stateAttr);
 		}

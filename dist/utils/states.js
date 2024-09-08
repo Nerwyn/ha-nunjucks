@@ -1,16 +1,24 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.has_value = exports.is_state_attr = exports.state_attr = exports.is_state = exports.states = void 0;
-function states(hass, entity_id) {
+export function states(hass, entity_id, rounded, with_unit) {
     try {
-        return hass.states[entity_id].state;
+        const stateObj = hass.states[entity_id];
+        let state = stateObj.state;
+        // https://www.home-assistant.io/docs/configuration/templating/#formatting-sensor-states
+        if (with_unit && rounded == undefined) {
+            rounded = true;
+        }
+        if (rounded && !isNaN(stateObj.state)) {
+            state = Math.round(state);
+        }
+        if (with_unit && stateObj.attributes.unit_of_measurement) {
+            state = `${state} ${stateObj.attributes.unit_of_measurement}`;
+        }
+        return state;
     }
-    catch (_a) {
+    catch {
         return undefined;
     }
 }
-exports.states = states;
-function is_state(hass, entity_id, value) {
+export function is_state(hass, entity_id, value) {
     try {
         const state = states(hass, entity_id);
         if (Array.isArray(value)) {
@@ -18,34 +26,36 @@ function is_state(hass, entity_id, value) {
         }
         return state == value;
     }
-    catch (_a) {
+    catch {
         return false;
     }
 }
-exports.is_state = is_state;
-function state_attr(hass, entity_id, attribute) {
+export function state_attr(hass, entity_id, attribute) {
     try {
         return hass.states[entity_id].attributes[attribute];
     }
-    catch (_a) {
+    catch {
         return undefined;
     }
 }
-exports.state_attr = state_attr;
-function is_state_attr(hass, entity_id, attribute, value) {
+export function is_state_attr(hass, entity_id, attribute, value) {
     try {
         const stateAttr = state_attr(hass, entity_id, attribute);
+        if (typeof value == 'string' &&
+            value.startsWith('[') &&
+            value.endsWith(']')) {
+            value = JSON.parse(value);
+        }
         if (Array.isArray(value)) {
             return value.includes(stateAttr);
         }
         return stateAttr == value;
     }
-    catch (_a) {
+    catch {
         return false;
     }
 }
-exports.is_state_attr = is_state_attr;
-function has_value(hass, entity_id) {
+export function has_value(hass, entity_id) {
     try {
         const state = states(hass, entity_id);
         if ([false, 0, -0, ''].includes(state)) {
@@ -55,8 +65,7 @@ function has_value(hass, entity_id) {
             return Boolean(state);
         }
     }
-    catch (_a) {
+    catch {
         return false;
     }
 }
-exports.has_value = has_value;

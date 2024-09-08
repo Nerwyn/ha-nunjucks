@@ -50,7 +50,7 @@ const renderedString = renderTemplate(this.hass, templateString, context);
 
 ### Return Types
 
-`renderTemplate` will return a string unless the result is `true` or `false` (*not* case sensitive), in which case it will return a boolean.
+`renderTemplate` will return a string unless the result is `true` or `false` (_not_ case sensitive), in which case it will return a boolean.
 
 When the return type is expected to be a number, end users should cast these values using the nunjucks `int` or `float` filters to prevent undesired behavior caused by JavaScript forcing operations between disparate variable types. Numbers are not returned by default to prevent leading and trailing zeroes from being truncated from numerical strings.
 
@@ -88,13 +88,28 @@ You can also use dot notation for everything but the entity ID.
 
 Functions used to determine an entity's state or an attribute.
 
-| Name          | Arguments                   | Description                                                                                        |
-| ------------- | --------------------------- | -------------------------------------------------------------------------------------------------- |
-| states        | entity_id                   | Returns the state string of the given entity.                                                      |
-| is_state      | entity_id, value            | Compares an entity's state with a specified state or list of states and returns `true` or `false`. |
-| state_attr    | entity_id, attribute        | Returns the value of the attribute or `undefined` if it doesn't exist.                             |
-| is_state_attr | entity_id, attribute, value | Tests if the given entity attribute is the specified value.                                        |
-| has_value     | entity_id                   | Tests if the given entity is not unknown or unavailable.                                           |
+| Name          | Arguments                     | Description                                                                                                         |
+| ------------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| states        | entity_id, rounded, with_unit | Returns the state string of the given entity. Optionally round numerical states and append the unit of measurement. |
+| is_state      | entity_id, value              | Compares an entity's state with a specified state or list of states and returns `true` or `false`.                  |
+| state_attr    | entity_id, attribute          | Returns the value of the attribute or `undefined` if it doesn't exist.                                              |
+| is_state_attr | entity_id, attribute, value   | Tests if the given entity attribute is the specified value.                                                         |
+| has_value     | entity_id                     | Tests if the given entity is not unknown or unavailable.                                                            |
+
+### [Entities](https://www.home-assistant.io/docs/configuration/templating/#entities)
+
+| Name             | Arguments | Description                                |
+| ---------------- | --------- | ------------------------------------------ |
+| is_hidden_entity | entity_id | Returns whether an entity has been hidden. |
+
+### [Devices](https://www.home-assistant.io/docs/configuration/templating/#devices)
+
+| Name            | Arguments                                  | Description                                                                                  |
+| --------------- | ------------------------------------------ | -------------------------------------------------------------------------------------------- |
+| device_entities | device_id                                  | Returns a list of entities that are associated with a given device ID.                       |
+| device_attr     | device_or_entity_id, attr_name             | Returns the value of attr_name for the given device or entity ID.                            |
+| is_device_attr  | device_or_entity_id, attr_name, attr_value | Returns whether the value of attr_name for the given device or entity ID matches attr_value. |
+| device_id       | entity_id                                  | Returns the device ID for a given entity ID or device name.                                  |
 
 ### [Immediate If](https://www.home-assistant.io/docs/configuration/templating/#immediate-if-iif)
 
