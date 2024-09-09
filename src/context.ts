@@ -9,6 +9,7 @@ import {
 	is_device_attr,
 } from './utils/devices';
 import { is_hidden_entity } from './utils/entities';
+import { floor_areas, floor_id, floor_name, floors } from './utils/floors';
 import { iif } from './utils/iif';
 import {
 	has_value,
@@ -68,6 +69,18 @@ export const CONTEXT = (hass: HomeAssistant) => {
 		},
 		device_id(entity_id: string) {
 			return device_id(hass, entity_id);
+		},
+		floors() {
+			return floors(hass);
+		},
+		floor_id(lookup_value: string) {
+			return floor_id(hass, lookup_value);
+		},
+		floor_name(lookup_value: string) {
+			return floor_name(hass, lookup_value);
+		},
+		floor_areas(floor_name_or_id: string) {
+			return floor_areas(hass, floor_name_or_id);
 		},
 		iif(
 			condition: string,

@@ -1,6 +1,7 @@
 import { match_media } from './utils/css';
 import { device_attr, device_entities, device_id, is_device_attr, } from './utils/devices';
 import { is_hidden_entity } from './utils/entities';
+import { floor_areas, floor_id, floor_name, floors } from './utils/floors';
 import { iif } from './utils/iif';
 import { has_value, is_state, is_state_attr, state_attr, states, } from './utils/states';
 export const CONTEXT = (hass) => {
@@ -44,6 +45,18 @@ export const CONTEXT = (hass) => {
         },
         device_id(entity_id) {
             return device_id(hass, entity_id);
+        },
+        floors() {
+            return floors(hass);
+        },
+        floor_id(lookup_value) {
+            return floor_id(hass, lookup_value);
+        },
+        floor_name(lookup_value) {
+            return floor_name(hass, lookup_value);
+        },
+        floor_areas(floor_name_or_id) {
+            return floor_areas(hass, floor_name_or_id);
         },
         iif(condition, if_true, if_false, if_none) {
             return iif(hass, condition, if_true, if_false, if_none);

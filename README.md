@@ -111,6 +111,15 @@ Functions used to determine an entity's state or an attribute.
 | is_device_attr  | device_or_entity_id, attr_name, attr_value | Returns whether the value of attr_name for the given device or entity ID matches attr_value. |
 | device_id       | entity_id                                  | Returns the device ID for a given entity ID or device name.                                  |
 
+### [Floors](https://www.home-assistant.io/docs/configuration/templating/#floors)
+
+| Name        | Arguments        | Description                                                                    |
+| ----------- | ---------------- | ------------------------------------------------------------------------------ |
+| floors      |                  | Returns the full list of floor IDs.                                            |
+| floor_id    | lookup_value     | Returns the floor ID for a given device ID, entity ID, area ID, or area name.  |
+| floor_name  | lookup_value     | Returns the floor name for a given device ID, entity ID, area ID, or floor ID. |
+| floor_areas | floor_name_or_id | Returns the list of area IDs tied to a given floor ID or name.                 |
+
 ### [Immediate If](https://www.home-assistant.io/docs/configuration/templating/#immediate-if-iif)
 
 A shorthand for an if else statement.
