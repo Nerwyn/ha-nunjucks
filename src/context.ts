@@ -19,6 +19,14 @@ import { floor_areas, floor_id, floor_name, floors } from './utils/floors';
 import { iif } from './utils/iif';
 import { integration_entities } from './utils/integrations';
 import {
+	label_areas,
+	label_devices,
+	label_entities,
+	label_id,
+	label_name,
+	labels,
+} from './utils/labels';
+import {
 	has_value,
 	is_state,
 	is_state_attr,
@@ -31,6 +39,8 @@ export const CONTEXT = (hass: HomeAssistant) => ({
 	False: false,
 	None: null,
 	hass: hass,
+
+	// States
 	states(entity_id: string, rounded?: boolean, with_unit?: boolean) {
 		return states(hass, entity_id, rounded, with_unit);
 	},
@@ -46,9 +56,13 @@ export const CONTEXT = (hass: HomeAssistant) => ({
 	has_value(entity_id: string) {
 		return has_value(hass, entity_id);
 	},
+
+	// Entities
 	is_hidden_entity(entity_id: string) {
 		return is_hidden_entity(hass, entity_id);
 	},
+
+	// Devices
 	device_entities(device_id: string) {
 		return device_entities(hass, device_id);
 	},
@@ -65,6 +79,8 @@ export const CONTEXT = (hass: HomeAssistant) => ({
 	device_id(entity_id: string) {
 		return device_id(hass, entity_id);
 	},
+
+	// Floors
 	floors() {
 		return floors(hass);
 	},
@@ -77,6 +93,8 @@ export const CONTEXT = (hass: HomeAssistant) => ({
 	floor_areas(floor_name_or_id: string) {
 		return floor_areas(hass, floor_name_or_id);
 	},
+
+	// Areas
 	areas() {
 		return areas(hass);
 	},
@@ -92,9 +110,33 @@ export const CONTEXT = (hass: HomeAssistant) => ({
 	area_devices(area_name_or_id: string) {
 		return area_devices(hass, area_name_or_id);
 	},
+
+	// Integrations
 	integration_entities(integration: string) {
 		return integration_entities(hass, integration);
 	},
+
+	// Labels
+	labels(lookup_value?: string) {
+		return labels(hass, lookup_value);
+	},
+	label_id(lookup_value: string) {
+		return label_id(hass, lookup_value);
+	},
+	label_name(lookup_value: string) {
+		return label_name(hass, lookup_value);
+	},
+	label_areas(label_name_or_id: string) {
+		return label_areas(hass, label_name_or_id);
+	},
+	label_devices(label_name_or_id: string) {
+		return label_devices(hass, label_name_or_id);
+	},
+	label_entities(label_name_or_id: string) {
+		return label_entities(hass, label_name_or_id);
+	},
+
+	// Immediate If
 	iif(
 		condition: string,
 		if_true: string,
@@ -103,6 +145,8 @@ export const CONTEXT = (hass: HomeAssistant) => ({
 	) {
 		return iif(hass, condition, if_true, if_false, if_none);
 	},
+
+	// CSS
 	match_media(mediaquery: string) {
 		return match_media(mediaquery);
 	},

@@ -90,13 +90,13 @@ You can also use dot notation for everything but the entity ID.
 
 Functions used to determine an entity's state or an attribute.
 
-| Name          | Arguments                     | Description                                                                                                         |
-| ------------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| states        | entity_id, rounded, with_unit | Returns the state string of the given entity. Optionally round numerical states and append the unit of measurement. |
-| is_state      | entity_id, value              | Compares an entity's state with a specified state or list of states and returns `true` or `false`.                  |
-| state_attr    | entity_id, attribute          | Returns the value of the attribute or `undefined` if it doesn't exist.                                              |
-| is_state_attr | entity_id, attribute, value   | Tests if the given entity attribute is the specified value.                                                         |
-| has_value     | entity_id                     | Tests if the given entity is not unknown or unavailable.                                                            |
+| Name          | Arguments                                           | Description                                                                                                         |
+| ------------- | --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| states        | entity_id, rounded (optional), with_unit (optional) | Returns the state string of the given entity. Optionally round numerical states and append the unit of measurement. |
+| is_state      | entity_id, value                                    | Compares an entity's state with a specified state or list of states and returns `true` or `false`.                  |
+| state_attr    | entity_id, attribute                                | Returns the value of the attribute or `undefined` if it doesn't exist.                                              |
+| is_state_attr | entity_id, attribute, value                         | Tests if the given entity attribute is the specified value.                                                         |
+| has_value     | entity_id                                           | Tests if the given entity is not unknown or unavailable.                                                            |
 
 ### [Entities](https://www.home-assistant.io/docs/configuration/templating/#entities)
 
@@ -137,6 +137,17 @@ Functions used to determine an entity's state or an attribute.
 | Name                 | Arguments   | Description                                                              |
 | -------------------- | ----------- | ------------------------------------------------------------------------ |
 | integration_entities | integration | Returns a list of entities that are associated with a given integration. |
+
+### [Labels](https://www.home-assistant.io/docs/configuration/templating/#labels)
+
+| Name           | Arguments               | Description                                                                                |
+| -------------- | ----------------------- | ------------------------------------------------------------------------------------------ |
+| labels         | lookup_value (optional) | Returns the full list of label IDs, or those for a given area ID, device ID, or entity ID. |
+| label_id       | lookup_value            | Returns the label ID for a given label name.                                               |
+| label_name     | lookup_value            | Returns the label name for a given label ID.                                               |
+| label_areas    | label_name_or_id        | Returns the list of area IDs tied to a given label ID or name.                             |
+| label_devices  | label_name_or_id        | Returns the list of device IDs tied to a given label ID or name.                           |
+| label_entities | label_name_or_id        | Returns the list of entity IDs tied to a given label ID or name.                           |
 
 ### [Immediate If](https://www.home-assistant.io/docs/configuration/templating/#immediate-if-iif)
 
