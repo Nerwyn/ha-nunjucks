@@ -22,6 +22,12 @@ test('area_id should return an area ID if given an entity ID', () => {
 	);
 });
 
+test('area_id should return an area ID if given a group entity ID', () => {
+	expect(renderTemplate(hass, '{{ area_id("light.driveway_lamps") }}')).toBe(
+		'front_yard',
+	);
+});
+
 test('area_id should return an area ID if given an area name', () => {
 	expect(renderTemplate(hass, '{{ area_id("Front Yard") }}')).toBe(
 		'front_yard',

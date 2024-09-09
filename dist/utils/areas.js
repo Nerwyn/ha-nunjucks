@@ -13,7 +13,10 @@ export function area_id(hass, lookup_value) {
             const devices = hass['devices'];
             const entities = hass['entities'];
             if (entities[lookup_value]) {
-                lookup_value = entities[lookup_value].device_id;
+                if (entities[lookup_value].area_id) {
+                    return entities[lookup_value].area_id;
+                }
+                lookup_value = entities[lookup_value].device_id ?? lookup_value;
             }
             if (devices[lookup_value]) {
                 return devices[lookup_value].area_id;
@@ -38,10 +41,11 @@ export function area_name(hass, lookup_value) {
             const entities = hass['entities'];
             let areaId = lookup_value;
             if (entities[lookup_value]) {
-                lookup_value = entities[lookup_value].device_id;
+                areaId = entities[lookup_value].area_id ?? areaId;
+                lookup_value = entities[lookup_value].device_id ?? lookup_value;
             }
             if (devices[lookup_value]) {
-                areaId = devices[lookup_value].area_id;
+                areaId = devices[lookup_value].area_id ?? areaId;
             }
             if (areas[areaId]) {
                 return areas[areaId].name;

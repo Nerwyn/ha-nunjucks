@@ -22,6 +22,12 @@ test('floor_id should return a floor ID if given an entity ID', () => {
 	);
 });
 
+test('floor_id should return a floor ID if given a group entity ID', () => {
+	expect(renderTemplate(hass, '{{ floor_id("light.driveway_lamps") }}')).toBe(
+		'first_floor',
+	);
+});
+
 test('floor_id should return a floor ID if given an area ID', () => {
 	expect(renderTemplate(hass, '{{ floor_id("kitchen") }}')).toBe(
 		'first_floor',

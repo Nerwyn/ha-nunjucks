@@ -17,16 +17,17 @@ export function floor_id(hass, lookup_value) {
         const areas = hass['areas'];
         const devices = hass['devices'];
         const entities = hass['entities'];
-        let area = lookup_value;
+        let areaId = lookup_value;
         if (entities[lookup_value]) {
-            lookup_value = entities[lookup_value].device_id;
+            areaId = entities[lookup_value].area_id ?? areaId;
+            lookup_value = entities[lookup_value].device_id ?? lookup_value;
         }
         if (lookup_value) {
             if (devices[lookup_value]) {
-                area = devices[lookup_value].area_id;
+                areaId = devices[lookup_value].area_id ?? areaId;
             }
-            if (areas[area]) {
-                return areas[area].floor_id;
+            if (areas[areaId]) {
+                return areas[areaId].floor_id;
             }
             else {
                 for (const areaId in areas) {
