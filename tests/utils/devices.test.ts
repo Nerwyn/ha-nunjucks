@@ -7,7 +7,7 @@ test('device_entities should return a stringified list of entity IDs associated 
 			hass,
 			'{{ device_entities("1c81fa4a8d5d3bbc8a9fcf3b9b88b178") }}',
 		),
-	).toBe('light.driveway_light_1,light.driveway_light_2');
+	).toBe('light.driveway_light_1,sensor.driveway_light_1_signal_strength');
 });
 
 test('device_attr should return device attribute if it exists.', () => {

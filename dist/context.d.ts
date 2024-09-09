@@ -18,6 +18,11 @@ export declare const CONTEXT: (hass: HomeAssistant) => {
     floor_id(lookup_value: string): string | undefined;
     floor_name(lookup_value: string): string | undefined;
     floor_areas(floor_name_or_id: string): string[];
+    areas(): string[];
+    area_id(lookup_value: string): string | undefined;
+    area_name(lookup_value: string): string | undefined;
+    area_entities(area_name_or_id: string): string[];
+    area_devices(area_name_or_id: string): string[];
     iif(condition: string, if_true: string, if_false?: string, if_none?: string): string | boolean;
     match_media(mediaquery: string): boolean;
 };

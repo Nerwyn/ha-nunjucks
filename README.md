@@ -58,9 +58,11 @@ When the return type is expected to be a number, end users should cast these val
 
 ## Available Extensions
 
-The catch to this approach of rendering jinja2/nunjucks templates is that we have to reimplement all of the [Home Assistant template extension](https://www.home-assistant.io/docs/configuration/templating/#home-assistant-template-extensions) functions and filters. If there are functions or filters that you use that are not currently supported, please make a feature request or try adding it to the project yourself and create a pull request.
+The catch to this approach of rendering jinja2/nunjucks templates is that we have to reimplement all of the [Home Assistant template extension](https://www.home-assistant.io/docs/configuration/templating/#home-assistant-template-extensions) functions. If there are functions that you use that are not currently supported, please make a feature request or try adding it to the project yourself and create a pull request.
 
 So far a subset of the Home Assistant template extension functions have been implemented as documented below.
+
+**NOTE**: The following implemented functions cannot be used as filters.
 
 ### Variables
 
@@ -119,6 +121,16 @@ Functions used to determine an entity's state or an attribute.
 | floor_id    | lookup_value     | Returns the floor ID for a given device ID, entity ID, area ID, or area name.  |
 | floor_name  | lookup_value     | Returns the floor name for a given device ID, entity ID, area ID, or floor ID. |
 | floor_areas | floor_name_or_id | Returns the list of area IDs tied to a given floor ID or name.                 |
+
+### [Areas](https://www.home-assistant.io/docs/configuration/templating/#areas)
+
+| Name          | Arguments       | Description                                                         |
+| ------------- | --------------- | ------------------------------------------------------------------- |
+| areas         |                 | Returns the full list of area IDs.                                  |
+| area_id       | lookup_value    | Returns the area ID for a given device ID, entity ID, or area name. |
+| area_name     | lookup_value    | Returns the area name for a given device ID, entity ID, or area ID. |
+| area_entities | area_name_or_id | Returns the list of entity IDs tied to a given area ID or name.     |
+| area_devices  | area_name_or_id | Returns the list of device IDs tied to a given area ID or name.     |
 
 ### [Immediate If](https://www.home-assistant.io/docs/configuration/templating/#immediate-if-iif)
 

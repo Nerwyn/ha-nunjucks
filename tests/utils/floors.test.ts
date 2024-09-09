@@ -7,7 +7,7 @@ test('floors should return a stringified array of floor IDs.', () => {
 	);
 });
 
-test('floor_id should return floor ID if given device ID', () => {
+test('floor_id should return a floor ID if given a device ID', () => {
 	expect(
 		renderTemplate(
 			hass,
@@ -16,25 +16,25 @@ test('floor_id should return floor ID if given device ID', () => {
 	).toBe('first_floor');
 });
 
-test('floor_id should return floor ID if given entity ID', () => {
+test('floor_id should return a floor ID if given an entity ID', () => {
 	expect(renderTemplate(hass, '{{ floor_id("remote.bedroom") }}')).toBe(
 		'second_floor',
 	);
 });
 
-test('floor_id should return floor ID if given area ID', () => {
+test('floor_id should return a floor ID if given an area ID', () => {
 	expect(renderTemplate(hass, '{{ floor_id("kitchen") }}')).toBe(
 		'first_floor',
 	);
 });
 
-test('floor_id should return floor ID if given area name', () => {
+test('floor_id should return a floor ID if given an area name', () => {
 	expect(renderTemplate(hass, '{{ floor_id("Front Yard") }}')).toBe(
 		'first_floor',
 	);
 });
 
-test('floor_name should return floor name if given device ID', () => {
+test('floor_name should return a floor name if given a device ID', () => {
 	expect(
 		renderTemplate(
 			hass,
@@ -43,19 +43,19 @@ test('floor_name should return floor name if given device ID', () => {
 	).toBe('First Floor');
 });
 
-test('floor_name should return floor name if given entity ID', () => {
+test('floor_name should return a floor name if given an entity ID', () => {
 	expect(renderTemplate(hass, '{{ floor_name("remote.bedroom") }}')).toBe(
 		'Second Floor',
 	);
 });
 
-test('floor_name should return floor name if given area ID', () => {
+test('floor_name should return a floor name if given an area ID', () => {
 	expect(renderTemplate(hass, '{{ floor_name("kitchen") }}')).toBe(
 		'First Floor',
 	);
 });
 
-test('floor_name should return floor name if given floor ID', () => {
+test('floor_name should return a floor name if given a floor ID', () => {
 	expect(renderTemplate(hass, '{{ floor_name("first_floor") }}')).toBe(
 		'First Floor',
 	);
