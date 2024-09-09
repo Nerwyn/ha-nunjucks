@@ -17,6 +17,7 @@ import {
 import { is_hidden_entity } from './utils/entities';
 import { floor_areas, floor_id, floor_name, floors } from './utils/floors';
 import { iif } from './utils/iif';
+import { integration_entities } from './utils/integrations';
 import {
 	has_value,
 	is_state,
@@ -90,6 +91,9 @@ export const CONTEXT = (hass: HomeAssistant) => ({
 	},
 	area_devices(area_name_or_id: string) {
 		return area_devices(hass, area_name_or_id);
+	},
+	integration_entities(integration: string) {
+		return integration_entities(hass, integration);
 	},
 	iif(
 		condition: string,

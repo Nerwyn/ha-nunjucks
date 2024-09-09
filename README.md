@@ -132,6 +132,12 @@ Functions used to determine an entity's state or an attribute.
 | area_entities | area_name_or_id | Returns the list of entity IDs tied to a given area ID or name.     |
 | area_devices  | area_name_or_id | Returns the list of device IDs tied to a given area ID or name.     |
 
+### [Entities For An Integration](https://www.home-assistant.io/docs/configuration/templating/#entities-for-an-integration)
+
+| Name                 | Arguments   | Description                                                              |
+| -------------------- | ----------- | ------------------------------------------------------------------------ |
+| integration_entities | integration | Returns a list of entities that are associated with a given integration. |
+
 ### [Immediate If](https://www.home-assistant.io/docs/configuration/templating/#immediate-if-iif)
 
 A shorthand for an if else statement.
