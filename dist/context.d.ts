@@ -16,8 +16,7 @@ export declare const CONTEXT: (hass: HomeAssistant) => {
     device_id(entity_id: string): string | undefined;
     floors(): string[] | undefined;
     floor_id(lookup_value: string): string | undefined;
-    floor_name(lookup_value: string): string | undefined;
-    floor_areas(floor_name_or_id: string): string[];
+    floor_areas(floor_id: string): string[];
     areas(): string[];
     area_id(lookup_value: string): string | undefined;
     area_name(lookup_value: string): string | undefined;
@@ -25,8 +24,6 @@ export declare const CONTEXT: (hass: HomeAssistant) => {
     area_devices(area_name_or_id: string): string[];
     integration_entities(integration: string): string[];
     labels(lookup_value?: string): string | string[];
-    label_id(lookup_value: string): string | undefined;
-    label_name(lookup_value: string): string | undefined;
     label_areas(label_name_or_id: string): string[];
     label_devices(label_name_or_id: string): string[];
     label_entities(label_name_or_id: string): string[];

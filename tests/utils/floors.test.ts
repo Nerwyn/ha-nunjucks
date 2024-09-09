@@ -34,41 +34,8 @@ test('floor_id should return a floor ID if given an area name', () => {
 	);
 });
 
-test('floor_name should return a floor name if given a device ID', () => {
-	expect(
-		renderTemplate(
-			hass,
-			'{{ floor_name("08d6a7f58fc934fba97d2ec2a66e7bba") }}',
-		),
-	).toBe('First Floor');
-});
-
-test('floor_name should return a floor name if given an entity ID', () => {
-	expect(renderTemplate(hass, '{{ floor_name("remote.bedroom") }}')).toBe(
-		'Second Floor',
-	);
-});
-
-test('floor_name should return a floor name if given an area ID', () => {
-	expect(renderTemplate(hass, '{{ floor_name("kitchen") }}')).toBe(
-		'First Floor',
-	);
-});
-
-test('floor_name should return a floor name if given a floor ID', () => {
-	expect(renderTemplate(hass, '{{ floor_name("first_floor") }}')).toBe(
-		'First Floor',
-	);
-});
-
 test('floor_areas should return a stringified array of area IDs associated with a floor ID', () => {
 	expect(renderTemplate(hass, '{{ floor_areas("first_floor") }}')).toBe(
 		'front_yard,kitchen,lounge',
-	);
-});
-
-test('floor_areas should return a stringified array of area IDs associated with a floor name', () => {
-	expect(renderTemplate(hass, '{{ floor_areas("Second Floor") }}')).toBe(
-		'bedroom',
 	);
 });

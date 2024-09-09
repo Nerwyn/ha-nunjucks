@@ -15,15 +15,13 @@ import {
 	is_device_attr,
 } from './utils/devices';
 import { is_hidden_entity } from './utils/entities';
-import { floor_areas, floor_id, floor_name, floors } from './utils/floors';
+import { floor_areas, floor_id, floors } from './utils/floors';
 import { iif } from './utils/iif';
 import { integration_entities } from './utils/integrations';
 import {
 	label_areas,
 	label_devices,
 	label_entities,
-	label_id,
-	label_name,
 	labels,
 } from './utils/labels';
 import {
@@ -87,11 +85,8 @@ export const CONTEXT = (hass: HomeAssistant) => ({
 	floor_id(lookup_value: string) {
 		return floor_id(hass, lookup_value);
 	},
-	floor_name(lookup_value: string) {
-		return floor_name(hass, lookup_value);
-	},
-	floor_areas(floor_name_or_id: string) {
-		return floor_areas(hass, floor_name_or_id);
+	floor_areas(floor_id: string) {
+		return floor_areas(hass, floor_id);
 	},
 
 	// Areas
@@ -119,12 +114,6 @@ export const CONTEXT = (hass: HomeAssistant) => ({
 	// Labels
 	labels(lookup_value?: string) {
 		return labels(hass, lookup_value);
-	},
-	label_id(lookup_value: string) {
-		return label_id(hass, lookup_value);
-	},
-	label_name(lookup_value: string) {
-		return label_name(hass, lookup_value);
 	},
 	label_areas(label_name_or_id: string) {
 		return label_areas(hass, label_name_or_id);

@@ -2,10 +2,10 @@ import { area_devices, area_entities, area_id, area_name, areas, } from './utils
 import { match_media } from './utils/css';
 import { device_attr, device_entities, device_id, is_device_attr, } from './utils/devices';
 import { is_hidden_entity } from './utils/entities';
-import { floor_areas, floor_id, floor_name, floors } from './utils/floors';
+import { floor_areas, floor_id, floors } from './utils/floors';
 import { iif } from './utils/iif';
 import { integration_entities } from './utils/integrations';
-import { label_areas, label_devices, label_entities, label_id, label_name, labels, } from './utils/labels';
+import { label_areas, label_devices, label_entities, labels, } from './utils/labels';
 import { has_value, is_state, is_state_attr, state_attr, states, } from './utils/states';
 export const CONTEXT = (hass) => ({
     True: true,
@@ -52,11 +52,8 @@ export const CONTEXT = (hass) => ({
     floor_id(lookup_value) {
         return floor_id(hass, lookup_value);
     },
-    floor_name(lookup_value) {
-        return floor_name(hass, lookup_value);
-    },
-    floor_areas(floor_name_or_id) {
-        return floor_areas(hass, floor_name_or_id);
+    floor_areas(floor_id) {
+        return floor_areas(hass, floor_id);
     },
     // Areas
     areas() {
@@ -81,12 +78,6 @@ export const CONTEXT = (hass) => ({
     // Labels
     labels(lookup_value) {
         return labels(hass, lookup_value);
-    },
-    label_id(lookup_value) {
-        return label_id(hass, lookup_value);
-    },
-    label_name(lookup_value) {
-        return label_name(hass, lookup_value);
     },
     label_areas(label_name_or_id) {
         return label_areas(hass, label_name_or_id);

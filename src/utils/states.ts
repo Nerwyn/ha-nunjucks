@@ -8,12 +8,12 @@ export function states(
 ) {
 	try {
 		const stateObj = hass.states[entity_id];
-		let state: string | number | boolean = stateObj.state;
+		let state: string | number | boolean = stateObj?.state;
 		// https://www.home-assistant.io/docs/configuration/templating/#formatting-sensor-states
 		if (with_unit && rounded == undefined) {
 			rounded = true;
 		}
-		if (rounded && !isNaN(stateObj.state as unknown as number)) {
+		if (rounded && !isNaN(stateObj?.state as unknown as number)) {
 			const precision = parseInt(
 				(
 					hass[
@@ -24,8 +24,8 @@ export function states(
 
 			state = Number(state).toPrecision(precision);
 		}
-		if (with_unit && stateObj.attributes.unit_of_measurement) {
-			state = `${state} ${stateObj.attributes.unit_of_measurement}`;
+		if (with_unit && stateObj?.attributes?.unit_of_measurement) {
+			state = `${state} ${stateObj?.attributes?.unit_of_measurement}`;
 		}
 		return state;
 	} catch {

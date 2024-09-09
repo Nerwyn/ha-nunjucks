@@ -2,16 +2,6 @@ import { HomeAssistant } from 'custom-card-helpers';
 
 export function labels(hass: HomeAssistant, lookup_value?: string) {
 	try {
-		if (!lookup_value) {
-			const labels = (
-				hass.connection as unknown as Record<
-					string,
-					Record<string, Record<string, string>[]>
-				>
-			)._labelRegistry.state;
-			return labels.map((label) => label.label_id);
-		}
-
 		const areas = hass['areas' as keyof HomeAssistant] as Record<
 			string,
 			Record<string, string>
@@ -24,6 +14,18 @@ export function labels(hass: HomeAssistant, lookup_value?: string) {
 			string,
 			Record<string, string>
 		>;
+
+		if (!lookup_value) {
+			const labelArr = [];
+			for (const ids of [entities, devices, areas]) {
+				for (const id in ids) {
+					labelArr.push(...(ids[id].labels ?? []));
+				}
+			}
+			labelArr.sort();
+			return Array.from(new Set(labelArr));
+		}
+
 		return (
 			entities[lookup_value]?.labels ??
 			devices[lookup_value]?.labels ??
@@ -34,88 +36,63 @@ export function labels(hass: HomeAssistant, lookup_value?: string) {
 	}
 }
 
-export function label_id(hass: HomeAssistant, lookup_value: string) {
+export function label_areas(hass: HomeAssistant, label_id: string) {
 	try {
-		const labels = (
-			hass.connection as unknown as Record<
-				string,
-				Record<string, Record<string, string>[]>
-			>
-		)._labelRegistry.state;
-		return labels.filter((label) => label.name == lookup_value)[0].label_id;
-	} catch {
-		return undefined;
-	}
-}
-
-export function label_name(hass: HomeAssistant, lookup_value: string) {
-	try {
-		const labels = (
-			hass.connection as unknown as Record<
-				string,
-				Record<string, Record<string, string>[]>
-			>
-		)._labelRegistry.state;
-		return labels.filter((label) => label.label_id == lookup_value)[0].name;
-	} catch {
-		return undefined;
-	}
-}
-
-export function label_areas(hass: HomeAssistant, label_name_or_id: string) {
-	try {
-		const labelId = label_id(hass, label_name_or_id) ?? label_name_or_id;
-		const areas = hass['areas' as keyof HomeAssistant] as Record<
-			string,
-			Record<string, string>
-		>;
 		const areaIds = [];
-		for (const areaId in areas) {
-			if ((areas[areaId].labels ?? []).includes(labelId)) {
-				areaIds.push(areaId);
+		if (label_id) {
+			const areas = hass['areas' as keyof HomeAssistant] as Record<
+				string,
+				Record<string, string>
+			>;
+			for (const areaId in areas) {
+				if ((areas[areaId].labels ?? []).includes(label_id)) {
+					areaIds.push(areaId);
+				}
 			}
+			areaIds.sort();
 		}
-		areaIds.sort();
 		return areaIds;
 	} catch {
 		return [];
 	}
 }
 
-export function label_devices(hass: HomeAssistant, label_name_or_id: string) {
+export function label_devices(hass: HomeAssistant, label_id: string) {
 	try {
-		const labelId = label_id(hass, label_name_or_id) ?? label_name_or_id;
-		const devices = hass['devices' as keyof HomeAssistant] as Record<
-			string,
-			Record<string, string>
-		>;
 		const deviceIds = [];
-		for (const devicesId in devices) {
-			if ((devices[devicesId].labels ?? []).includes(labelId)) {
-				deviceIds.push(devicesId);
+		if (label_id) {
+			const devices = hass['devices' as keyof HomeAssistant] as Record<
+				string,
+				Record<string, string>
+			>;
+			for (const devicesId in devices) {
+				if ((devices[devicesId].labels ?? []).includes(label_id)) {
+					deviceIds.push(devicesId);
+				}
 			}
+			deviceIds.sort();
 		}
-		deviceIds.sort();
 		return deviceIds;
 	} catch {
 		return [];
 	}
 }
 
-export function label_entities(hass: HomeAssistant, label_name_or_id: string) {
+export function label_entities(hass: HomeAssistant, label_id: string) {
 	try {
-		const labelId = label_id(hass, label_name_or_id) ?? label_name_or_id;
-		const entities = hass['entities' as keyof HomeAssistant] as Record<
-			string,
-			Record<string, string>
-		>;
 		const entityIds = [];
-		for (const entityId in entities) {
-			if ((entities[entityId].labels ?? []).includes(labelId)) {
-				entityIds.push(entityId);
+		if (label_id) {
+			const entities = hass['entities' as keyof HomeAssistant] as Record<
+				string,
+				Record<string, string>
+			>;
+			for (const entityId in entities) {
+				if ((entities[entityId].labels ?? []).includes(label_id)) {
+					entityIds.push(entityId);
+				}
 			}
+			entityIds.sort();
 		}
-		entityIds.sort();
 		return entityIds;
 	} catch {
 		return [];

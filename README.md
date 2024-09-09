@@ -115,12 +115,11 @@ Functions used to determine an entity's state or an attribute.
 
 ### [Floors](https://www.home-assistant.io/docs/configuration/templating/#floors)
 
-| Name        | Arguments        | Description                                                                    |
-| ----------- | ---------------- | ------------------------------------------------------------------------------ |
-| floors      |                  | Returns the full list of floor IDs.                                            |
-| floor_id    | lookup_value     | Returns the floor ID for a given device ID, entity ID, area ID, or area name.  |
-| floor_name  | lookup_value     | Returns the floor name for a given device ID, entity ID, area ID, or floor ID. |
-| floor_areas | floor_name_or_id | Returns the list of area IDs tied to a given floor ID or name.                 |
+| Name        | Arguments    | Description                                                                   |
+| ----------- | ------------ | ----------------------------------------------------------------------------- |
+| floors      |              | Returns the full list of floor IDs that include an area.                      |
+| floor_id    | lookup_value | Returns the floor ID for a given device ID, entity ID, area ID, or area name. |
+| floor_areas | floor_id     | Returns the list of area IDs tied to a given floor ID.                        |
 
 ### [Areas](https://www.home-assistant.io/docs/configuration/templating/#areas)
 
@@ -143,11 +142,9 @@ Functions used to determine an entity's state or an attribute.
 | Name           | Arguments               | Description                                                                                |
 | -------------- | ----------------------- | ------------------------------------------------------------------------------------------ |
 | labels         | lookup_value (optional) | Returns the full list of label IDs, or those for a given area ID, device ID, or entity ID. |
-| label_id       | lookup_value            | Returns the label ID for a given label name.                                               |
-| label_name     | lookup_value            | Returns the label name for a given label ID.                                               |
-| label_areas    | label_name_or_id        | Returns the list of area IDs tied to a given label ID or name.                             |
-| label_devices  | label_name_or_id        | Returns the list of device IDs tied to a given label ID or name.                           |
-| label_entities | label_name_or_id        | Returns the list of entity IDs tied to a given label ID or name.                           |
+| label_areas    | label_id                | Returns the list of area IDs tied to a given label ID.                                     |
+| label_devices  | label_id                | Returns the list of device IDs tied to a given label ID.                                   |
+| label_entities | label_id                | Returns the list of entity IDs tied to a given label ID.                                   |
 
 ### [Immediate If](https://www.home-assistant.io/docs/configuration/templating/#immediate-if-iif)
 
