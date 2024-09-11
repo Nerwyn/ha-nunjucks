@@ -98,6 +98,14 @@ Functions used to determine an entity's state or an attribute.
 | is_state_attr | entity_id, attribute, value                         | Tests if the given entity attribute is the specified value.                                                         |
 | has_value     | entity_id                                           | Tests if the given entity is not unknown or unavailable.                                                            |
 
+### [State Translated](https://www.home-assistant.io/docs/configuration/templating/#state-translated)
+
+| Name                  | Arguments                                             | Description                                                                                                                                                          |
+| --------------------- | ----------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| state_translated      | entity_id, state (optional)                           | Returns the formatted and translated state of an entity or provided state using a language that is currently configured in the general settings.                     |
+| attr_name_translated  | entity_id, attr_name (optional) attr_value (optional) | Returns the formatted and translated attribute name of an entity or provided attribute name using a language that is currently configured in the general settings.   |
+| attr_value_translated | entity_id, attr_name (optional) attr_value (optional) | Returns the formatted and translated attribute value of an entity or provided attribute value using a language that is currently configured in the general settings. |
+
 ### [Entities](https://www.home-assistant.io/docs/configuration/templating/#entities)
 
 | Name             | Arguments | Description                                |

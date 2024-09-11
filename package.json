@@ -34,7 +34,8 @@
 	"dependencies": {
 		"@types/nunjucks": "latest",
 		"custom-card-helpers": "latest",
-		"nunjucks": "latest"
+		"nunjucks": "latest",
+		"py-datetime": "latest"
 	},
 	"devDependencies": {
 		"@types/jest": "latest",

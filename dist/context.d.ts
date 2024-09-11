@@ -9,6 +9,9 @@ export declare const CONTEXT: (hass: HomeAssistant) => {
     state_attr(entity_id: string, attribute: string): any;
     is_state_attr(entity_id: string, attribute: string, value: string): boolean;
     has_value(entity_id: string): boolean;
+    state_translated(entity_id: string, state?: string): string;
+    attr_name_translated(entity_id: string, attr_name: string, attr_value?: string): string;
+    attr_value_translated(entity_id: string, attr_name: string, attr_value?: string): any;
     is_hidden_entity(entity_id: string): string | false;
     device_entities(device_id: string): string[];
     device_attr(device_or_entity_id: string, attr_name: string): string | undefined;

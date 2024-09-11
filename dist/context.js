@@ -6,7 +6,7 @@ import { floor_areas, floor_id, floors } from './utils/floors';
 import { iif } from './utils/iif';
 import { integration_entities } from './utils/integrations';
 import { label_areas, label_devices, label_entities, labels, } from './utils/labels';
-import { has_value, is_state, is_state_attr, state_attr, states, } from './utils/states';
+import { attr_name_translated, attr_value_translated, has_value, is_state, is_state_attr, state_attr, state_translated, states, } from './utils/states';
 export const CONTEXT = (hass) => ({
     True: true,
     False: false,
@@ -27,6 +27,15 @@ export const CONTEXT = (hass) => ({
     },
     has_value(entity_id) {
         return has_value(hass, entity_id);
+    },
+    state_translated(entity_id, state) {
+        return state_translated(hass, entity_id, state);
+    },
+    attr_name_translated(entity_id, attr_name, attr_value) {
+        return attr_name_translated(hass, entity_id, attr_name, attr_value);
+    },
+    attr_value_translated(entity_id, attr_name, attr_value) {
+        return attr_value_translated(hass, entity_id, attr_name, attr_value);
     },
     // Entities
     is_hidden_entity(entity_id) {

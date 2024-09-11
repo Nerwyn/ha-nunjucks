@@ -25,10 +25,13 @@ import {
 	labels,
 } from './utils/labels';
 import {
+	attr_name_translated,
+	attr_value_translated,
 	has_value,
 	is_state,
 	is_state_attr,
 	state_attr,
+	state_translated,
 	states,
 } from './utils/states';
 
@@ -53,6 +56,23 @@ export const CONTEXT = (hass: HomeAssistant) => ({
 	},
 	has_value(entity_id: string) {
 		return has_value(hass, entity_id);
+	},
+	state_translated(entity_id: string, state?: string) {
+		return state_translated(hass, entity_id, state);
+	},
+	attr_name_translated(
+		entity_id: string,
+		attr_name: string,
+		attr_value?: string,
+	) {
+		return attr_name_translated(hass, entity_id, attr_name, attr_value);
+	},
+	attr_value_translated(
+		entity_id: string,
+		attr_name: string,
+		attr_value?: string,
+	) {
+		return attr_value_translated(hass, entity_id, attr_name, attr_value);
 	},
 
 	// Entities
