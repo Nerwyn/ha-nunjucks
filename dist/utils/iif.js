@@ -1,10 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.iif = iif;
-const __1 = require("..");
-function iif(hass, condition, if_true, if_false, if_none) {
+import { renderTemplate } from '..';
+export function iif(hass, condition, if_true, if_false, if_none) {
     if (if_none) {
-        const rendered = (0, __1.renderTemplate)(hass, condition);
+        const rendered = renderTemplate(hass, condition);
         if ([undefined, null, 'undefined', 'null', 'None'].includes(rendered)) {
             return if_none;
         }
@@ -16,5 +13,5 @@ function iif(hass, condition, if_true, if_false, if_none) {
 		${if_false ?? false}
 		{% endif %}
 	`;
-    return (0, __1.renderTemplate)(hass, template);
+    return renderTemplate(hass, template);
 }

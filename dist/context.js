@@ -1,145 +1,138 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.CONTEXT = void 0;
-const py_datetime_1 = __importDefault(require("py-datetime"));
-const areas_1 = require("./utils/areas");
-const css_1 = require("./utils/css");
-const devices_1 = require("./utils/devices");
-const entities_1 = require("./utils/entities");
-const floors_1 = require("./utils/floors");
-const iif_1 = require("./utils/iif");
-const integrations_1 = require("./utils/integrations");
-const labels_1 = require("./utils/labels");
-const states_1 = require("./utils/states");
-const time_1 = require("./utils/time");
-const CONTEXT = (hass) => ({
+import dt from 'py-datetime';
+import { area_devices, area_entities, area_id, area_name, areas, } from './utils/areas';
+import { match_media } from './utils/css';
+import { device_attr, device_entities, device_id, is_device_attr, } from './utils/devices';
+import { is_hidden_entity } from './utils/entities';
+import { floor_areas, floor_id, floors } from './utils/floors';
+import { iif } from './utils/iif';
+import { integration_entities } from './utils/integrations';
+import { label_areas, label_devices, label_entities, labels, } from './utils/labels';
+import { attr_name_translated, attr_value_translated, has_value, is_state, is_state_attr, state_attr, state_translated, states, } from './utils/states';
+import { as_datetime, as_local, as_timestamp, now, strptime, timedelta, today_at, utcnow, } from './utils/time';
+export const CONTEXT = (hass) => ({
     True: true,
     False: false,
     None: null,
     hass: hass,
     // States
     states(entity_id, rounded, with_unit) {
-        return (0, states_1.states)(hass, entity_id, rounded, with_unit);
+        return states(hass, entity_id, rounded, with_unit);
     },
     is_state(entity_id, value) {
-        return (0, states_1.is_state)(hass, entity_id, value);
+        return is_state(hass, entity_id, value);
     },
     state_attr(entity_id, attribute) {
-        return (0, states_1.state_attr)(hass, entity_id, attribute);
+        return state_attr(hass, entity_id, attribute);
     },
     is_state_attr(entity_id, attribute, value) {
-        return (0, states_1.is_state_attr)(hass, entity_id, attribute, value);
+        return is_state_attr(hass, entity_id, attribute, value);
     },
     has_value(entity_id) {
-        return (0, states_1.has_value)(hass, entity_id);
+        return has_value(hass, entity_id);
     },
     state_translated(entity_id, state) {
-        return (0, states_1.state_translated)(hass, entity_id, state);
+        return state_translated(hass, entity_id, state);
     },
     attr_name_translated(entity_id, attr_name, attr_value) {
-        return (0, states_1.attr_name_translated)(hass, entity_id, attr_name, attr_value);
+        return attr_name_translated(hass, entity_id, attr_name, attr_value);
     },
     attr_value_translated(entity_id, attr_name, attr_value) {
-        return (0, states_1.attr_value_translated)(hass, entity_id, attr_name, attr_value);
+        return attr_value_translated(hass, entity_id, attr_name, attr_value);
     },
     // Entities
     is_hidden_entity(entity_id) {
-        return (0, entities_1.is_hidden_entity)(hass, entity_id);
+        return is_hidden_entity(hass, entity_id);
     },
     // Devices
     device_entities(device_id) {
-        return (0, devices_1.device_entities)(hass, device_id);
+        return device_entities(hass, device_id);
     },
     device_attr(device_or_entity_id, attr_name) {
-        return (0, devices_1.device_attr)(hass, device_or_entity_id, attr_name);
+        return device_attr(hass, device_or_entity_id, attr_name);
     },
     is_device_attr(device_or_entity_id, attr_name, attr_value) {
-        return (0, devices_1.is_device_attr)(hass, device_or_entity_id, attr_name, attr_value);
+        return is_device_attr(hass, device_or_entity_id, attr_name, attr_value);
     },
     device_id(entity_id) {
-        return (0, devices_1.device_id)(hass, entity_id);
+        return device_id(hass, entity_id);
     },
     // Floors
     floors() {
-        return (0, floors_1.floors)(hass);
+        return floors(hass);
     },
     floor_id(lookup_value) {
-        return (0, floors_1.floor_id)(hass, lookup_value);
+        return floor_id(hass, lookup_value);
     },
     floor_areas(floor_id) {
-        return (0, floors_1.floor_areas)(hass, floor_id);
+        return floor_areas(hass, floor_id);
     },
     // Areas
     areas() {
-        return (0, areas_1.areas)(hass);
+        return areas(hass);
     },
     area_id(lookup_value) {
-        return (0, areas_1.area_id)(hass, lookup_value);
+        return area_id(hass, lookup_value);
     },
     area_name(lookup_value) {
-        return (0, areas_1.area_name)(hass, lookup_value);
+        return area_name(hass, lookup_value);
     },
     area_entities(area_name_or_id) {
-        return (0, areas_1.area_entities)(hass, area_name_or_id);
+        return area_entities(hass, area_name_or_id);
     },
     area_devices(area_name_or_id) {
-        return (0, areas_1.area_devices)(hass, area_name_or_id);
+        return area_devices(hass, area_name_or_id);
     },
     // Integrations
     integration_entities(integration) {
-        return (0, integrations_1.integration_entities)(hass, integration);
+        return integration_entities(hass, integration);
     },
     // Labels
     labels(lookup_value) {
-        return (0, labels_1.labels)(hass, lookup_value);
+        return labels(hass, lookup_value);
     },
     label_areas(label_name_or_id) {
-        return (0, labels_1.label_areas)(hass, label_name_or_id);
+        return label_areas(hass, label_name_or_id);
     },
     label_devices(label_name_or_id) {
-        return (0, labels_1.label_devices)(hass, label_name_or_id);
+        return label_devices(hass, label_name_or_id);
     },
     label_entities(label_name_or_id) {
-        return (0, labels_1.label_entities)(hass, label_name_or_id);
+        return label_entities(hass, label_name_or_id);
     },
     // Immediate If
     iif(condition, if_true, if_false, if_none) {
-        return (0, iif_1.iif)(hass, condition, if_true, if_false, if_none);
+        return iif(hass, condition, if_true, if_false, if_none);
     },
     // Time
     dt() {
-        return py_datetime_1.default;
+        return dt;
     },
     now() {
-        return (0, time_1.now)();
+        return now();
     },
     utcnow() {
-        return (0, time_1.utcnow)();
+        return utcnow();
     },
     today_at(value) {
-        return (0, time_1.today_at)(value);
+        return today_at(value);
     },
     as_datetime(value, fallback) {
-        return (0, time_1.as_datetime)(value, fallback);
+        return as_datetime(value, fallback);
     },
     as_timestamp(value, fallback) {
-        return (0, time_1.as_timestamp)(value, fallback);
+        return as_timestamp(value, fallback);
     },
     as_local(value) {
-        return (0, time_1.as_local)(value);
+        return as_local(value);
     },
     strptime(value, format, fallback) {
-        return (0, time_1.strptime)(value, format, fallback);
+        return strptime(value, format, fallback);
     },
     timedelta(days, seconds, microseconds, milliseconds, minutes, hours, weeks) {
-        return (0, time_1.timedelta)(days, seconds, microseconds, milliseconds, minutes, hours, weeks);
+        return timedelta(days, seconds, microseconds, milliseconds, minutes, hours, weeks);
     },
     // CSS
     match_media(mediaquery) {
-        return (0, css_1.match_media)(mediaquery);
+        return match_media(mediaquery);
     },
 });
-exports.CONTEXT = CONTEXT;

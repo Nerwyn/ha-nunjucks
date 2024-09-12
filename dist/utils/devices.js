@@ -1,11 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.device_entities = device_entities;
-exports.device_attr = device_attr;
-exports.is_device_attr = is_device_attr;
-exports.device_id = device_id;
-const states_1 = require("./states");
-function device_entities(hass, device_id) {
+import { state_attr } from './states';
+export function device_entities(hass, device_id) {
     try {
         const res = [];
         if (device_id) {
@@ -22,17 +16,17 @@ function device_entities(hass, device_id) {
         return [];
     }
 }
-function device_attr(hass, device_or_entity_id, attr_name) {
+export function device_attr(hass, device_or_entity_id, attr_name) {
     try {
         const devices = hass['devices'];
         return (devices[device_or_entity_id]?.[attr_name] ??
-            (0, states_1.state_attr)(hass, device_or_entity_id, attr_name));
+            state_attr(hass, device_or_entity_id, attr_name));
     }
     catch {
         return undefined;
     }
 }
-function is_device_attr(hass, device_or_entity_id, attr_name, attr_value) {
+export function is_device_attr(hass, device_or_entity_id, attr_name, attr_value) {
     try {
         if (attr_value != undefined) {
             const deviceAttr = device_attr(hass, device_or_entity_id, attr_name);
@@ -52,7 +46,7 @@ function is_device_attr(hass, device_or_entity_id, attr_name, attr_value) {
         return false;
     }
 }
-function device_id(hass, entity_id) {
+export function device_id(hass, entity_id) {
     try {
         if (entity_id) {
             const entities = hass['entities'];

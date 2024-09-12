@@ -1,11 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.areas = areas;
-exports.area_id = area_id;
-exports.area_name = area_name;
-exports.area_entities = area_entities;
-exports.area_devices = area_devices;
-function areas(hass) {
+export function areas(hass) {
     try {
         return Object.keys(hass['areas']);
     }
@@ -13,7 +6,7 @@ function areas(hass) {
         return [];
     }
 }
-function area_id(hass, lookup_value) {
+export function area_id(hass, lookup_value) {
     try {
         if (lookup_value) {
             const areas = hass['areas'];
@@ -40,7 +33,7 @@ function area_id(hass, lookup_value) {
         return undefined;
     }
 }
-function area_name(hass, lookup_value) {
+export function area_name(hass, lookup_value) {
     try {
         if (lookup_value) {
             const areas = hass['areas'];
@@ -64,7 +57,7 @@ function area_name(hass, lookup_value) {
         return undefined;
     }
 }
-function area_entities(hass, area_name_or_id) {
+export function area_entities(hass, area_name_or_id) {
     try {
         const entityIds = [];
         if (area_name_or_id) {
@@ -85,7 +78,7 @@ function area_entities(hass, area_name_or_id) {
         return [];
     }
 }
-function area_devices(hass, area_name_or_id) {
+export function area_devices(hass, area_name_or_id) {
     try {
         const deviceIds = [];
         if (area_name_or_id) {
