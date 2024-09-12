@@ -13,7 +13,7 @@ export function today_at(value = '00:00') {
 export function as_datetime(value, fallback) {
     try {
         if (typeof value == 'number' || typeof value == 'string') {
-            return dt.datetime(Number(value) * 1000);
+            return dt.datetime(Number(value));
         }
         if (!value.year || !value.month || !value.day) {
             throw Error('Not a datetime or timestamp');
