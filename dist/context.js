@@ -1,6 +1,10 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CONTEXT = void 0;
+const py_datetime_1 = __importDefault(require("py-datetime"));
 const areas_1 = require("./utils/areas");
 const css_1 = require("./utils/css");
 const devices_1 = require("./utils/devices");
@@ -106,6 +110,9 @@ const CONTEXT = (hass) => ({
         return (0, iif_1.iif)(hass, condition, if_true, if_false, if_none);
     },
     // Time
+    dt() {
+        return py_datetime_1.default;
+    },
     now() {
         return (0, time_1.now)();
     },
