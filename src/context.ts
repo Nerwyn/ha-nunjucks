@@ -1,4 +1,5 @@
 import { HomeAssistant } from 'custom-card-helpers';
+import { PyDate, PyDatetime } from 'py-datetime/dist/classes';
 
 import {
 	area_devices,
@@ -34,6 +35,16 @@ import {
 	state_translated,
 	states,
 } from './utils/states';
+import {
+	as_datetime,
+	as_local,
+	as_timestamp,
+	now,
+	strptime,
+	timedelta,
+	today_at,
+	utcnow,
+} from './utils/time';
 
 export const CONTEXT = (hass: HomeAssistant) => ({
 	True: true,
@@ -153,6 +164,48 @@ export const CONTEXT = (hass: HomeAssistant) => ({
 		if_none?: string,
 	) {
 		return iif(hass, condition, if_true, if_false, if_none);
+	},
+
+	// Time
+	now() {
+		return now();
+	},
+	utcnow() {
+		return utcnow();
+	},
+	today_at(value: string) {
+		return today_at(value);
+	},
+	as_datetime(value: number | string | PyDate, fallback?: string) {
+		return as_datetime(value, fallback);
+	},
+	as_timestamp(value: string, fallback?: string) {
+		return as_timestamp(value, fallback);
+	},
+	as_local(value: PyDatetime) {
+		return as_local(value);
+	},
+	strptime(value: string, format: string, fallback?: string) {
+		return strptime(value, format, fallback);
+	},
+	timedelta(
+		days?: number,
+		seconds?: number,
+		microseconds?: number,
+		milliseconds?: number,
+		minutes?: number,
+		hours?: number,
+		weeks?: number,
+	) {
+		return timedelta(
+			days,
+			seconds,
+			microseconds,
+			milliseconds,
+			minutes,
+			hours,
+			weeks,
+		);
 	},
 
 	// CSS

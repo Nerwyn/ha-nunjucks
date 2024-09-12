@@ -1,4 +1,6 @@
 .prettierignore
+.gitignore
+.npmignore
 *.sh
 **/githooks
 **/dist

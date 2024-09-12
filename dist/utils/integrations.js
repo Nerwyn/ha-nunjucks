@@ -1,4 +1,7 @@
-export function integration_entities(hass, integration) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.integration_entities = integration_entities;
+function integration_entities(hass, integration) {
     try {
         const entityIds = [];
         if (integration) {

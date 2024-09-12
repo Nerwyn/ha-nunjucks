@@ -7,7 +7,7 @@
 		"test": "jest --silent=false",
 		"build": "tsc",
 		"prelint": "tsc --noemit",
-		"lint": "eslint ./src --fix --ext .ts --config ./.eslintrc.js"
+		"lint": "eslint --config ./.eslintrc.config.cjs"
 	},
 	"lint-staged": {
 		"*": "prettier -w"
@@ -22,11 +22,6 @@
 		"url": "https://github.com/Nerwyn/ha-nunjucks/issues"
 	},
 	"homepage": "https://github.com/Nerwyn/ha-nunjucks#readme",
-	"husky": {
-		"hooks": {
-			"pre-commit": "pretty-quick --staged"
-		}
-	},
 	"files": [
 		"./dist",
 		"README.md"
@@ -35,7 +30,7 @@
 		"@types/nunjucks": "latest",
 		"custom-card-helpers": "latest",
 		"nunjucks": "latest",
-		"py-datetime": "latest"
+		"py-datetime": "github:Nerwyn/py-datetime"
 	},
 	"devDependencies": {
 		"@types/jest": "latest",
@@ -44,9 +39,9 @@
 		"eslint": "latest",
 		"eslint-config-prettier": "latest",
 		"eslint-plugin-prettier": "latest",
+		"lint-staged": "latest",
 		"prettier": "latest",
 		"prettier-plugin-organize-imports": "latest",
-		"lint-staged": "latest",
 		"ts-jest": "latest",
 		"ts-loader": "latest",
 		"typescript": "latest"

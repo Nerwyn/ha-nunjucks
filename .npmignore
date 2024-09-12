@@ -1,0 +1,11 @@
+node_modules
+test
+src
+githooks
+.eslint.config.cjs
+.gitignore
+.prettierignore
+.prettierrc
+LICENSE
+README.md
+tsconfig.json

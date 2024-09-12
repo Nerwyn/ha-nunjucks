@@ -1,4 +1,10 @@
-export function labels(hass, lookup_value) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.labels = labels;
+exports.label_areas = label_areas;
+exports.label_devices = label_devices;
+exports.label_entities = label_entities;
+function labels(hass, lookup_value) {
     try {
         const areas = hass['areas'];
         const devices = hass['devices'];
@@ -21,7 +27,7 @@ export function labels(hass, lookup_value) {
         return [];
     }
 }
-export function label_areas(hass, label_id) {
+function label_areas(hass, label_id) {
     try {
         const areaIds = [];
         if (label_id) {
@@ -39,7 +45,7 @@ export function label_areas(hass, label_id) {
         return [];
     }
 }
-export function label_devices(hass, label_id) {
+function label_devices(hass, label_id) {
     try {
         const deviceIds = [];
         if (label_id) {
@@ -57,7 +63,7 @@ export function label_devices(hass, label_id) {
         return [];
     }
 }
-export function label_entities(hass, label_id) {
+function label_entities(hass, label_id) {
     try {
         const entityIds = [];
         if (label_id) {
