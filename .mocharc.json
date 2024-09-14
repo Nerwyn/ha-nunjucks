@@ -1,0 +1,7 @@
+{
+	"extension": ["ts"],
+	"require": ["ts-node/register"],
+	"node-option": ["import=tsx/esm"],
+	"recursive": true,
+	"watch-files": ["tests/**/*.test.ts"]
+}

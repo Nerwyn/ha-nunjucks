@@ -32,21 +32,6 @@ export declare const CONTEXT: (hass: HomeAssistant) => {
     label_devices(label_name_or_id: string): string[];
     label_entities(label_name_or_id: string): string[];
     iif(condition: string, if_true: string, if_false?: string, if_none?: string): string | boolean;
-    dt(): {
-        date: (year?: number | undefined, month?: number | undefined, day?: number | undefined) => PyDate;
-        time: (hour?: number | Partial<Record<"hour" | "minute" | "second" | "millisecond", number>> | undefined, minute?: number | undefined, second?: number | undefined, millisecond?: number | undefined) => import("py-datetime").PyTime;
-        timedelta: (days?: number | Partial<Record<"weeks" | "days" | "hours" | "minutes" | "seconds" | "milliseconds", number>> | undefined, seconds?: number | undefined, milliseconds?: number | undefined, minutes?: number | undefined, hours?: number | undefined, weeks?: number | undefined) => import("py-datetime").PyTimedelta;
-        datetime: {
-            (year?: number | Date | Partial<Record<"hour" | "minute" | "second" | "millisecond" | "year" | "month" | "day", number> & {
-                utc: boolean;
-            }> | undefined, month?: number | undefined, day?: number | undefined, hour?: number | undefined, minute?: number | undefined, second?: number | undefined, millisecond?: number | undefined, utc?: boolean | undefined): PyDatetime;
-            now(): PyDatetime;
-            utcnow(): PyDatetime;
-            utc(ts: number | PyDatetime | Date): PyDatetime;
-            combine(date: PyDate | PyDatetime, time: import("py-datetime").PyTime): PyDatetime;
-            strptime(dateString: string, format: string, is_utc?: boolean | undefined): PyDatetime;
-        };
-    };
     now(): PyDatetime;
     utcnow(): PyDatetime;
     today_at(value: string): PyDatetime;

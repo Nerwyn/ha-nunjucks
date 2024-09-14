@@ -1,45 +1,63 @@
+import assert from 'assert';
 import { renderTemplate } from '../../src';
 import { hass } from '../hass';
 
-test('labels should return all labels if no argument is provided.', () => {
-	expect(renderTemplate(hass, '{{ labels() }}')).toBe(
-		'ir,lighting,lounge_ceiling_fan,outside',
-	);
+describe('labels', () => {
+	it('should return all labels if no argument is provided', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ labels() }}'),
+			'ir,lighting,lounge_ceiling_fan,outside',
+		);
+	});
+
+	it(' should return all labels associated with a provided entity ID', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ labels("light.driveway_lamps") }}'),
+			'lighting',
+		);
+	});
+
+	it('should return all labels associated with a provided device ID', () => {
+		assert.equal(
+			renderTemplate(
+				hass,
+				'{{ labels("06c14f4b7dd701890e596ebbe354aa97") }}',
+			),
+			'ir',
+		);
+	});
+
+	it('should return all labels associated with a provided area ID', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ labels("front_yard") }}'),
+			'outside',
+		);
+	});
 });
 
-test('labels should return all labels associated with a provided entity ID.', () => {
-	expect(renderTemplate(hass, '{{ labels("light.driveway_lamps") }}')).toBe(
-		'lighting',
-	);
+describe('label_areas', () => {
+	it('label_areas should return a list of area IDs for a given label ID', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ label_areas("outside") }}'),
+			'front_yard',
+		);
+	});
 });
 
-test('labels should return all labels associated with a provided device ID.', () => {
-	expect(
-		renderTemplate(
-			hass,
-			'{{ labels("06c14f4b7dd701890e596ebbe354aa97") }}',
-		),
-	).toBe('ir');
+describe('label_devices', () => {
+	it('label_devices should return a list of device IDs for a given label ID', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ label_devices("ir") }}'),
+			'06c14f4b7dd701890e596ebbe354aa97',
+		);
+	});
 });
 
-test('labels should return all labels associated with a provided area ID.', () => {
-	expect(renderTemplate(hass, '{{ labels("front_yard") }}')).toBe('outside');
-});
-
-test('label_areas should return a list of area IDs for a given label ID.', () => {
-	expect(renderTemplate(hass, '{{ label_areas("outside") }}')).toBe(
-		'front_yard',
-	);
-});
-
-test('label_devices should return a list of device IDs for a given label ID.', () => {
-	expect(renderTemplate(hass, '{{ label_devices("ir") }}')).toBe(
-		'06c14f4b7dd701890e596ebbe354aa97',
-	);
-});
-
-test('label_entities should return a list of entity IDs for a given label ID.', () => {
-	expect(renderTemplate(hass, '{{ label_entities("lighting") }}')).toBe(
-		'light.driveway_lamps',
-	);
+describe('label_entities', () => {
+	it('label_entities should return a list of entity IDs for a given label ID', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ label_entities("lighting") }}'),
+			'light.driveway_lamps',
+		);
+	});
 });

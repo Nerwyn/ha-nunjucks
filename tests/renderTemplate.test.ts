@@ -1,126 +1,149 @@
-import { hass } from './hass';
+import assert from 'assert';
 import { renderTemplate } from '../src';
+import { hass } from './hass';
 
-test('Returns input if it is not a string.', () => {
-	expect(renderTemplate(hass, 5 as unknown as string)).toBe(5);
-	expect(renderTemplate(hass, 0 as unknown as string)).toBe(0);
+describe('renderTemplate', () => {
+	it('returns the input if it is not a string', () => {
+		assert.equal(renderTemplate(hass, 5 as unknown as string), 5);
+		assert.equal(renderTemplate(hass, 0 as unknown as string), 0);
 
-	expect(renderTemplate(hass, true as unknown as string)).toBe(true);
-	expect(renderTemplate(hass, false as unknown as string)).toBe(false);
+		assert.equal(renderTemplate(hass, true as unknown as string), true);
+		assert.equal(renderTemplate(hass, false as unknown as string), false);
 
-	expect(renderTemplate(hass, undefined as unknown as string)).toBe(
-		undefined,
-	);
-	expect(renderTemplate(hass, null as unknown as string)).toBe(null);
+		assert.equal(
+			renderTemplate(hass, undefined as unknown as string),
+			undefined,
+		);
+		assert.equal(renderTemplate(hass, null as unknown as string), null);
 
-	expect(
-		renderTemplate(hass, [
-			'This',
-			'is',
-			'not',
-			'a',
-			'string',
-		] as unknown as string),
-	).toStrictEqual(['This', 'is', 'not', 'a', 'string']);
+		assert.deepStrictEqual(
+			renderTemplate(hass, [
+				'This',
+				'is',
+				'not',
+				'a',
+				'string',
+			] as unknown as string),
+			['This', 'is', 'not', 'a', 'string'],
+		);
 
-	expect(
-		renderTemplate(hass, { foo: 'bar', baz: 'bah' } as unknown as string),
-	).toStrictEqual({ foo: 'bar', baz: 'bah' });
-});
+		assert.deepStrictEqual(
+			renderTemplate(hass, {
+				foo: 'bar',
+				baz: 'bah',
+			} as unknown as string),
+			{ foo: 'bar', baz: 'bah' },
+		);
+	});
 
-test('Returns input string if it is a string but does not include a template.', () => {
-	expect(renderTemplate(hass, 'foobar')).toBe('foobar');
-	expect(renderTemplate(hass, '')).toBe('');
-});
+	it('returns the input string if it is a string but does not include a template', () => {
+		assert.equal(renderTemplate(hass, 'foobar'), 'foobar');
+		assert.equal(renderTemplate(hass, ''), '');
+	});
 
-test('Returns input string if it is a string but does not contain a complete template.', () => {
-	let str = '{{ not a template';
-	expect(renderTemplate(hass, str)).toBe(str);
-	str = 'not a template }}';
-	expect(renderTemplate(hass, str)).toBe(str);
-	str = '{ not a template }}';
-	expect(renderTemplate(hass, str)).toBe(str);
-	str = '{{ not a template }';
-	expect(renderTemplate(hass, str)).toBe(str);
+	it('returns the input string if it is a string but does not contain a complete template', () => {
+		let str = '{{ not a template';
+		assert.equal(renderTemplate(hass, str), str);
+		str = 'not a template }}';
+		assert.equal(renderTemplate(hass, str), str);
+		str = '{ not a template }}';
+		assert.equal(renderTemplate(hass, str), str);
+		str = '{{ not a template }';
+		assert.equal(renderTemplate(hass, str), str);
 
-	str = `
+		str = `
 		{% if 'foo' == 'bar' }
 		still not a string
 		{% endif }
 	`;
-	expect(renderTemplate(hass, str)).toBe(str);
-});
+		assert.equal(renderTemplate(hass, str), str);
+	});
 
-test('Returns result of simple templates and does not modify the input.', () => {
-	const str = '{{ hass["states"]["light.lounge"]["state"] }}';
-	expect(renderTemplate(hass, str)).toBe('on');
-	expect(str).toBe('{{ hass["states"]["light.lounge"]["state"] }}');
-});
+	it('returns the result of a simple templates and does not modify the input', () => {
+		const str = '{{ hass["states"]["light.lounge"]["state"] }}';
+		assert.equal(renderTemplate(hass, str), 'on');
+		assert.equal(str, '{{ hass["states"]["light.lounge"]["state"] }}');
+	});
 
-test('Returns empty string if result of template is undefined or null, but not if it is falsey.', () => {
-	let str = '{{ hass["states"]["light.lounge"]["status"] }}';
-	expect(renderTemplate(hass, str)).toBe('');
+	it('returns an empty string if the result of a template is undefined or null, but not if it is falsey', () => {
+		assert.equal(
+			renderTemplate(
+				hass,
+				'{{ hass["states"]["light.lounge"]["status"] }}',
+			),
+			'',
+		);
+		assert.equal(
+			renderTemplate(
+				hass,
+				'{{ hass["states"]["light.lounge"]["state"] == "off" }}',
+			),
+			false,
+		);
+	});
 
-	str = '{{ hass["states"]["light.lounge"]["state"] == "off" }}';
-	expect(renderTemplate(hass, str)).toBe(false);
-});
+	it('return type should be a string if original value is a number', () => {
+		assert.equal(
+			renderTemplate(
+				hass,
+				'{{ hass["states"]["light.lounge"]["attributes"]["brightness"] }}',
+			),
+			'155',
+		);
+		assert.equal(
+			renderTemplate(
+				hass,
+				'{{ hass["states"]["light.lounge"]["attributes"]["hs_color"][0] }}',
+			),
+			'28.406',
+		);
+	});
 
-test('Return type should be string if original value is a number.', () => {
-	let value = hass['states']['light.lounge']['attributes']['brightness'];
-	let str =
-		'{{ hass["states"]["light.lounge"]["attributes"]["brightness"] }}';
-	expect(typeof value).toBe('number');
-	expect(renderTemplate(hass, str)).toBe(
-		hass['states']['light.lounge']['attributes']['brightness'].toString(),
-	);
+	it('return type should be a boolean if original value is a boolean', () => {
+		assert.equal(renderTemplate(hass, '{{ "foo" == "foo" }}'), true);
+		assert.equal(renderTemplate(hass, '{{ "foo" == "bar" }}'), false);
+	});
 
-	value = hass['states']['light.lounge']['attributes']['hs_color'][0];
-	str = '{{ hass["states"]["light.lounge"]["attributes"]["hs_color"][0] }}';
-	expect(typeof value).toBe('number');
-	expect(renderTemplate(hass, str)).toBe(value.toString());
-});
+	it('can be given additional context to reference it in templates', () => {
+		const context = {
+			foo: 'bar',
+			doThing(thing: string) {
+				return `doing ${thing}!`;
+			},
+		};
+		assert.equal(
+			renderTemplate(hass, 'Testing that foo is {{ foo }}', context),
+			'Testing that foo is bar',
+		);
+		assert.equal(
+			renderTemplate(hass, 'I am {{ doThing("the dishes") }}', context),
+			'I am doing the dishes!',
+		);
+	});
 
-test('Return type should be boolean if original value is a boolean.', () => {
-	let value = 'foo' == 'foo';
-	let str = '{{ "foo" == "foo" }}';
-	expect(typeof value).toBe('boolean');
-	expect(renderTemplate(hass, str)).toBe(true);
+	it('can still use the built in context when given additional context', () => {
+		const context = {
+			min: 'minimum',
+			doThing(thing: string) {
+				return `doing ${thing}!`;
+			},
+		};
 
-	value = 'foo' == ('bar' as 'foo');
-	str = '{{ "foo" == "bar" }}';
-	expect(typeof value).toBe('boolean');
-	expect(renderTemplate(hass, str)).toBe(false);
-});
-
-test('Users should be able to add additional context and reference it in templates.', () => {
-	const context = {
-		foo: 'bar',
-		doThing(thing: string) {
-			return `doing ${thing}!`;
-		},
-	};
-
-	let str = 'Testing that foo is {{ foo }}.';
-	expect(renderTemplate(hass, str, context)).toBe('Testing that foo is bar.');
-
-	str = 'I am {{ doThing("the dishes") }}';
-	expect(renderTemplate(hass, str, context)).toBe('I am doing the dishes!');
-});
-
-test('Users should be able to still use the built in context when adding additional context.', () => {
-	const context = {
-		min: 'minimum',
-		doThing(thing: string) {
-			return `doing ${thing}!`;
-		},
-	};
-
-	let value = hass['states']['light.lounge']['attributes']['min_mireds'];
-	let str = '{{ hass.states["light.lounge"].attributes.min_mireds }}';
-	expect(renderTemplate(hass, str, context)).toBe(value.toString());
-
-	value = `The minimum color temperature is ${hass['states']['light.lounge']['attributes']['min_mireds']} mireds. Also I'm doing my taxes!`;
-	str =
-		'The {{ min }} color temperature is {{ hass.states["light.lounge"].attributes.min_mireds }} mireds. Also I\'m {{ doThing("my taxes") }}';
-	expect(renderTemplate(hass, str, context)).toBe(value);
+		assert.equal(
+			renderTemplate(
+				hass,
+				'{{ hass.states["light.lounge"].attributes.min_mireds }}',
+				context,
+			),
+			153,
+		);
+		assert.equal(
+			renderTemplate(
+				hass,
+				'The {{ min }} color temperature is {{ hass.states["light.lounge"].attributes.min_mireds }} mireds. Also I\'m {{ doThing("my taxes") }}',
+				context,
+			),
+			"The minimum color temperature is 153 mireds. Also I'm doing my taxes!",
+		);
+	});
 });

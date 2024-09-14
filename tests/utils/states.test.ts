@@ -1,141 +1,177 @@
+import assert from 'assert';
 import { renderTemplate } from '../../src';
 import { hass } from '../hass';
 
-test('states should return state of an entity.', () => {
-	const value = hass['states']['light.lounge']['state'];
-	expect(renderTemplate(hass, '{{ states("light.lounge") }}')).toBe(value);
+describe('states', () => {
+	it('should return state of an entity', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ states("light.lounge") }}'),
+			'on',
+		);
+		assert.equal(renderTemplate(hass, '{{ states("foobar") }}'), '');
+	});
 
-	expect(renderTemplate(hass, '{{ states("foobar") }}')).toBe('');
+	describe('with rounded=True', () => {
+		it('should round numerical state', () => {
+			assert.equal(
+				renderTemplate(hass, '{{ states("input_number.volume") }}'),
+				'0.4',
+			);
+			assert.equal(
+				renderTemplate(
+					hass,
+					'{{ states("input_number.volume", True) }}',
+				),
+				'0.40',
+			);
+		});
+
+		it('should return state as is if state is non-numerical', () => {
+			assert.equal(
+				renderTemplate(hass, '{{ states("light.lounge") }}'),
+				'on',
+			);
+			assert.equal(
+				renderTemplate(hass, '{{ states("light.lounge", True) }}'),
+				'on',
+			);
+		});
+	});
+
+	describe('with with_unit=True', () => {
+		it('should return state with unit_of_measurement attribute appended to the end', () => {
+			const value1 = hass['states']['input_number.volume']['state'];
+			assert.equal(
+				renderTemplate(
+					hass,
+					'{{ states("input_number.volume", false, true) }}',
+				),
+				'0.4 %',
+			);
+			assert.equal(
+				renderTemplate(
+					hass,
+					'{{ states("input_number.volume", undefined, true) }}',
+				),
+				'0.40 %',
+			);
+		});
+		it('should return state as is if unit_of_measurement is not available', () => {
+			assert.equal(
+				renderTemplate(
+					hass,
+					'{{ states("light.lounge", false, true) }}',
+				),
+				'on',
+			);
+		});
+	});
 });
 
-test('states with rounded=True should round numerical state.', () => {
-	const value = hass['states']['input_number.volume']['state'].toString();
-	expect(renderTemplate(hass, '{{ states("input_number.volume") }}')).toBe(
-		value,
-	);
-
-	expect(
-		renderTemplate(hass, '{{ states("input_number.volume", True) }}'),
-	).toBe('0.40');
+describe('is_state', () => {
+	it('should return a boolean', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ is_state("light.lounge", "on") }}'),
+			true,
+		);
+		assert.equal(
+			renderTemplate(hass, '{{ is_state("foobar", "foobar") }}'),
+			false,
+		);
+	});
+	it('should also work with arrays', () => {
+		assert.equal(
+			renderTemplate(
+				hass,
+				'{{ is_state("light.lounge", ["on", "foobar"]) }}',
+			),
+			true,
+		);
+		assert.equal(
+			renderTemplate(
+				hass,
+				'{{ is_state("light.lounge", ["off", "foobar"]) }}',
+			),
+			false,
+		);
+	});
 });
 
-test('states with rounded=True should return state as is if state is non-numerical.', () => {
-	const value = hass['states']['light.lounge']['state'];
-	expect(renderTemplate(hass, '{{ states("light.lounge") }}')).toBe(value);
-	expect(renderTemplate(hass, '{{ states("light.lounge", True) }}')).toBe(
-		value,
-	);
+describe('state_attr', () => {
+	it('should return an attribute of an entity', () => {
+		assert.equal(
+			renderTemplate(
+				hass,
+				`{{ state_attr("light.lounge", "color_mode") }}`,
+			),
+			'color_temp',
+		);
+		assert.equal(
+			renderTemplate(
+				hass,
+				`{{ state_attr("light.lounge", "brightness") }}`,
+			),
+			'155',
+		);
+		assert.equal(
+			renderTemplate(hass, '{{ state_attr("foobar", "foobar") }}'),
+			'',
+		);
+	});
 });
 
-test('states with with_unit=True should return state with unit_of_measurement attribute appended to end after space if available.', () => {
-	const value1 = hass['states']['input_number.volume']['state'];
-	expect(
-		renderTemplate(
-			hass,
-			'{{ states("input_number.volume", false, true) }}',
-		),
-	).toBe(
-		`${value1} ${hass['states']['input_number.volume']['attributes']['unit_of_measurement']}`,
-	);
-	expect(
-		renderTemplate(
-			hass,
-			'{{ states("input_number.volume", undefined, true) }}',
-		),
-	).toBe(
-		`0.40 ${hass['states']['input_number.volume']['attributes']['unit_of_measurement']}`,
-	);
-	const value2 = hass['states']['light.lounge']['state'];
-	expect(
-		renderTemplate(hass, '{{ states("light.lounge", false, true) }}'),
-	).toBe(value2);
+describe('is_state_attr', () => {
+	it('is_state_attr should return boolean', () => {
+		assert.equal(
+			renderTemplate(
+				hass,
+				`{{ is_state_attr("light.lounge", "color_mode", "color_temp") }}`,
+			),
+			true,
+		);
+		assert.equal(
+			renderTemplate(
+				hass,
+				`{{ is_state_attr("light.lounge", "brightness", 155) }}`,
+			),
+			true,
+		);
+		assert.equal(
+			renderTemplate(
+				hass,
+				'{{ is_state_attr("foobar", "foobar", "foobar") }}',
+			),
+			false,
+		);
+	});
+	it('should also work with arrays', () => {
+		assert.equal(
+			renderTemplate(
+				hass,
+				`{{ is_state_attr("light.lounge", "brightness", [155, "bar"]) }}`,
+			),
+			true,
+		);
+		assert.equal(
+			renderTemplate(
+				hass,
+				`{{ is_state_attr("light.lounge", "brightness", [154, "bar"]) }}`,
+			),
+			false,
+		);
+	});
 });
 
-test('is_state should return boolean.', () => {
-	expect(
-		renderTemplate(
-			hass,
-			'{{ is_state("light.lounge", hass["states"]["light.lounge"]["state"]) }}',
-		),
-	).toBe(true);
-	expect(
-		renderTemplate(
-			hass,
-			'{{ is_state("light.lounge", [hass["states"]["light.lounge"]["state"], "foobar"]) }}',
-		),
-	).toBe(true);
-	expect(renderTemplate(hass, '{{ is_state("foobar", "foobar") }}')).toBe(
-		false,
-	);
-});
-
-test('state_attr should return attribute of an entity.', () => {
-	let attribute = 'color_mode';
-	let value = hass['states']['light.lounge']['attributes'][attribute];
-	expect(typeof value).toBe('string');
-	expect(
-		renderTemplate(
-			hass,
-			`{{ state_attr("light.lounge", "${attribute}") }}`,
-		),
-	).toBe(value);
-
-	attribute = 'brightness';
-	value = hass['states']['light.lounge']['attributes'][attribute];
-	expect(typeof value).toBe('number');
-	expect(
-		renderTemplate(
-			hass,
-			`{{ state_attr("light.lounge", "${attribute}") }}`,
-		),
-	).toBe(value.toString());
-
-	expect(renderTemplate(hass, '{{ state_attr("foobar", "foobar") }}')).toBe(
-		'',
-	);
-});
-
-test('is_state_attr should return boolean.', () => {
-	let attribute = 'color_mode';
-	let value = hass['states']['light.lounge']['attributes'][attribute];
-	expect(
-		renderTemplate(
-			hass,
-			`{{ is_state_attr("light.lounge", "${attribute}", "${value}") }}`,
-		),
-	).toBe(true);
-
-	attribute = 'brightness';
-	value = hass['states']['light.lounge']['attributes'][attribute];
-	expect(
-		renderTemplate(
-			hass,
-			`{{ is_state_attr("light.lounge", "${attribute}", ${value}) }}`,
-		),
-	).toBe(true);
-
-	expect(
-		renderTemplate(
-			hass,
-			'{{ is_state_attr("foobar", "foobar", "foobar") }}',
-		),
-	).toBe(false);
-
-	expect(
-		renderTemplate(
-			hass,
-			`{{ is_state_attr("light.lounge", "${attribute}", [${value}, "bar"]) }}`,
-		),
-	).toBe(true);
-});
-
-test('has_value should return boolean.', () => {
-	let entity = 'light.lounge';
-	expect(renderTemplate(hass, `{{ has_value("${entity}") }}`)).toBe(true);
-
-	entity = 'input_number.volume';
-	expect(renderTemplate(hass, `{{ has_value("${entity}") }}`)).toBe(true);
-
-	entity = 'foobar';
-	expect(renderTemplate(hass, `{{ has_value("${entity}") }}`)).toBe(false);
+describe('has_value', () => {
+	it('should return boolean', () => {
+		assert.equal(
+			renderTemplate(hass, `{{ has_value("light.lounge") }}`),
+			true,
+		);
+		assert.equal(
+			renderTemplate(hass, `{{ has_value("input_number.volume") }}`),
+			true,
+		);
+		assert.equal(renderTemplate(hass, `{{ has_value("foobar") }}`), false);
+	});
 });

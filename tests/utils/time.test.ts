@@ -1,6 +1,17 @@
-test('now and utcnow should return different values.', () => {
-	// expect(renderTemplate(hass, '{{ now() }}')).not.toBe(
-	// 	renderTemplate(hass, '{{ utcnow() }}'),
-	// );
+import assert from 'assert';
+import { renderTemplate } from '../../src';
+import { hass } from '../hass';
+
+describe('time', () => {
+	it('should return different values for now and utcnow', () => {
+		assert.notEqual(
+			renderTemplate(hass, '{{ now() }}'),
+			renderTemplate(hass, '{{ utcnow() }}'),
+		);
+	});
 });
-// TODO - fix py-datetime minified file to have default export
+
+// it('as_datetime should turn a timestamp into a datetime object', () => {
+// 	const datetime = renderTemplate(hass, '{{ as_datetime(1726210000) }}')
+// 	console.log(datetime)
+// })

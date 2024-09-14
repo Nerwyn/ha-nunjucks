@@ -1,5 +1,5 @@
 import { HomeAssistant } from 'custom-card-helpers';
-import dt, { PyDate, PyDatetime } from 'py-datetime';
+import { PyDate, PyDatetime } from 'py-datetime';
 
 import {
 	area_devices,
@@ -167,9 +167,6 @@ export const CONTEXT = (hass: HomeAssistant) => ({
 	},
 
 	// Time
-	dt() {
-		return dt;
-	},
 	now() {
 		return now();
 	},

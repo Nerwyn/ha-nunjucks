@@ -1,64 +1,50 @@
+import assert from 'assert';
 import { renderTemplate } from '../../src';
-import { iif } from '../../src/utils/iif';
 import { hass } from '../hass';
 
-test('iif should return true or false if only condition is given.', () => {
-	let condition = '"foo" == "foo"';
-	expect(iif(hass, condition)).toBe(true);
-	expect(renderTemplate(hass, `{{ iif(${condition}) }}`)).toBe(true);
+describe('iif', () => {
+	it('should return true or false if only condition is given', () => {
+		assert.equal(renderTemplate(hass, '{{ iif("foo" == "foo") }}'), true);
+		assert.equal(renderTemplate(hass, '{{ iif("foo" == "bar") }}'), false);
+	});
 
-	condition = '"foo" == "bar"';
-	expect(iif(hass, condition)).toBe(false);
-	expect(renderTemplate(hass, `{{ iif(${condition}) }}`)).toBe(false);
-});
+	it('should return if_true if condition is true or false otherwise', () => {
+		assert.equal(
+			renderTemplate(hass, `{{ iif("foo" == "foo", "is foo") }}`),
+			'is foo',
+		);
 
-test('iif should return if_true if condition is true or false otherwise.', () => {
-	let condition = '"foo" == "foo"';
-	const isTrue = 'is foo';
-	expect(iif(hass, condition, isTrue)).toBe(isTrue);
-	expect(renderTemplate(hass, `{{ iif(${condition}, "${isTrue}") }}`)).toBe(
-		isTrue,
-	);
+		assert.equal(
+			renderTemplate(hass, `{{ iif("foo" == "bar", "is foo") }}`),
+			false,
+		);
+	});
 
-	condition = '"foo" == "bar"';
-	expect(iif(hass, condition, isTrue)).toBe(false);
-	expect(renderTemplate(hass, `{{ iif(${condition}, "${isTrue}") }}`)).toBe(
-		false,
-	);
-});
+	it('should return if_true if condition is true or if_false otherwise', () => {
+		assert.equal(
+			renderTemplate(
+				hass,
+				`{{ iif("foo" == "foo", "is foo", "is not foo") }}`,
+			),
+			'is foo',
+		);
 
-test('iif should return if_true if condition is true or if_false otherwise.', () => {
-	let condition = '"foo" == "foo"';
-	const isTrue = 'is foo';
-	const isFalse = 'is not foo';
-	expect(iif(hass, condition, isTrue, isFalse)).toBe(isTrue);
-	expect(
-		renderTemplate(
-			hass,
-			`{{ iif(${condition}, "${isTrue}", "${isFalse}") }}`,
-		),
-	).toBe(isTrue);
+		assert.equal(
+			renderTemplate(
+				hass,
+				`{{ iif("foo" == "bar", "is foo", "is not foo") }}`,
+			),
+			'is not foo',
+		);
+	});
 
-	condition = '"foo" == "bar"';
-	expect(iif(hass, condition, isTrue, isFalse)).toBe(isFalse);
-	expect(
-		renderTemplate(
-			hass,
-			`{{ iif(${condition}, "${isTrue}", "${isFalse}") }}`,
-		),
-	).toBe(isFalse);
-});
-
-test('iif should return is_none if comparison.', () => {
-	const condition = 'None';
-	const isTrue = 'is true';
-	const isFalse = 'is false';
-	const isNone = 'is none';
-	expect(iif(hass, condition, isTrue, isFalse, isNone)).toBe(isNone);
-	expect(
-		renderTemplate(
-			hass,
-			`{{ iif(${condition}, "${isTrue}", "${isFalse}", "${isNone}") }}`,
-		),
-	);
+	it('should return is_none if comparison', () => {
+		assert.equal(
+			renderTemplate(
+				hass,
+				`{{ iif(None, "is true", "is false", "is none") }}`,
+			),
+			'is none',
+		);
+	});
 });

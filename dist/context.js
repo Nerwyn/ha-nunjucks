@@ -1,4 +1,3 @@
-import dt from 'py-datetime';
 import { area_devices, area_entities, area_id, area_name, areas, } from './utils/areas';
 import { match_media } from './utils/css';
 import { device_attr, device_entities, device_id, is_device_attr, } from './utils/devices';
@@ -104,9 +103,6 @@ export const CONTEXT = (hass) => ({
         return iif(hass, condition, if_true, if_false, if_none);
     },
     // Time
-    dt() {
-        return dt;
-    },
     now() {
         return now();
     },

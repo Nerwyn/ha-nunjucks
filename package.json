@@ -5,7 +5,7 @@
 	"main": "./dist/index.js",
 	"type": "module",
 	"scripts": {
-		"test": "jest --silent=false",
+		"test": "ts-mocha 'tests/**/*.test.ts'",
 		"build": "tsc",
 		"prelint": "tsc --noemit",
 		"lint": "eslint --config ./.eslintrc.config.cjs"
@@ -34,7 +34,7 @@
 		"py-datetime": "github:Nerwyn/py-datetime"
 	},
 	"devDependencies": {
-		"@types/jest": "latest",
+		"@types/mocha": "^10.0.8",
 		"@typescript-eslint/eslint-plugin": "latest",
 		"@typescript-eslint/parser": "latest",
 		"eslint": "latest",
@@ -43,8 +43,10 @@
 		"lint-staged": "latest",
 		"prettier": "latest",
 		"prettier-plugin-organize-imports": "latest",
-		"ts-jest": "latest",
 		"ts-loader": "latest",
+		"ts-mocha": "^10.0.0",
+		"ts-node": "latest",
+		"tsx": "^4.19.1",
 		"typescript": "latest"
 	}
 }
