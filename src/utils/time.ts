@@ -49,12 +49,24 @@ export function as_datetime(
 	}
 }
 
-export function as_timestamp(value: string, fallback?: string) {
+export function as_timestamp(
+	value: number | string | PyDatetime | PyDate,
+	fallback?: string,
+) {
 	try {
+		let res: number;
 		if (typeof value == 'string') {
-			return Date.parse(value) / 1000;
+			if (!(value.includes(' ') || value.includes('T'))) {
+				value += ' 00:00:00';
+			}
+			res = Date.parse(value);
+		} else {
+			res = dt.datetime.utc(value as PyDatetime).jsDate.getTime();
 		}
-		return dt.datetime(value).jsDate.getTime() / 1000;
+		if (res.toString().includes('NaN')) {
+			throw Error('Input string not a number.');
+		}
+		return res / 1000;
 	} catch (e) {
 		if (fallback) {
 			return fallback;

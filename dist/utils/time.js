@@ -34,10 +34,20 @@ export function as_datetime(value, fallback) {
 }
 export function as_timestamp(value, fallback) {
     try {
+        let res;
         if (typeof value == 'string') {
-            return Date.parse(value) / 1000;
+            if (!(value.includes(' ') || value.includes('T'))) {
+                value += ' 00:00:00';
+            }
+            res = Date.parse(value);
         }
-        return dt.datetime(value).jsDate.getTime() / 1000;
+        else {
+            res = dt.datetime.utc(value).jsDate.getTime();
+        }
+        if (res.toString().includes('NaN')) {
+            throw Error('Input string not a number.');
+        }
+        return res / 1000;
     }
     catch (e) {
         if (fallback) {
