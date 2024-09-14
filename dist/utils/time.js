@@ -1,4 +1,4 @@
-import dt, { TimeIntervals } from 'py-datetime';
+import dt, { PyDatetime } from 'py-datetime';
 export function now() {
     return dt.datetime.now();
 }
@@ -13,16 +13,15 @@ export function today_at(value = '00:00') {
 export function as_datetime(value, fallback) {
     try {
         if (typeof value == 'number' || typeof value == 'string') {
-            return dt.datetime(Number(value));
+            value = parseFloat(value) * 1000;
         }
-        if (!value.year || !value.month || !value.day) {
-            throw Error('Not a datetime or timestamp');
+        const res = dt.datetime.utc(value);
+        if (res.str().includes('NaN')) {
+            throw Error('Input string not a number.');
         }
-        const res = dt.datetime(value);
-        for (const field of TimeIntervals) {
-            if (!res[field]) {
-                res[field] = 0;
-            }
+        if (value.year &&
+            value.hour == undefined) {
+            return new PyDatetime(res.year, res.month, res.day);
         }
         return res;
     }
