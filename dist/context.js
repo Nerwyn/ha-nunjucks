@@ -7,128 +7,55 @@ import { iif } from './utils/iif';
 import { integration_entities } from './utils/integrations';
 import { label_areas, label_devices, label_entities, labels, } from './utils/labels';
 import { attr_name_translated, attr_value_translated, has_value, is_state, is_state_attr, state_attr, state_translated, states, } from './utils/states';
-import { as_datetime, as_local, as_timestamp, now, strptime, timedelta, today_at, utcnow, } from './utils/time';
+import { as_datetime, as_timestamp, now, strptime, timedelta, today_at, utcnow, } from './utils/time';
 export const CONTEXT = (hass) => ({
     True: true,
     False: false,
     None: null,
     hass: hass,
     // States
-    states(entity_id, rounded, with_unit) {
-        return states(hass, entity_id, rounded, with_unit);
-    },
-    is_state(entity_id, value) {
-        return is_state(hass, entity_id, value);
-    },
-    state_attr(entity_id, attribute) {
-        return state_attr(hass, entity_id, attribute);
-    },
-    is_state_attr(entity_id, attribute, value) {
-        return is_state_attr(hass, entity_id, attribute, value);
-    },
-    has_value(entity_id) {
-        return has_value(hass, entity_id);
-    },
-    state_translated(entity_id, state) {
-        return state_translated(hass, entity_id, state);
-    },
-    attr_name_translated(entity_id, attr_name, attr_value) {
-        return attr_name_translated(hass, entity_id, attr_name, attr_value);
-    },
-    attr_value_translated(entity_id, attr_name, attr_value) {
-        return attr_value_translated(hass, entity_id, attr_name, attr_value);
-    },
+    states: (...args) => states(hass, ...args),
+    is_state: (...args) => is_state(hass, ...args),
+    state_attr: (...args) => state_attr(hass, ...args),
+    is_state_attr: (...args) => is_state_attr(hass, ...args),
+    has_value: (...args) => has_value(hass, ...args),
+    state_translated: (...args) => state_translated(hass, ...args),
+    attr_name_translated: (...args) => attr_name_translated(hass, ...args),
+    attr_value_translated: (...args) => attr_value_translated(hass, ...args),
     // Entities
-    is_hidden_entity(entity_id) {
-        return is_hidden_entity(hass, entity_id);
-    },
+    is_hidden_entity: (...args) => is_hidden_entity(hass, ...args),
     // Devices
-    device_entities(device_id) {
-        return device_entities(hass, device_id);
-    },
-    device_attr(device_or_entity_id, attr_name) {
-        return device_attr(hass, device_or_entity_id, attr_name);
-    },
-    is_device_attr(device_or_entity_id, attr_name, attr_value) {
-        return is_device_attr(hass, device_or_entity_id, attr_name, attr_value);
-    },
-    device_id(entity_id) {
-        return device_id(hass, entity_id);
-    },
+    device_entities: (...args) => device_entities(hass, ...args),
+    device_attr: (...args) => device_attr(hass, ...args),
+    is_device_attr: (...args) => is_device_attr(hass, ...args),
+    device_id: (...args) => device_id(hass, ...args),
     // Floors
-    floors() {
-        return floors(hass);
-    },
-    floor_id(lookup_value) {
-        return floor_id(hass, lookup_value);
-    },
-    floor_areas(floor_id) {
-        return floor_areas(hass, floor_id);
-    },
+    floors: (...args) => floors(hass, ...args),
+    floor_id: (...args) => floor_id(hass, ...args),
+    floor_areas: (...args) => floor_areas(hass, ...args),
     // Areas
-    areas() {
-        return areas(hass);
-    },
-    area_id(lookup_value) {
-        return area_id(hass, lookup_value);
-    },
-    area_name(lookup_value) {
-        return area_name(hass, lookup_value);
-    },
-    area_entities(area_name_or_id) {
-        return area_entities(hass, area_name_or_id);
-    },
-    area_devices(area_name_or_id) {
-        return area_devices(hass, area_name_or_id);
-    },
+    areas: (...args) => areas(hass, ...args),
+    area_id: (...args) => area_id(hass, ...args),
+    area_name: (...args) => area_name(hass, ...args),
+    area_entities: (...args) => area_entities(hass, ...args),
+    area_devices: (...args) => area_devices(hass, ...args),
     // Integrations
-    integration_entities(integration) {
-        return integration_entities(hass, integration);
-    },
+    integration_entities: (...args) => integration_entities(hass, ...args),
     // Labels
-    labels(lookup_value) {
-        return labels(hass, lookup_value);
-    },
-    label_areas(label_name_or_id) {
-        return label_areas(hass, label_name_or_id);
-    },
-    label_devices(label_name_or_id) {
-        return label_devices(hass, label_name_or_id);
-    },
-    label_entities(label_name_or_id) {
-        return label_entities(hass, label_name_or_id);
-    },
+    labels: (...args) => labels(hass, ...args),
+    label_areas: (...args) => label_areas(hass, ...args),
+    label_devices: (...args) => label_devices(hass, ...args),
+    label_entities: (...args) => label_entities(hass, ...args),
     // Immediate If
-    iif(condition, if_true, if_false, if_none) {
-        return iif(hass, condition, if_true, if_false, if_none);
-    },
+    iif: (...args) => iif(hass, ...args),
     // Time
-    now() {
-        return now();
-    },
-    utcnow() {
-        return utcnow();
-    },
-    today_at(value) {
-        return today_at(value);
-    },
-    as_datetime(value, fallback) {
-        return as_datetime(value, fallback);
-    },
-    as_timestamp(value, fallback) {
-        return as_timestamp(value, fallback);
-    },
-    as_local(value) {
-        return as_local(value);
-    },
-    strptime(value, format, fallback) {
-        return strptime(value, format, fallback);
-    },
-    timedelta(days, seconds, microseconds, milliseconds, minutes, hours, weeks) {
-        return timedelta(days, seconds, microseconds, milliseconds, minutes, hours, weeks);
-    },
+    now,
+    utcnow,
+    today_at,
+    as_datetime,
+    as_timestamp,
+    strptime,
+    timedelta,
     // CSS
-    match_media(mediaquery) {
-        return match_media(mediaquery);
-    },
+    match_media,
 });

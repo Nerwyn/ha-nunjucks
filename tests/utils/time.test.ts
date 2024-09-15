@@ -16,7 +16,7 @@ describe('today_at', () => {
 		const now = new Date();
 		assert.equal(
 			renderTemplate(hass, '{{ today_at("12:34") }}'),
-			`${now.getUTCFullYear()}-${(now.getUTCMonth() + 1).toString().padStart(2, '0')}-${now.getUTCDate().toString().padStart(2, '0')} 12:34:00.000000`,
+			`${now.getUTCFullYear()}-${(now.getUTCMonth() + 1).toString().padStart(2, '0')}-${now.getUTCDate().toString().padStart(2, '0')} 12:34:00`,
 		);
 	});
 
@@ -24,7 +24,7 @@ describe('today_at', () => {
 		const now = new Date();
 		assert.equal(
 			renderTemplate(hass, '{{ today_at() }}'),
-			`${now.getUTCFullYear()}-${(now.getUTCMonth() + 1).toString().padStart(2, '0')}-${now.getUTCDate().toString().padStart(2, '0')} 00:00:00.000000`,
+			`${now.getUTCFullYear()}-${(now.getUTCMonth() + 1).toString().padStart(2, '0')}-${now.getUTCDate().toString().padStart(2, '0')} 00:00:00`,
 		);
 	});
 });
@@ -61,7 +61,7 @@ describe('as_datetime', () => {
 		it('string representation should be the date and time', () => {
 			assert.equal(
 				renderTemplate(hass, '{{ as_datetime(512345151) }}'),
-				'1986-03-27 22:05:51.000000',
+				'1986-03-27 22:05:51',
 			);
 		});
 
@@ -81,7 +81,7 @@ describe('as_datetime', () => {
 					hass,
 					'{{ as_datetime(as_datetime(512345151).date()) }}',
 				),
-				'1986-03-27 00:00:00.000000',
+				'1986-03-27 00:00:00',
 			);
 		});
 
@@ -159,8 +159,50 @@ describe('as_timestamp', () => {
 	});
 });
 
-describe('as_local', () => {});
+describe('strptime', () => {
+	it('should parse a datetime string using format codes', () => {
+		assert.equal(
+			renderTemplate(
+				hass,
+				'{{ strptime("2020-11-10T8:12:50", "%Y-%m-%dT%H:%M:%S") }}',
+			),
+			'2020-11-10 08:12:50',
+		);
+	});
 
-describe('strptime', () => {});
+	it('should return a fallback value on error', () => {
+		assert.equal(
+			renderTemplate(
+				hass,
+				'{{ strptime("not a date", "%Y-%m-%dT%H:%M:%S", "foobar") }}',
+			),
+			'foobar',
+		);
+	});
+});
 
-describe('timedelta', () => {});
+describe('timedelta', () => {
+	it('should return a timedelta object with string representation', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ timedelta(4, 32, 0, 0, 32, 8, 2) }}'),
+			'18 days, 8:32:32',
+		);
+	});
+
+	it("should ignore microseconds in it's string representation due to JS limitations", () => {
+		assert.equal(
+			renderTemplate(hass, '{{ timedelta(4, 32, 11, 120, 32, 8, 2) }}'),
+			'18 days, 8:32:32.120000',
+		);
+	});
+
+	it('should return a new timestamp when added to a datetime due to JS limitations', () => {
+		assert.equal(
+			renderTemplate(
+				hass,
+				'{{ strptime("2020-11-10T8:12:50", "%Y-%m-%dT%H:%M:%S") - timedelta({ days: 3, hours: 2, minutes: 1 })}}',
+			),
+			'1604747510',
+		);
+	});
+});
