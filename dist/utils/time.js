@@ -1,4 +1,5 @@
 import dt, { PyDatetime } from 'py-datetime';
+import { isNaNCheck } from './numeric';
 export function now() {
     return dt.datetime.now();
 }
@@ -54,6 +55,10 @@ export function as_timestamp(value, fallback) {
         throw e;
     }
 }
+// TODO test
+export function as_local(value) {
+    return dt.datetime(dt.datetime(value).jsDate);
+}
 export function strptime(value, format, fallback) {
     try {
         format = format.replace(/%z/g, '%Z');
@@ -68,6 +73,53 @@ export function strptime(value, format, fallback) {
         throw e;
     }
 }
+function timeDiff(datetime, precision = 1, until = false) {
+    if (!(datetime instanceof PyDatetime)) {
+        return null;
+    }
+    let diff = now().valueOf() - as_local(datetime).valueOf();
+    if (until) {
+        diff = -1 * diff;
+    }
+    if (diff <= 0) {
+        return datetime;
+    }
+    if (precision == 0 || precision > 6) {
+        precision = 6;
+    }
+    const toSeconds = {
+        year: 60 * 60 * 24 * 365,
+        month: 60 * 60 * 24 * 30,
+        day: 60 * 60 * 24,
+        hour: 60 * 60,
+        minute: 60,
+        second: 1,
+    };
+    const units = Object.keys(toSeconds);
+    let res = '';
+    let startRes = false;
+    for (let i = 0; i < precision; i++) {
+        let value = diff / toSeconds[units[i]];
+        if (i == precision - 1) {
+            value = Math.round(value);
+        }
+        else {
+            value = Math.floor(value);
+        }
+        if (startRes || value > 0) {
+            startRes = true;
+            res += ` ${value} ${units[i]}${value != 1 ? 's' : ''}`;
+            diff -= value * toSeconds[units[i]];
+        }
+    }
+    return res.trim();
+}
+export function time_since(datetime, precision = 1) {
+    return timeDiff(datetime, precision);
+}
+export function time_until(datetime, precision = 1) {
+    return timeDiff(datetime, precision, true);
+}
 export function timedelta(days, seconds, microseconds, milliseconds, minutes, hours, weeks) {
     let res;
     if (days != null && typeof days != 'number') {
@@ -79,8 +131,4 @@ export function timedelta(days, seconds, microseconds, milliseconds, minutes, ho
     isNaNCheck(res.str());
     return res;
 }
-function isNaNCheck(res) {
-    if (res.toString().includes('NaN')) {
-        throw Error('Result returned NaN.');
-    }
-}
+export function as_timedelta(value) { }

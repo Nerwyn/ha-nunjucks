@@ -36,9 +36,12 @@ import {
 } from './utils/states';
 import {
 	as_datetime,
+	as_local,
 	as_timestamp,
 	now,
 	strptime,
+	time_since,
+	time_until,
 	timedelta,
 	today_at,
 	utcnow,
@@ -136,7 +139,10 @@ export const CONTEXT = (hass: HomeAssistant) => ({
 	today_at,
 	as_datetime,
 	as_timestamp,
+	as_local,
 	strptime,
+	time_since,
+	time_until,
 	timedelta,
 
 	// CSS

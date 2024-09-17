@@ -1,5 +1,7 @@
 import dt, { PyDate, PyDatetime, PyTimedeltaDict } from 'py-datetime';
 
+import { isNaNCheck } from './numeric';
+
 export function now() {
 	return dt.datetime.now();
 }
@@ -73,6 +75,11 @@ export function as_timestamp(
 	}
 }
 
+// TODO test
+export function as_local(value: PyDatetime) {
+	return dt.datetime(dt.datetime(value).jsDate);
+}
+
 export function strptime(value: string, format: string, fallback?: string) {
 	try {
 		format = format.replace(/%z/g, '%Z');
@@ -85,6 +92,61 @@ export function strptime(value: string, format: string, fallback?: string) {
 		}
 		throw e;
 	}
+}
+
+function timeDiff(
+	datetime: PyDatetime,
+	precision: number = 1,
+	until: boolean = false,
+) {
+	if (!(datetime instanceof PyDatetime)) {
+		return null;
+	}
+
+	let diff = now().valueOf() - as_local(datetime).valueOf();
+	if (until) {
+		diff = -1 * diff;
+	}
+	if (diff <= 0) {
+		return datetime;
+	}
+	if (precision == 0 || precision > 6) {
+		precision = 6;
+	}
+
+	const toSeconds: Record<string, number> = {
+		year: 60 * 60 * 24 * 365,
+		month: 60 * 60 * 24 * 30,
+		day: 60 * 60 * 24,
+		hour: 60 * 60,
+		minute: 60,
+		second: 1,
+	} as const;
+	const units = Object.keys(toSeconds);
+	let res = '';
+	let startRes = false;
+	for (let i = 0; i < precision; i++) {
+		let value = diff / toSeconds[units[i]];
+		if (i == precision - 1) {
+			value = Math.round(value);
+		} else {
+			value = Math.floor(value);
+		}
+		if (startRes || value > 0) {
+			startRes = true;
+			res += ` ${value} ${units[i]}${value != 1 ? 's' : ''}`;
+			diff -= value * toSeconds[units[i]];
+		}
+	}
+	return res.trim();
+}
+
+export function time_since(datetime: PyDatetime, precision: number = 1) {
+	return timeDiff(datetime, precision);
+}
+
+export function time_until(datetime: PyDatetime, precision: number = 1) {
+	return timeDiff(datetime, precision, true);
 }
 
 export function timedelta(
@@ -113,8 +175,4 @@ export function timedelta(
 	return res;
 }
 
-function isNaNCheck(res: string) {
-	if (res.toString().includes('NaN')) {
-		throw Error('Result returned NaN.');
-	}
-}
+export function as_timedelta(value: string) {}
