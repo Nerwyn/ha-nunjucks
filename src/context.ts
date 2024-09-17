@@ -37,6 +37,7 @@ import {
 import {
 	as_datetime,
 	as_local,
+	as_timedelta,
 	as_timestamp,
 	now,
 	strptime,
@@ -144,6 +145,7 @@ export const CONTEXT = (hass: HomeAssistant) => ({
 	time_since,
 	time_until,
 	timedelta,
+	as_timedelta,
 
 	// CSS
 	match_media,

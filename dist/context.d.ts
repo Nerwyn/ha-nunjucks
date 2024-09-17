@@ -1,6 +1,6 @@
 import { HomeAssistant } from 'custom-card-helpers';
 import { match_media } from './utils/css';
-import { as_datetime, as_local, as_timestamp, now, strptime, time_since, time_until, timedelta, today_at, utcnow } from './utils/time';
+import { as_datetime, as_local, as_timedelta, as_timestamp, now, strptime, time_since, time_until, timedelta, today_at, utcnow } from './utils/time';
 export declare const CONTEXT: (hass: HomeAssistant) => {
     True: boolean;
     False: boolean;
@@ -43,5 +43,6 @@ export declare const CONTEXT: (hass: HomeAssistant) => {
     time_since: typeof time_since;
     time_until: typeof time_until;
     timedelta: typeof timedelta;
+    as_timedelta: typeof as_timedelta;
     match_media: typeof match_media;
 };

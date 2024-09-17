@@ -391,3 +391,168 @@ describe('timedelta', () => {
 		);
 	});
 });
+
+describe('as_timedelta', () => {
+	describe('should support the timedelta string format - ', () => {
+		it('DD HH:MM:SS', () => {
+			assert.equal(
+				renderTemplate(hass, '{{ as_timedelta("2 8:20:40") }}'),
+				'2 days, 8:20:40',
+			);
+		});
+
+		it('D days HH:MM:SS', () => {
+			assert.equal(
+				renderTemplate(hass, '{{ as_timedelta("2 days 8:20:40") }}'),
+				'2 days, 8:20:40',
+			);
+		});
+
+		it('DD MM:SS', () => {
+			assert.equal(
+				renderTemplate(hass, '{{ as_timedelta("2 20:40") }}'),
+				'2 days, 0:20:40',
+			);
+		});
+
+		it('D days MM:SS', () => {
+			assert.equal(
+				renderTemplate(hass, '{{ as_timedelta("2 days 20:40") }}'),
+				'2 days, 0:20:40',
+			);
+		});
+
+		it('DD SS', () => {
+			assert.equal(
+				renderTemplate(hass, '{{ as_timedelta("2 40") }}'),
+				'2 days, 0:00:40',
+			);
+		});
+
+		it('D days SS', () => {
+			assert.equal(
+				renderTemplate(hass, '{{ as_timedelta("2 days 40") }}'),
+				'2 days, 0:00:40',
+			);
+		});
+
+		it('DD HH:MM:SS.fff', () => {
+			assert.equal(
+				renderTemplate(hass, '{{ as_timedelta("2 8:20:40.123") }}'),
+				'2 days, 8:20:40.123000',
+			);
+		});
+
+		it('D days HH:MM:SS.fff', () => {
+			assert.equal(
+				renderTemplate(
+					hass,
+					'{{ as_timedelta("2 days 8:20:40.123") }}',
+				),
+				'2 days, 8:20:40.123000',
+			);
+		});
+
+		it('DD MM:SS.fff', () => {
+			assert.equal(
+				renderTemplate(hass, '{{ as_timedelta("2 20:40.123") }}'),
+				'2 days, 0:20:40.123000',
+			);
+		});
+
+		it('D days MM:SS.fff', () => {
+			assert.equal(
+				renderTemplate(hass, '{{ as_timedelta("2 days 20:40.123") }}'),
+				'2 days, 0:20:40.123000',
+			);
+		});
+
+		it('DD SS.fff', () => {
+			assert.equal(
+				renderTemplate(hass, '{{ as_timedelta("2 40.123") }}'),
+				'2 days, 0:00:40.123000',
+			);
+		});
+
+		it('D days SS.fff', () => {
+			assert.equal(
+				renderTemplate(hass, '{{ as_timedelta("2 days 40.123") }}'),
+				'2 days, 0:00:40.123000',
+			);
+		});
+
+		it('HH:MM:SS', () => {
+			assert.equal(
+				renderTemplate(hass, '{{ as_timedelta("8:20:40") }}'),
+				'8:20:40',
+			);
+		});
+
+		it('MM:SS', () => {
+			assert.equal(
+				renderTemplate(hass, '{{ as_timedelta("20:40") }}'),
+				'0:20:40',
+			);
+		});
+
+		it('SS', () => {
+			assert.equal(
+				renderTemplate(hass, '{{ as_timedelta("40") }}'),
+				'0:00:40',
+			);
+		});
+
+		it('HH:MM:SS.fff', () => {
+			assert.equal(
+				renderTemplate(hass, '{{ as_timedelta("8:20:40.123000") }}'),
+				'8:20:40.123000',
+			);
+		});
+
+		it('MM:SS.fff', () => {
+			assert.equal(
+				renderTemplate(hass, '{{ as_timedelta("20:40.123000") }}'),
+				'0:20:40.123000',
+			);
+		});
+
+		it('SS.fff', () => {
+			assert.equal(
+				renderTemplate(hass, '{{ as_timedelta("40.123000") }}'),
+				'0:00:40.123000',
+			);
+		});
+
+		it('PnWnDTnHnMnS', () => {
+			assert.equal(
+				renderTemplate(hass, '{{ as_timedelta("P2W4DT12H30M5S") }}'),
+				'18 days, 12:30:05',
+			);
+		});
+
+		it('PnDTnHnMnS', () => {
+			assert.equal(
+				renderTemplate(hass, '{{ as_timedelta("P4DT12H30M5S") }}'),
+				'4 days, 12:30:05',
+			);
+		});
+
+		it('PTnHnMnS', () => {
+			assert.equal(
+				renderTemplate(hass, '{{ as_timedelta("P12H30M5S") }}'),
+				'12:30:05',
+			);
+			assert.equal(
+				renderTemplate(hass, '{{ as_timedelta("P26H30M5S") }}'),
+				'1 day, 2:30:05',
+			);
+		});
+
+		it('PnS', () => {
+			assert.equal(
+				renderTemplate(hass, '{{ as_timedelta("P5S") }}'),
+				'0:00:05',
+			);
+		});
+	});
+});

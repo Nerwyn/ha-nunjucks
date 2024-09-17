@@ -1,4 +1,9 @@
-import dt, { PyDate, PyDatetime, PyTimedeltaDict } from 'py-datetime';
+import dt, {
+	PyDate,
+	PyDatetime,
+	PyTimedelta,
+	PyTimedeltaDict,
+} from 'py-datetime';
 
 import { isNaNCheck } from './numeric';
 
@@ -75,12 +80,15 @@ export function as_timestamp(
 	}
 }
 
-// TODO test
 export function as_local(value: PyDatetime) {
 	return dt.datetime(dt.datetime(value).jsDate);
 }
 
-export function strptime(value: string, format: string, fallback?: string) {
+export function strptime(
+	value: string,
+	format: string,
+	fallback?: PyDatetime | string,
+) {
 	try {
 		format = format.replace(/%z/g, '%Z');
 		const res = dt.datetime.strptime(value, format);
@@ -175,4 +183,60 @@ export function timedelta(
 	return res;
 }
 
-export function as_timedelta(value: string) {}
+export function as_timedelta(value: string) {
+	try {
+		let res: PyTimedelta;
+		if (
+			value.includes(':') ||
+			value.includes(' ') ||
+			/^\d*\.?\d*$/.test(value)
+		) {
+			let daysStr, timeStr;
+			if (value.includes(' ')) {
+				if (value.includes('days')) {
+					[daysStr, timeStr] = value.split(' days ');
+				} else {
+					[daysStr, timeStr] = value.split(' ');
+				}
+			} else {
+				daysStr = 0;
+				timeStr = value;
+			}
+			const [seconds, minutes, hours] = timeStr.split(':').reverse();
+			res = dt.timedelta(
+				Number(daysStr),
+				Number(seconds.replace(',', '.') ?? 0),
+				0,
+				Number(minutes ?? 0),
+				Number(hours ?? 0),
+			);
+		} else if (value.startsWith('P')) {
+			const values = value.replace(/P|T/g, '').match(/(\d*?)[A-Z]/g);
+			if (!values) {
+				return null;
+			}
+			const amounts: Record<string, number> = {};
+			for (const v of values) {
+				const amount = v.match(/^(\d*)/);
+				const unit = v.match(/[A-Z]$/);
+				if (amount && unit) {
+					amounts[unit[0]] = parseFloat(amount[0]);
+				}
+			}
+			res = dt.timedelta(
+				amounts.D,
+				amounts.S,
+				0,
+				amounts.M,
+				amounts.H,
+				amounts.W,
+			);
+		} else {
+			return null;
+		}
+		isNaNCheck(res.str());
+		return res;
+	} catch {
+		return null;
+	}
+}
