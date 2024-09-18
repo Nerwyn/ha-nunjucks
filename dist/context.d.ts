@@ -1,5 +1,6 @@
 import { HomeAssistant } from 'custom-card-helpers';
 import { match_media } from './utils/css';
+import { acos, asin, atan, atan2, average, bool, cos, float, int, is_number, log, max, median, min, sin, sqrt, statistical_mode, tan } from './utils/numeric';
 import { as_datetime, as_local, as_timedelta, as_timestamp, now, strptime, time_since, time_until, timedelta, today_at, utcnow } from './utils/time';
 export declare const CONTEXT: (hass: HomeAssistant) => {
     True: boolean;
@@ -44,5 +45,27 @@ export declare const CONTEXT: (hass: HomeAssistant) => {
     time_until: typeof time_until;
     timedelta: typeof timedelta;
     as_timedelta: typeof as_timedelta;
+    float: typeof float;
+    is_number: typeof is_number;
+    int: typeof int;
+    bool: typeof bool;
+    log: typeof log;
+    sin: typeof sin;
+    cos: typeof cos;
+    tan: typeof tan;
+    asin: typeof asin;
+    acos: typeof acos;
+    atan: typeof atan;
+    atan2: typeof atan2;
+    sqrt: typeof sqrt;
+    max: typeof max;
+    min: typeof min;
+    average: typeof average;
+    median: typeof median;
+    statistical_mode: typeof statistical_mode;
+    e: number;
+    pi: number;
+    tau: number;
+    inf: number;
     match_media: typeof match_media;
 };

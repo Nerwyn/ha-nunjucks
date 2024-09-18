@@ -6,6 +6,7 @@ import { floor_areas, floor_id, floors } from './utils/floors';
 import { iif } from './utils/iif';
 import { integration_entities } from './utils/integrations';
 import { label_areas, label_devices, label_entities, labels, } from './utils/labels';
+import { acos, asin, atan, atan2, average, bool, cos, e, float, inf, int, is_number, log, max, median, min, pi, sin, sqrt, statistical_mode, tan, tau, } from './utils/numeric';
 import { attr_name_translated, attr_value_translated, has_value, is_state, is_state_attr, state_attr, state_translated, states, } from './utils/states';
 import { as_datetime, as_local, as_timedelta, as_timestamp, now, strptime, time_since, time_until, timedelta, today_at, utcnow, } from './utils/time';
 export const CONTEXT = (hass) => ({
@@ -60,6 +61,29 @@ export const CONTEXT = (hass) => ({
     time_until,
     timedelta,
     as_timedelta,
+    // Numeric,
+    float,
+    is_number,
+    int,
+    bool,
+    log,
+    sin,
+    cos,
+    tan,
+    asin,
+    acos,
+    atan,
+    atan2,
+    sqrt,
+    max,
+    min,
+    average,
+    median,
+    statistical_mode,
+    e,
+    pi,
+    tau,
+    inf,
     // CSS
     match_media,
 });
