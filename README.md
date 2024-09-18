@@ -164,7 +164,10 @@ A shorthand for an if else statement.
 
 ### [Time](https://www.home-assistant.io/docs/configuration/templating/#time)
 
-**NOTE**: JS Date does not support time precision below 1 millisecond, while Python datetime supports microsecond precision. While some of these functions allow you to input microseconds, any time unit below 1 millisecond will be lost.
+**NOTE**: JS Date limitations
+
+- JS Date does not support time precision below 1 millisecond, while Python datetime supports microsecond precision. While some of these functions allow you to input microseconds, any time unit below 1 millisecond will be lost.
+- JS Date is not as good at handling timezones as Python datetime. Be careful about timezone differences! You can try to account for this using the `utc` flags and/or by including a timezone offset in a datetime string to parse using `as_datetime` or `strptime`.
 
 | Name         | Arguments                                                                                                                                     | Description                                                                                                                                                                                                                                                                                                                                                                                        |
 | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
