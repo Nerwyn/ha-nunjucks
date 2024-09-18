@@ -15,15 +15,38 @@ export function today_at(value = '00:00') {
 }
 export function as_datetime(value, fallback = undefined, utc = true) {
     try {
-        if (typeof value == 'number' || typeof value == 'string') {
-            value = parseFloat(value);
+        let res = undefined;
+        if (typeof value == 'string') {
+            if (/[^\d]/g.test(value)) {
+                value = value.replace(/T/g, ' ');
+                const formats = [
+                    '%Y-%m-%d %H:%M:%S.%f%Z',
+                    '%Y-%m-%d %H:%M:%S.%f',
+                    '%Y-%m-%d %H:%M:%S%Z',
+                    '%Y-%m-%d %H:%M:%S',
+                ];
+                for (const format of formats) {
+                    try {
+                        res = dt.datetime.strptime(value, format, utc);
+                        break;
+                    }
+                    catch { }
+                }
+                if (!res) {
+                    value = parseFloat(value);
+                }
+            }
+            else {
+                value = parseFloat(value);
+            }
         }
-        let res;
-        if (utc) {
-            res = dt.datetime.utc(value);
-        }
-        else {
-            res = dt.datetime(value);
+        if (!res) {
+            if (utc) {
+                res = dt.datetime.utc(value);
+            }
+            else {
+                res = dt.datetime(value);
+            }
         }
         isNaNCheck(res.str());
         if (value.year &&
@@ -64,10 +87,10 @@ export function as_timestamp(value, fallback) {
 export function as_local(value) {
     return dt.datetime(dt.datetime(value).jsDate);
 }
-export function strptime(value, format, fallback) {
+export function strptime(value, format, fallback = undefined, utc = false) {
     try {
         format = format.replace(/%z/g, '%Z');
-        const res = dt.datetime.strptime(value, format);
+        const res = dt.datetime.strptime(value, format, utc);
         isNaNCheck(res.toString());
         return res;
     }

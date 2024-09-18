@@ -85,6 +85,74 @@ describe('as_datetime', () => {
 			);
 		});
 
+		it('should parse a datetime string in format YYYY-MM-DD HH:MM:SS', () => {
+			assert.equal(
+				renderTemplate(
+					hass,
+					'{{ as_datetime("2020-04-06 14:32:12") }}',
+				),
+				'2020-04-06 14:32:12',
+			);
+			assert.equal(
+				renderTemplate(
+					hass,
+					'{{ as_timestamp(as_datetime("2020-04-06 14:32:12", "", false))}}',
+				),
+				'1586197932',
+			);
+		});
+
+		it('should parse a datetime string in format YYYY-MM-DD HH:MM:SS+0400', () => {
+			assert.equal(
+				renderTemplate(
+					hass,
+					'{{ as_datetime("2020-04-06 14:32:12+0400") }}',
+				),
+				'2020-04-06 10:32:12',
+			);
+			assert.equal(
+				renderTemplate(
+					hass,
+					'{{ as_timestamp(as_datetime("2020-04-06 14:32:12+0400", "", false))}}',
+				),
+				'1586169132',
+			);
+		});
+
+		it('should parse a datetime string in format YYYY-MM-DD HH:MM:SS.ffffff', () => {
+			assert.equal(
+				renderTemplate(
+					hass,
+					'{{ as_datetime("2020-04-06 14:32:12.123000") }}',
+				),
+				'2020-04-06 14:32:12.123000',
+			);
+			assert.equal(
+				renderTemplate(
+					hass,
+					'{{ as_timestamp(as_datetime("2020-04-06 14:32:12.123000", "", false))}}',
+				),
+				'1586197932.123',
+			);
+		});
+
+		it('should parse a datetime string in format YYYY-MM-DD HH:MM:SS.ffffff+0400', () => {
+			assert.equal(
+				renderTemplate(
+					hass,
+					'{{ as_datetime("2020-04-06 14:32:12.123000+0400") }}',
+				),
+				'2020-04-06 10:32:12.123000',
+			);
+			assert.equal(
+				renderTemplate(
+					hass,
+					'{{ as_timestamp(as_datetime("2020-04-06 14:32:12.123000+0400", "", false))}}',
+				),
+				'1586169132.123',
+			);
+		});
+
 		it('should return a fallback value on error', () => {
 			assert.equal(
 				renderTemplate(hass, '{{ as_datetime("foo", "bar") }}'),

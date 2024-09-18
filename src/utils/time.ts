@@ -37,14 +37,39 @@ export function as_datetime(
 	utc: boolean = true,
 ) {
 	try {
-		if (typeof value == 'number' || typeof value == 'string') {
-			value = parseFloat(value as string);
+		let res: PyDatetime | undefined = undefined;
+		if (typeof value == 'string') {
+			if (/[^\d]/g.test(value)) {
+				value = value.replace(/T/g, ' ');
+				const formats = [
+					'%Y-%m-%d %H:%M:%S.%f%Z',
+					'%Y-%m-%d %H:%M:%S.%f',
+					'%Y-%m-%d %H:%M:%S%Z',
+					'%Y-%m-%d %H:%M:%S',
+				];
+				for (const format of formats) {
+					try {
+						res = dt.datetime.strptime(
+							value,
+							format,
+							utc,
+						) as PyDatetime;
+						break;
+					} catch {}
+				}
+				if (!res) {
+					value = parseFloat(value);
+				}
+			} else {
+				value = parseFloat(value);
+			}
 		}
-		let res: PyDatetime;
-		if (utc) {
-			res = dt.datetime.utc(value as PyDatetime);
-		} else {
-			res = dt.datetime(value as PyDatetime);
+		if (!res) {
+			if (utc) {
+				res = dt.datetime.utc(value as PyDatetime);
+			} else {
+				res = dt.datetime(value as PyDatetime);
+			}
 		}
 		isNaNCheck(res.str());
 		if (
@@ -93,11 +118,12 @@ export function as_local(value: PyDatetime) {
 export function strptime(
 	value: string,
 	format: string,
-	fallback?: PyDatetime | string,
+	fallback: PyDatetime | string | undefined = undefined,
+	utc: boolean = false,
 ) {
 	try {
 		format = format.replace(/%z/g, '%Z');
-		const res = dt.datetime.strptime(value, format);
+		const res = dt.datetime.strptime(value, format, utc);
 		isNaNCheck(res.toString());
 		return res;
 	} catch (e) {
