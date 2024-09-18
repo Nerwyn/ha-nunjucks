@@ -17,7 +17,7 @@ export function utcnow() {
 
 export function today_at(value: string = '00:00') {
 	const [hour, minutes, seconds, milliseconds] = value.split(':');
-	const now = dt.datetime.utcnow();
+	const now = dt.datetime.now();
 	const res = dt.datetime(
 		now.year,
 		now.month,
@@ -33,13 +33,19 @@ export function today_at(value: string = '00:00') {
 
 export function as_datetime(
 	value: number | string | PyDatetime | PyDate,
-	fallback?: string,
+	fallback: string | undefined = undefined,
+	utc: boolean = true,
 ) {
 	try {
 		if (typeof value == 'number' || typeof value == 'string') {
 			value = parseFloat(value as string);
 		}
-		const res = dt.datetime.utc(value as PyDatetime);
+		let res: PyDatetime;
+		if (utc) {
+			res = dt.datetime.utc(value as PyDatetime);
+		} else {
+			res = dt.datetime(value as PyDatetime);
+		}
 		isNaNCheck(res.str());
 		if (
 			(value as PyDatetime).year &&
@@ -108,7 +114,7 @@ function timeDiff(
 	until: boolean = false,
 ) {
 	if (!(datetime instanceof PyDatetime)) {
-		return null;
+		return datetime;
 	}
 
 	let diff = now().valueOf() - as_local(datetime).valueOf();

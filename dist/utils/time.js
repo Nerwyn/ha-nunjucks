@@ -8,17 +8,23 @@ export function utcnow() {
 }
 export function today_at(value = '00:00') {
     const [hour, minutes, seconds, milliseconds] = value.split(':');
-    const now = dt.datetime.utcnow();
+    const now = dt.datetime.now();
     const res = dt.datetime(now.year, now.month, now.day, Number(hour), Number(minutes), Number(seconds), Number(milliseconds));
     isNaNCheck(res.str());
     return res;
 }
-export function as_datetime(value, fallback) {
+export function as_datetime(value, fallback = undefined, utc = true) {
     try {
         if (typeof value == 'number' || typeof value == 'string') {
             value = parseFloat(value);
         }
-        const res = dt.datetime.utc(value);
+        let res;
+        if (utc) {
+            res = dt.datetime.utc(value);
+        }
+        else {
+            res = dt.datetime(value);
+        }
         isNaNCheck(res.str());
         if (value.year &&
             value.hour == undefined) {
@@ -74,7 +80,7 @@ export function strptime(value, format, fallback) {
 }
 function timeDiff(datetime, precision = 1, until = false) {
     if (!(datetime instanceof PyDatetime)) {
-        return null;
+        return datetime;
     }
     let diff = now().valueOf() - as_local(datetime).valueOf();
     if (until) {

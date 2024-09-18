@@ -2,7 +2,7 @@ import assert from 'assert';
 import { renderTemplate } from '../../src';
 import { hass } from '../hass';
 
-describe('time', () => {
+describe('now and utcnow', () => {
 	it('should return different values for now and utcnow', () => {
 		assert.notEqual(
 			renderTemplate(hass, '{{ now() }}'),
@@ -16,7 +16,7 @@ describe('today_at', () => {
 		const now = new Date();
 		assert.equal(
 			renderTemplate(hass, '{{ today_at("12:34") }}'),
-			`${now.getUTCFullYear()}-${(now.getUTCMonth() + 1).toString().padStart(2, '0')}-${now.getUTCDate().toString().padStart(2, '0')} 12:34:00`,
+			`${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')} 12:34:00`,
 		);
 	});
 
@@ -24,7 +24,7 @@ describe('today_at', () => {
 		const now = new Date();
 		assert.equal(
 			renderTemplate(hass, '{{ today_at() }}'),
-			`${now.getUTCFullYear()}-${(now.getUTCMonth() + 1).toString().padStart(2, '0')}-${now.getUTCDate().toString().padStart(2, '0')} 00:00:00`,
+			`${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')} 00:00:00`,
 		);
 	});
 });
@@ -269,8 +269,11 @@ describe('time_since', () => {
 		);
 	});
 
-	it('should return nothing if the input is not a datetime', () => {
-		assert.equal(renderTemplate(hass, '{{ time_since("foobar") }}'), '');
+	it('should return the input if it is not a datetime', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ time_since("foobar") }}'),
+			'foobar',
+		);
 	});
 });
 
@@ -361,8 +364,11 @@ describe('time_until', () => {
 		);
 	});
 
-	it('should return nothing if the input is not a datetime', () => {
-		assert.equal(renderTemplate(hass, '{{ time_until("foobar") }}'), '');
+	it('should return the input if it is not a datetime', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ time_until("foobar") }}'),
+			'foobar',
+		);
 	});
 });
 
@@ -385,7 +391,7 @@ describe('timedelta', () => {
 		assert.equal(
 			renderTemplate(
 				hass,
-				'{{ strptime("2020-11-10T8:12:50", "%Y-%m-%dT%H:%M:%S") - timedelta({ days: 3, hours: 2, minutes: 1 })}}',
+				'{{ strptime("2020-11-10T8:12:50", "%Y-%m-%dT%H:%M:%S") - timedelta(days=3, hours=2, minutes=1) }}',
 			),
 			'1604747510',
 		);
