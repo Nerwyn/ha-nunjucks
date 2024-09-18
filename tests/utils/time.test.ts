@@ -545,18 +545,18 @@ describe('as_timedelta', () => {
 
 		it('PTnHnMnS', () => {
 			assert.equal(
-				renderTemplate(hass, '{{ as_timedelta("P12H30M5S") }}'),
+				renderTemplate(hass, '{{ as_timedelta("PT12H30M5S") }}'),
 				'12:30:05',
 			);
 			assert.equal(
-				renderTemplate(hass, '{{ as_timedelta("P26H30M5S") }}'),
+				renderTemplate(hass, '{{ as_timedelta("PT26H30M5S") }}'),
 				'1 day, 2:30:05',
 			);
 		});
 
 		it('PnS', () => {
 			assert.equal(
-				renderTemplate(hass, '{{ as_timedelta("P5S") }}'),
+				renderTemplate(hass, '{{ as_timedelta("PT5S") }}'),
 				'0:00:05',
 			);
 		});
