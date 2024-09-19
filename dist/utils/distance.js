@@ -223,7 +223,6 @@ export function closest(hass, ...args) {
                 res = stateObj;
                 minDistance = distance;
             }
-            console.log(`${stateObj.entity_id}: ${distance}`);
         }
     }
     return res;

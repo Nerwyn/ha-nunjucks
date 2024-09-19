@@ -250,7 +250,6 @@ export function closest(
 				res = stateObj;
 				minDistance = distance;
 			}
-			console.log(`${stateObj.entity_id}: ${distance}`);
 		}
 	}
 	return res;
