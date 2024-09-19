@@ -1,7 +1,10 @@
 import { HomeAssistant } from 'custom-card-helpers';
 import { match_media } from './utils/css';
+import { closest, distance } from './utils/distance';
 import { acos, asin, atan, atan2, average, bool, cos, float, int, is_number, log, max, median, min, sin, sqrt, statistical_mode, tan } from './utils/numeric';
 import { as_datetime, as_local, as_timedelta, as_timestamp, now, strptime, time_since, time_until, timedelta, today_at, utcnow } from './utils/time';
+type OmitFirstArg<F> = F extends (x: any, ...args: infer P) => infer R ? (...args: P) => R : never;
+type ParametersOmitFirstArg<F> = Parameters<OmitFirstArg<F>>;
 export declare const CONTEXT: (hass: HomeAssistant) => {
     True: boolean;
     False: boolean;
@@ -45,6 +48,8 @@ export declare const CONTEXT: (hass: HomeAssistant) => {
     time_until: typeof time_until;
     timedelta: typeof timedelta;
     as_timedelta: typeof as_timedelta;
+    distance: (...args: ParametersOmitFirstArg<typeof distance>) => number | null | undefined;
+    closest: (...args: ParametersOmitFirstArg<typeof closest>) => import("home-assistant-js-websocket").HassEntity | null;
     float: typeof float;
     is_number: typeof is_number;
     int: typeof int;
@@ -69,3 +74,4 @@ export declare const CONTEXT: (hass: HomeAssistant) => {
     inf: number;
     match_media: typeof match_media;
 };
+export {};

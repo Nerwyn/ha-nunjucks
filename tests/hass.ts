@@ -3,6 +3,7 @@ import { HomeAssistant } from 'custom-card-helpers';
 export const hass = {
 	states: {
 		'light.lounge': {
+			entity_id: 'light.lounge',
 			state: 'on',
 			attributes: {
 				min_color_temp_kelvin: 2695,
@@ -24,6 +25,7 @@ export const hass = {
 			},
 		},
 		'input_number.volume': {
+			entity_id: 'input_number.volume',
 			state: 0.4,
 			attributes: {
 				initial: null,
@@ -35,6 +37,50 @@ export const hass = {
 				icon: 'mdi:numeric',
 				friendly_name: 'Volume Slider',
 				unit_of_measurement: '%',
+			},
+		},
+		'zone.home': {
+			entity_id: 'zone.home',
+			attributes: {
+				latitude: 37.27073,
+				longitude: -115.801193,
+				persons: ['person.jane_doe'],
+			},
+		},
+		'zone.danger': {
+			entity_id: 'zone.danger',
+			attributes: {
+				latitude: -25.715955,
+				longitude: -10.415194,
+				persons: ['person.jane_doe'],
+			},
+		},
+		'person.john_doe': {
+			entity_id: 'person.john_doe',
+			attributes: {
+				latitude: 46.006823,
+				longitude: -105.586907,
+			},
+		},
+		'person.jane_doe': {
+			entity_id: 'person.jane_doe',
+			attributes: {
+				latitude: 56.006823,
+				longitude: -115.586907,
+			},
+		},
+		'device_tracker.ark_of_the_covenent': {
+			entity_id: 'device_tracker.ark_of_the_covenent',
+			attributes: {
+				latitude: 28.989944,
+				longitude: 29.26883,
+			},
+		},
+		'device_tracker.null_island': {
+			entity_id: 'device_tracker.null_island',
+			attributes: {
+				latitude: 0,
+				longitude: 0,
 			},
 		},
 	},
@@ -212,6 +258,11 @@ export const hass = {
 			picture: null,
 			created_at: 0,
 			modified_at: 0,
+		},
+	},
+	config: {
+		unit_system: {
+			length: 'mi',
 		},
 	},
 } as unknown as HomeAssistant;

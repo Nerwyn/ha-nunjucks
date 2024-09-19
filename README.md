@@ -183,6 +183,13 @@ A shorthand for an if else statement.
 | timedelta    | days (optional), seconds (optional), microseconds (optional), milliseconds (optional), minutes (optional), hours (optional), weeks (optional) | Returns a timedelta object, which represents a duration (an amount of time between two datetimes). It accepts the same arguments as the Python datetime.timedelta function – days, seconds, microseconds, milliseconds, minutes, hours, weeks. JS Date does not support microsecond precision, and precision below 1 millisecond is lost.                                                          |
 | as_timedelta | value                                                                                                                                         | Converts a string to a timedelta object. Expects data in the format `DD HH:MM:SS.uuuuuu`, `DD HH:MM:SS,uuuuuu`, or as specified by ISO 8601 (e.g. `P4DT1H15M20S` which is equivalent to `4 1:15:20`) or PostgreSQL’s day-time interval format (e.g. `3 days 04:05:06`).                                                                                                                            |
 
+### [Distance](https://www.home-assistant.io/docs/configuration/templating/#distance)
+
+| Name     | Arguments | Description                                                                                                                                                                                                   |
+| -------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| distance | args      | Measures the distance between home, an entity, or coordinates. The unit of measurement (kilometers or miles) depends on the system’s configuration settings. Does not work with groups.                       |
+| closest  | args      | Finds the closest entity to home, or the first entity or coordinate if multiple provided. Arguments can be entity IDs, domains, entity state objects, coordinate pairs, or arrays. Does not work with groups. |
+
 ### [Numeric](https://www.home-assistant.io/docs/configuration/templating/#numeric-functions-and-filters)
 
 | Name             | Arguments                                    | Description                                                                                                                                                                                                                                                                                                                                              |

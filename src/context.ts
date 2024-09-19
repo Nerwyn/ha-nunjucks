@@ -14,6 +14,7 @@ import {
 	device_id,
 	is_device_attr,
 } from './utils/devices';
+import { closest, distance } from './utils/distance';
 import { is_hidden_entity } from './utils/entities';
 import { floor_areas, floor_id, floors } from './utils/floors';
 import { iif } from './utils/iif';
@@ -170,6 +171,12 @@ export const CONTEXT = (hass: HomeAssistant) => ({
 	time_until,
 	timedelta,
 	as_timedelta,
+
+	// Distance
+	distance: (...args: ParametersOmitFirstArg<typeof distance>) =>
+		distance(hass, ...args),
+	closest: (...args: ParametersOmitFirstArg<typeof closest>) =>
+		closest(hass, ...args),
 
 	// Numeric,
 	float,

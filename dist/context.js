@@ -1,6 +1,7 @@
 import { area_devices, area_entities, area_id, area_name, areas, } from './utils/areas';
 import { match_media } from './utils/css';
 import { device_attr, device_entities, device_id, is_device_attr, } from './utils/devices';
+import { closest, distance } from './utils/distance';
 import { is_hidden_entity } from './utils/entities';
 import { floor_areas, floor_id, floors } from './utils/floors';
 import { iif } from './utils/iif';
@@ -61,6 +62,9 @@ export const CONTEXT = (hass) => ({
     time_until,
     timedelta,
     as_timedelta,
+    // Distance
+    distance: (...args) => distance(hass, ...args),
+    closest: (...args) => closest(hass, ...args),
     // Numeric,
     float,
     is_number,
