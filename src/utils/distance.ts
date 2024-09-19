@@ -246,7 +246,7 @@ export function closest(
 		const lon = stateObj.attributes.longitude;
 		if (lat != undefined && lon != undefined) {
 			const distance = vincenty(home, [lat, lon]) ?? Infinity;
-			if (distance < minDistance) {
+			if (distance <= minDistance) {
 				res = stateObj;
 				minDistance = distance;
 			}
