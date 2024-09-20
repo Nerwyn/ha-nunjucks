@@ -1,4 +1,5 @@
 import { area_devices, area_entities, area_id, area_name, areas, } from './utils/areas';
+import { contains } from './utils/contains';
 import { match_media } from './utils/css';
 import { device_attr, device_entities, device_id, is_device_attr, } from './utils/devices';
 import { closest, distance } from './utils/distance';
@@ -10,8 +11,10 @@ import { integration_entities } from './utils/integrations';
 import { from_json, str, to_json } from './utils/json';
 import { label_areas, label_devices, label_entities, labels, } from './utils/labels';
 import { acos, asin, atan, atan2, average, bool, cos, e, float, inf, int, is_number, log, max, median, min, pi, sin, sqrt, statistical_mode, tan, tau, } from './utils/numeric';
+import { list, set } from './utils/set';
 import { attr_name_translated, attr_value_translated, has_value, is_state, is_state_attr, state_attr, state_translated, states, } from './utils/states';
 import { as_datetime, as_local, as_timedelta, as_timestamp, now, strptime, time_since, time_until, timedelta, today_at, utcnow, } from './utils/time';
+import { zip } from './utils/zip';
 export const CONTEXT = (hass) => ({
     True: true,
     False: false,
@@ -74,6 +77,8 @@ export const CONTEXT = (hass) => ({
     // Distance
     distance: (...args) => distance(hass, ...args),
     closest: (...args) => closest(hass, ...args),
+    // Contains
+    contains,
     // Numeric,
     float,
     is_number,
@@ -97,6 +102,11 @@ export const CONTEXT = (hass) => ({
     pi,
     tau,
     inf,
+    // Type Conversions
+    set,
+    list,
+    // Iterating Multiple Objects
+    zip,
     // CSS
     match_media,
 });

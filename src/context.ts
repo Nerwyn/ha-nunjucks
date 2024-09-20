@@ -7,6 +7,7 @@ import {
 	area_name,
 	areas,
 } from './utils/areas';
+import { contains } from './utils/contains';
 import { match_media } from './utils/css';
 import {
 	device_attr,
@@ -51,6 +52,7 @@ import {
 	tan,
 	tau,
 } from './utils/numeric';
+import { list, set } from './utils/set';
 import {
 	attr_name_translated,
 	attr_value_translated,
@@ -74,6 +76,7 @@ import {
 	today_at,
 	utcnow,
 } from './utils/time';
+import { zip } from './utils/zip';
 
 type OmitFirstArg<F> = F extends (x: any, ...args: infer P) => infer R
 	? (...args: P) => R
@@ -191,6 +194,9 @@ export const CONTEXT = (hass: HomeAssistant) => ({
 	closest: (...args: ParametersOmitFirstArg<typeof closest>) =>
 		closest(hass, ...args),
 
+	// Contains
+	contains,
+
 	// Numeric,
 	float,
 	is_number,
@@ -214,6 +220,13 @@ export const CONTEXT = (hass: HomeAssistant) => ({
 	pi,
 	tau,
 	inf,
+
+	// Type Conversions
+	set,
+	list,
+
+	// Iterating Multiple Objects
+	zip,
 
 	// CSS
 	match_media,

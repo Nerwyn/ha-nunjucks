@@ -1,10 +1,13 @@
 import { HomeAssistant } from 'custom-card-helpers';
+import { contains } from './utils/contains';
 import { match_media } from './utils/css';
 import { closest, distance } from './utils/distance';
 import { expand } from './utils/groups';
 import { from_json, str, to_json } from './utils/json';
 import { acos, asin, atan, atan2, average, bool, cos, float, int, is_number, log, max, median, min, sin, sqrt, statistical_mode, tan } from './utils/numeric';
+import { list, set } from './utils/set';
 import { as_datetime, as_local, as_timedelta, as_timestamp, now, strptime, time_since, time_until, timedelta, today_at, utcnow } from './utils/time';
+import { zip } from './utils/zip';
 type OmitFirstArg<F> = F extends (x: any, ...args: infer P) => infer R ? (...args: P) => R : never;
 type ParametersOmitFirstArg<F> = Parameters<OmitFirstArg<F>>;
 export declare const CONTEXT: (hass: HomeAssistant) => {
@@ -56,6 +59,7 @@ export declare const CONTEXT: (hass: HomeAssistant) => {
     str: typeof str;
     distance: (...args: ParametersOmitFirstArg<typeof distance>) => number | null | undefined;
     closest: (...args: ParametersOmitFirstArg<typeof closest>) => import("home-assistant-js-websocket").HassEntity | null;
+    contains: typeof contains;
     float: typeof float;
     is_number: typeof is_number;
     int: typeof int;
@@ -78,6 +82,9 @@ export declare const CONTEXT: (hass: HomeAssistant) => {
     pi: number;
     tau: number;
     inf: number;
+    set: typeof set;
+    list: typeof list;
+    zip: typeof zip;
     match_media: typeof match_media;
 };
 export {};

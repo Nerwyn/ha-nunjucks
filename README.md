@@ -204,6 +204,12 @@ A shorthand for an if else statement.
 | distance | args      | Measures the distance between home, an entity, or coordinates. The unit of measurement (kilometers or miles) depends on the system’s configuration settings. Does not work with groups.                       |
 | closest  | args      | Finds the closest entity to home, or the first entity or coordinate if multiple provided. Arguments can be entity IDs, domains, entity state objects, coordinate pairs, or arrays. Does not work with groups. |
 
+### [Contains](https://www.home-assistant.io/docs/configuration/templating/#contains)
+
+| Name     | Arguments   | Description                         |
+| -------- | ----------- | ----------------------------------- |
+| contains | list, value | Returns if an element is in a list. |
+
 ### [Numeric](https://www.home-assistant.io/docs/configuration/templating/#numeric-functions-and-filters)
 
 | Name             | Arguments                                    | Description                                                                                                                                                                                                                                                                                                                                              |
@@ -230,6 +236,19 @@ A shorthand for an if else statement.
 | pi               |                                              | Mathematical constant pi.                                                                                                                                                                                                                                                                                                                                |
 | tau              |                                              | Mathematical constant tau.                                                                                                                                                                                                                                                                                                                               |
 | inf              |                                              | Mathematical conceptual value infinity.                                                                                                                                                                                                                                                                                                                  |
+
+### [Type Conversions](https://www.home-assistant.io/docs/configuration/templating/#type-conversions)
+
+| Name | Arguments | Description                                                |
+| ---- | --------- | ---------------------------------------------------------- |
+| set  | args      | Convert a list/array to a set. Removes duplicates.         |
+| list | args      | Convert a set to a list/array. Does not remove duplicates. |
+
+### [Iterating Multiple Objects](https://www.home-assistant.io/docs/configuration/templating/#iterating-multiple-objects)
+
+| Name | Arguments | Description                                                                                                                        |
+| ---- | --------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| zip  | args      | Use to iterate over multiple collections in one operation. If given one array will perform the opposite action and unzip the list. |
 
 ### Other
 
