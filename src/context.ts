@@ -17,8 +17,10 @@ import {
 import { closest, distance } from './utils/distance';
 import { is_hidden_entity } from './utils/entities';
 import { floor_areas, floor_id, floors } from './utils/floors';
+import { expand } from './utils/groups';
 import { iif } from './utils/iif';
 import { integration_entities } from './utils/integrations';
+import { from_json, str, to_json } from './utils/json';
 import {
 	label_areas,
 	label_devices,
@@ -95,6 +97,8 @@ export const CONTEXT = (hass: HomeAssistant) => ({
 		is_state_attr(hass, ...args),
 	has_value: (...args: ParametersOmitFirstArg<typeof has_value>) =>
 		has_value(hass, ...args),
+
+	// State Translated
 	state_translated: (
 		...args: ParametersOmitFirstArg<typeof state_translated>
 	) => state_translated(hass, ...args),
@@ -104,6 +108,10 @@ export const CONTEXT = (hass: HomeAssistant) => ({
 	attr_value_translated: (
 		...args: ParametersOmitFirstArg<typeof attr_value_translated>
 	) => attr_value_translated(hass, ...args),
+
+	// Groups
+	expand: (...args: ParametersOmitFirstArg<typeof expand>) =>
+		expand(hass, ...args),
 
 	// Entities
 	is_hidden_entity: (
@@ -171,6 +179,11 @@ export const CONTEXT = (hass: HomeAssistant) => ({
 	time_until,
 	timedelta,
 	as_timedelta,
+
+	// To/From JSON
+	to_json,
+	from_json,
+	str,
 
 	// Distance
 	distance: (...args: ParametersOmitFirstArg<typeof distance>) =>

@@ -4,8 +4,10 @@ import { device_attr, device_entities, device_id, is_device_attr, } from './util
 import { closest, distance } from './utils/distance';
 import { is_hidden_entity } from './utils/entities';
 import { floor_areas, floor_id, floors } from './utils/floors';
+import { expand } from './utils/groups';
 import { iif } from './utils/iif';
 import { integration_entities } from './utils/integrations';
+import { from_json, str, to_json } from './utils/json';
 import { label_areas, label_devices, label_entities, labels, } from './utils/labels';
 import { acos, asin, atan, atan2, average, bool, cos, e, float, inf, int, is_number, log, max, median, min, pi, sin, sqrt, statistical_mode, tan, tau, } from './utils/numeric';
 import { attr_name_translated, attr_value_translated, has_value, is_state, is_state_attr, state_attr, state_translated, states, } from './utils/states';
@@ -21,9 +23,12 @@ export const CONTEXT = (hass) => ({
     state_attr: (...args) => state_attr(hass, ...args),
     is_state_attr: (...args) => is_state_attr(hass, ...args),
     has_value: (...args) => has_value(hass, ...args),
+    // State Translated
     state_translated: (...args) => state_translated(hass, ...args),
     attr_name_translated: (...args) => attr_name_translated(hass, ...args),
     attr_value_translated: (...args) => attr_value_translated(hass, ...args),
+    // Groups
+    expand: (...args) => expand(hass, ...args),
     // Entities
     is_hidden_entity: (...args) => is_hidden_entity(hass, ...args),
     // Devices
@@ -62,6 +67,10 @@ export const CONTEXT = (hass) => ({
     time_until,
     timedelta,
     as_timedelta,
+    // To/From JSON
+    to_json,
+    from_json,
+    str,
     // Distance
     distance: (...args) => distance(hass, ...args),
     closest: (...args) => closest(hass, ...args),

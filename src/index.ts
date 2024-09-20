@@ -39,6 +39,8 @@ export function renderTemplate(
 		if (str.toLowerCase() == 'false') {
 			return false;
 		}
+
+		return str.replace(/&quot;/g, '"');
 	}
 
 	return str;

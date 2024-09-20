@@ -1,6 +1,8 @@
 import { HomeAssistant } from 'custom-card-helpers';
 import { match_media } from './utils/css';
 import { closest, distance } from './utils/distance';
+import { expand } from './utils/groups';
+import { from_json, str, to_json } from './utils/json';
 import { acos, asin, atan, atan2, average, bool, cos, float, int, is_number, log, max, median, min, sin, sqrt, statistical_mode, tan } from './utils/numeric';
 import { as_datetime, as_local, as_timedelta, as_timestamp, now, strptime, time_since, time_until, timedelta, today_at, utcnow } from './utils/time';
 type OmitFirstArg<F> = F extends (x: any, ...args: infer P) => infer R ? (...args: P) => R : never;
@@ -18,6 +20,7 @@ export declare const CONTEXT: (hass: HomeAssistant) => {
     state_translated: (entity_id: string, state?: string | undefined) => string;
     attr_name_translated: (entity_id: string, attr_name: string, attr_value?: string | undefined) => string;
     attr_value_translated: (entity_id: string, attr_name: string, attr_value?: string | undefined) => any;
+    expand: (...args: ParametersOmitFirstArg<typeof expand>) => import("home-assistant-js-websocket").HassEntity[];
     is_hidden_entity: (entity_id: string) => string | false;
     device_entities: (device_id: string) => string[];
     device_attr: (device_or_entity_id: string, attr_name: string) => string | undefined;
@@ -48,6 +51,9 @@ export declare const CONTEXT: (hass: HomeAssistant) => {
     time_until: typeof time_until;
     timedelta: typeof timedelta;
     as_timedelta: typeof as_timedelta;
+    to_json: typeof to_json;
+    from_json: typeof from_json;
+    str: typeof str;
     distance: (...args: ParametersOmitFirstArg<typeof distance>) => number | null | undefined;
     closest: (...args: ParametersOmitFirstArg<typeof closest>) => import("home-assistant-js-websocket").HassEntity | null;
     float: typeof float;

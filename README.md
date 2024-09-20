@@ -106,6 +106,12 @@ Functions used to determine an entity's state or an attribute.
 | attr_name_translated  | entity_id, attr_name (optional) attr_value (optional) | Returns the formatted and translated attribute name of an entity or provided attribute name using a language that is currently configured in the general settings.   |
 | attr_value_translated | entity_id, attr_name (optional) attr_value (optional) | Returns the formatted and translated attribute value of an entity or provided attribute value using a language that is currently configured in the general settings. |
 
+### [Groups](https://www.home-assistant.io/docs/configuration/templating/#working-with-groups)
+
+| Name   | Arguments | Description                                                                                       |
+| ------ | --------- | ------------------------------------------------------------------------------------------------- |
+| expand | args      | Retrieve state objects for provided entities and sort. Expands group entities into their members. |
+
 ### [Entities](https://www.home-assistant.io/docs/configuration/templating/#entities)
 
 | Name             | Arguments | Description                                |
@@ -182,6 +188,14 @@ A shorthand for an if else statement.
 | time_until   | value, precision (default 1)                                                                                                                  | Returns a human readable string indicating the difference between now and an input future datetime object. `precision` indicates how many units (years, months, days, hours, minutes, seconds) to use, with the last unit being rounded and 0 being the same as 6. If the input datetime is in the future it returns the input. If the input datetime is not a datetime object it returns nothing. |
 | timedelta    | days (optional), seconds (optional), microseconds (optional), milliseconds (optional), minutes (optional), hours (optional), weeks (optional) | Returns a timedelta object, which represents a duration (an amount of time between two datetimes). It accepts the same arguments as the Python datetime.timedelta function – days, seconds, microseconds, milliseconds, minutes, hours, weeks. JS Date does not support microsecond precision, and precision below 1 millisecond is lost.                                                          |
 | as_timedelta | value                                                                                                                                         | Converts a string to a timedelta object. Expects data in the format `DD HH:MM:SS.uuuuuu`, `DD HH:MM:SS,uuuuuu`, or as specified by ISO 8601 (e.g. `P4DT1H15M20S` which is equivalent to `4 1:15:20`) or PostgreSQL’s day-time interval format (e.g. `3 days 04:05:06`).                                                                                                                            |
+
+[To/From JSON](https://www.home-assistant.io/docs/configuration/templating/#tofrom-json)
+
+| Name      | Arguments                                  | Description                                                                                                                                                                                                                       |
+| --------- | ------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| to_json   | obj, ensure_ascii, pretty_print, sort_keys | Turn an object into a JSON string. `ensure_ascii` converts unicode characters into escape sequences. `pretty_print` formats the output with new lines and an indent of two spaces. `sort_keys` sorts the keys of the JSON object. |
+| from_json | value                                      | Parse a string as JSON.                                                                                                                                                                                                           |
+| str       | value                                      | Return the string representation of the input.                                                                                                                                                                                    |
 
 ### [Distance](https://www.home-assistant.io/docs/configuration/templating/#distance)
 
