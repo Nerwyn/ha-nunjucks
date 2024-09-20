@@ -11,10 +11,10 @@ describe('zip', () => {
 {% set entities = ['device_tracker.null_island', 'device_tracker.ark_of_the_covenent'] %}
 {% set attributes = ['latitude', 'longitude'] %}
 {% for name, entity, attribute in zip(names, entities, attributes) %}
-The {{ attribute }} of {{ name }} latitude is {{ state_attr(entity, attribute) }}
+The {{ attribute }} of {{ name }} is {{ state_attr(entity, attribute) }}
 {% endfor %}`,
 			) as string,
-			/(The latitude of Null Island latitude is 0)|(The longitude of Ark of the Covenant latitude is 29\.26883)/,
+			/(The latitude of Null Island is 0)|(The longitude of Ark of the Covenant is 29\.26883)/,
 		);
 	});
 

@@ -7,12 +7,14 @@ export function expand(hass: HomeAssistant, ...args: (string | HassEntity)[]) {
 		if (typeof entity == 'string') {
 			entity = hass.states[entity];
 		}
-		if (Array.isArray(entity.attributes?.entity_id)) {
-			res.push(...expand(hass, ...entity.attributes?.entity_id));
-		} else if (entity.attributes?.persons) {
-			res.push(...expand(hass, ...entity.attributes?.persons));
-		} else {
-			res.push(entity);
+		if (entity) {
+			if (Array.isArray(entity.attributes?.entity_id)) {
+				res.push(...expand(hass, ...entity.attributes?.entity_id));
+			} else if (entity.attributes?.persons) {
+				res.push(...expand(hass, ...entity.attributes?.persons));
+			} else {
+				res.push(entity);
+			}
 		}
 	}
 	return Array.from(new Set(res)).sort((a, b) =>

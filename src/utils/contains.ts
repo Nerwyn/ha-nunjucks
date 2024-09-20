@@ -1,3 +1,3 @@
 export function contains(list: string[], value: string) {
-	return list.includes(value);
+	return Array.isArray(list) ? list?.includes(value) : false;
 }
