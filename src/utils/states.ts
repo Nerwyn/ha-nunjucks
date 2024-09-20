@@ -4,9 +4,14 @@ import { HassEntity } from 'home-assistant-js-websocket';
 export function states(
 	hass: HomeAssistant,
 	entity_id: string,
-	rounded?: boolean,
+	rounded?: boolean | Record<string, boolean>,
 	with_unit?: boolean,
 ) {
+	if (typeof rounded == 'object' && !Array.isArray(rounded)) {
+		console.log(rounded);
+		with_unit = rounded.with_unit ?? with_unit;
+		rounded = rounded.rounded ?? undefined;
+	}
 	try {
 		const stateObj = hass.states[entity_id];
 		let state: string | number | boolean = stateObj?.state;

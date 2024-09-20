@@ -1,4 +1,9 @@
 export function states(hass, entity_id, rounded, with_unit) {
+    if (typeof rounded == 'object' && !Array.isArray(rounded)) {
+        console.log(rounded);
+        with_unit = rounded.with_unit ?? with_unit;
+        rounded = rounded.rounded ?? undefined;
+    }
     try {
         const stateObj = hass.states[entity_id];
         let state = stateObj?.state;

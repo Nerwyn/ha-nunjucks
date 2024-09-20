@@ -13,7 +13,6 @@ describe('iif', () => {
 			renderTemplate(hass, `{{ iif("foo" == "foo", "is foo") }}`),
 			'is foo',
 		);
-
 		assert.equal(
 			renderTemplate(hass, `{{ iif("foo" == "bar", "is foo") }}`),
 			false,
@@ -28,11 +27,17 @@ describe('iif', () => {
 			),
 			'is foo',
 		);
-
 		assert.equal(
 			renderTemplate(
 				hass,
 				`{{ iif("foo" == "bar", "is foo", "is not foo") }}`,
+			),
+			'is not foo',
+		);
+		assert.equal(
+			renderTemplate(
+				hass,
+				`{{ iif("foo" == "bar", if_false="is not foo") }}`,
 			),
 			'is not foo',
 		);
@@ -44,6 +49,10 @@ describe('iif', () => {
 				hass,
 				`{{ iif(None, "is true", "is false", "is none") }}`,
 			),
+			'is none',
+		);
+		assert.equal(
+			renderTemplate(hass, `{{ iif(None, if_none="is none") }}`),
 			'is none',
 		);
 	});

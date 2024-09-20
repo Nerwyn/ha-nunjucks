@@ -1,4 +1,4 @@
-import dt, { PyDatetime, } from 'py-datetime';
+import dt, { PyDate, PyDatetime, } from 'py-datetime';
 import { isNaNCheck } from './numeric';
 export function now() {
     return dt.datetime.now();
@@ -14,6 +14,10 @@ export function today_at(value = '00:00') {
     return res;
 }
 export function as_datetime(value, fallback = undefined, utc = true) {
+    if (typeof fallback == 'object' && !Array.isArray(fallback)) {
+        utc = fallback.utc ?? utc;
+        fallback = fallback.fallback ?? undefined;
+    }
     try {
         let res = undefined;
         if (typeof value == 'string') {
@@ -88,6 +92,13 @@ export function as_local(value) {
     return dt.datetime(dt.datetime(value).jsDate);
 }
 export function strptime(value, format, fallback = undefined, utc = false) {
+    if (typeof fallback == 'object' &&
+        !Array.isArray(fallback) &&
+        !(fallback instanceof PyDatetime) &&
+        !(fallback instanceof PyDate)) {
+        utc = fallback.utc ?? utc;
+        fallback = fallback.fallback ?? undefined;
+    }
     try {
         format = format.replace(/%z/g, '%Z');
         const res = dt.datetime.strptime(value, format, utc);

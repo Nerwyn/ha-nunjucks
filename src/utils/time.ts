@@ -33,9 +33,13 @@ export function today_at(value: string = '00:00') {
 
 export function as_datetime(
 	value: number | string | PyDatetime | PyDate,
-	fallback: string | undefined = undefined,
+	fallback: string | undefined | Record<string, string | boolean> = undefined,
 	utc: boolean = true,
 ) {
+	if (typeof fallback == 'object' && !Array.isArray(fallback)) {
+		utc = (fallback.utc as boolean) ?? utc;
+		fallback = (fallback.fallback as string) ?? undefined;
+	}
 	try {
 		let res: PyDatetime | undefined = undefined;
 		if (typeof value == 'string') {
@@ -118,9 +122,22 @@ export function as_local(value: PyDatetime) {
 export function strptime(
 	value: string,
 	format: string,
-	fallback: PyDatetime | string | undefined = undefined,
+	fallback:
+		| PyDatetime
+		| string
+		| undefined
+		| Record<string, PyDatetime | string | boolean> = undefined,
 	utc: boolean = false,
 ) {
+	if (
+		typeof fallback == 'object' &&
+		!Array.isArray(fallback) &&
+		!(fallback instanceof PyDatetime) &&
+		!((fallback as object) instanceof PyDate)
+	) {
+		utc = (fallback as Record<string, boolean>).utc ?? utc;
+		fallback = (fallback as Record<string, string>).fallback ?? undefined;
+	}
 	try {
 		format = format.replace(/%z/g, '%Z');
 		const res = dt.datetime.strptime(value, format, utc);

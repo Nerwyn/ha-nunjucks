@@ -15,7 +15,7 @@ export declare const CONTEXT: (hass: HomeAssistant) => {
     False: boolean;
     None: null;
     hass: HomeAssistant;
-    states: (entity_id: string, rounded?: boolean | undefined, with_unit?: boolean | undefined) => string | undefined;
+    states: (entity_id: string, rounded?: boolean | Record<string, boolean> | undefined, with_unit?: boolean | undefined) => string | undefined;
     is_state: (entity_id: string, value: string | string[]) => boolean;
     state_attr: (entity_id: string, attribute: string) => any;
     is_state_attr: (entity_id: string, attribute: string, value: string | string[]) => boolean;
@@ -42,7 +42,7 @@ export declare const CONTEXT: (hass: HomeAssistant) => {
     label_areas: (label_id: string) => string[];
     label_devices: (label_id: string) => string[];
     label_entities: (label_id: string) => string[];
-    iif: (condition: string, if_true?: string | undefined, if_false?: string | undefined, if_none?: string | undefined) => string | boolean;
+    iif: (condition: string, if_true?: string | Record<string, string> | undefined, if_false?: string | undefined, if_none?: string | undefined) => string | boolean;
     now: typeof now;
     utcnow: typeof utcnow;
     today_at: typeof today_at;

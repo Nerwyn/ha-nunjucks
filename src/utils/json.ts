@@ -4,7 +4,7 @@ export function to_json(
 	pretty_print: boolean = false,
 	sort_keys: boolean = false,
 ) {
-	if (typeof ensure_ascii == 'object') {
+	if (typeof ensure_ascii == 'object' && !Array.isArray(ensure_ascii)) {
 		sort_keys = ensure_ascii.sort_keys ?? sort_keys;
 		pretty_print = ensure_ascii.pretty_print ?? pretty_print;
 		ensure_ascii = ensure_ascii.ensure_ascii ?? ensure_ascii;

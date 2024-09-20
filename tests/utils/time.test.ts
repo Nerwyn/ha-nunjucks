@@ -56,6 +56,13 @@ describe('as_datetime', () => {
 				renderTemplate(hass, '{{ as_datetime(199999990).second }}'),
 				'10',
 			);
+			assert.notEqual(
+				renderTemplate(
+					hass,
+					'{{ as_datetime(199999990, utc=false).hour }}',
+				),
+				'19',
+			);
 		});
 
 		it('string representation should be the date and time', () => {

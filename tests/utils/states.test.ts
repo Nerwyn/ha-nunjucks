@@ -24,6 +24,13 @@ describe('states', () => {
 				),
 				'0.40',
 			);
+			assert.equal(
+				renderTemplate(
+					hass,
+					'{{ states("input_number.volume", rounded=True) }}',
+				),
+				'0.40',
+			);
 		});
 
 		it('should return state as is if state is non-numerical', () => {
@@ -52,6 +59,13 @@ describe('states', () => {
 				renderTemplate(
 					hass,
 					'{{ states("input_number.volume", undefined, true) }}',
+				),
+				'0.40 %',
+			);
+			assert.equal(
+				renderTemplate(
+					hass,
+					'{{ states("input_number.volume", with_unit=True) }}',
 				),
 				'0.40 %',
 			);
