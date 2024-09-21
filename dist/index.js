@@ -4,11 +4,6 @@ import { FILTERS, HASS_FILTERS } from './filters';
 import { HASS_TESTS, TESTS } from './tests';
 nunjucks.installJinjaCompat();
 const env = new nunjucks.Environment();
-const getHass = () => JSON.parse(new nunjucks.Template('{{ to_json(hass) }}')
-    .render(
-// @ts-ignore
-this.getVariables())
-    .replace(/&quot;/g, '"'));
 for (const f in FILTERS) {
     env.addFilter(f, function (...args) {
         return FILTERS[f](...args);
@@ -16,7 +11,12 @@ for (const f in FILTERS) {
 }
 for (const f in HASS_FILTERS) {
     env.addFilter(f, function (...args) {
-        return HASS_FILTERS[f](getHass(), ...args);
+        const hass = JSON.parse(new nunjucks.Template('{{ to_json(hass) }}')
+            .render(
+        // @ts-ignore
+        this.getVariables())
+            .replace(/&quot;/g, '"'));
+        return HASS_FILTERS[f](hass, ...args);
     });
 }
 for (const t in TESTS) {
@@ -26,7 +26,12 @@ for (const t in TESTS) {
 }
 for (const t in HASS_TESTS) {
     env.addTest(t, function (...args) {
-        return HASS_TESTS[t](getHass(), ...args);
+        const hass = JSON.parse(new nunjucks.Template('{{ to_json(hass) }}')
+            .render(
+        // @ts-ignore
+        this.getVariables())
+            .replace(/&quot;/g, '"'));
+        return HASS_TESTS[t](hass, ...args);
     });
 }
 /**
