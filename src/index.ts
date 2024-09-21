@@ -4,7 +4,6 @@ import nunjucks from 'nunjucks';
 import { addFilters } from './filters';
 import { addGlobals } from './globals';
 import { addTests } from './tests';
-import { buildStatesObject } from './utils/states';
 
 nunjucks.installJinjaCompat();
 const env = addTests(addFilters(addGlobals(new nunjucks.Environment())));
@@ -29,7 +28,7 @@ export function renderTemplate(
 		str = env
 			.renderString(structuredClone(str), {
 				hass,
-				_states: buildStatesObject(hass),
+				// _states: buildStatesObject(hass),
 				...context,
 			})
 			.trim();

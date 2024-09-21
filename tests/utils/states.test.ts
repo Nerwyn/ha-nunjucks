@@ -190,11 +190,11 @@ describe('has_value', () => {
 	});
 });
 
-describe('states object', () => {
-	it('should allow you to access state objects using just dot notation', () => {
-		assert.equal(
-			renderTemplate(hass, '{{ _states.light.ceiling_bulb_1.state }}'),
-			'off',
-		);
-	});
-});
+// describe('states object', () => {
+// 	it('should allow you to access state objects using just dot notation', () => {
+// 		assert.equal(
+// 			renderTemplate(hass, '{{ _states.light.ceiling_bulb_1.state }}'),
+// 			'off',
+// 		);
+// 	});
+// });

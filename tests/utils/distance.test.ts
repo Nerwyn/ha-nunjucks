@@ -83,22 +83,22 @@ describe('closest', () => {
 			);
 		});
 
-		it('should return the closest entity to home if given _states', () => {
-			assert.equal(
-				renderTemplate(hass, '{{ closest(_states).entity_id }}'),
-				'person.john_doe',
-			);
-		});
+		// it('should return the closest entity to home if given _states', () => {
+		// 	assert.equal(
+		// 		renderTemplate(hass, '{{ closest(_states).entity_id }}'),
+		// 		'person.john_doe',
+		// 	);
+		// });
 
-		it('should return the closest entity to home if given _states.domain', () => {
-			assert.equal(
-				renderTemplate(
-					hass,
-					'{{ closest(_states.device_tracker).entity_id }}',
-				),
-				'device_tracker.ark_of_the_covenent',
-			);
-		});
+		// it('should return the closest entity to home if given _states.domain', () => {
+		// 	assert.equal(
+		// 		renderTemplate(
+		// 			hass,
+		// 			'{{ closest(_states.device_tracker).entity_id }}',
+		// 		),
+		// 		'device_tracker.ark_of_the_covenent',
+		// 	);
+		// });
 
 		it('should return the closest entity in a domain if given one', () => {
 			assert.equal(
@@ -129,13 +129,13 @@ describe('closest', () => {
 				),
 				'person.jane_doe',
 			);
-			assert.equal(
-				renderTemplate(
-					hass,
-					'{{ closest(_states.zone.danger).entity_id }}',
-				),
-				'person.jane_doe',
-			);
+			// assert.equal(
+			// 	renderTemplate(
+			// 		hass,
+			// 		'{{ closest(_states.zone.danger).entity_id }}',
+			// 	),
+			// 	'person.jane_doe',
+			// );
 		});
 	});
 
@@ -148,20 +148,20 @@ describe('closest', () => {
 				),
 				'device_tracker.null_island',
 			);
-			assert.equal(
-				renderTemplate(
-					hass,
-					'{{ closest("zone.danger", _states).entity_id }}',
-				),
-				'device_tracker.null_island',
-			);
-			assert.equal(
-				renderTemplate(
-					hass,
-					'{{ closest("zone.danger", _states.person).entity_id }}',
-				),
-				'person.john_doe',
-			);
+			// assert.equal(
+			// 	renderTemplate(
+			// 		hass,
+			// 		'{{ closest("zone.danger", _states).entity_id }}',
+			// 	),
+			// 	'device_tracker.null_island',
+			// );
+			// assert.equal(
+			// 	renderTemplate(
+			// 		hass,
+			// 		'{{ closest("zone.danger", _states.person).entity_id }}',
+			// 	),
+			// 	'person.john_doe',
+			// );
 			assert.equal(
 				renderTemplate(
 					hass,
@@ -186,20 +186,20 @@ describe('closest', () => {
 				),
 				'device_tracker.ark_of_the_covenent',
 			);
-			assert.equal(
-				renderTemplate(
-					hass,
-					'{{ closest(31, 31, _states).entity_id }}',
-				),
-				'device_tracker.ark_of_the_covenent',
-			);
-			assert.equal(
-				renderTemplate(
-					hass,
-					'{{ closest(31, 31, _states.person).entity_id }}',
-				),
-				'person.jane_doe',
-			);
+			// assert.equal(
+			// 	renderTemplate(
+			// 		hass,
+			// 		'{{ closest(31, 31, _states).entity_id }}',
+			// 	),
+			// 	'device_tracker.ark_of_the_covenent',
+			// );
+			// assert.equal(
+			// 	renderTemplate(
+			// 		hass,
+			// 		'{{ closest(31, 31, _states.person).entity_id }}',
+			// 	),
+			// 	'person.jane_doe',
+			// );
 			assert.equal(
 				renderTemplate(
 					hass,
@@ -232,13 +232,13 @@ describe('closest', () => {
 				),
 				'person.jane_doe',
 			);
-			assert.equal(
-				renderTemplate(
-					hass,
-					'{{ closest(31, 31, _states.zone.danger).entity_id }}',
-				),
-				'person.jane_doe',
-			);
+			// assert.equal(
+			// 	renderTemplate(
+			// 		hass,
+			// 		'{{ closest(31, 31, _states.zone.danger).entity_id }}',
+			// 	),
+			// 	'person.jane_doe',
+			// );
 		});
 	});
 });
