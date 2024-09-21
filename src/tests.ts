@@ -1,9 +1,6 @@
 import { Environment, Template } from 'nunjucks';
-import { contains } from './utils/contains';
-import { is_device_attr } from './utils/devices';
-import { is_hidden_entity } from './utils/entities';
 import { match, search } from './utils/regexp';
-import { has_value, is_state, is_state_attr } from './utils/states';
+import { datetime, list, set, string_like } from './utils/type_checking';
 
 export function addTests(env: Environment) {
 	for (const t in TESTS) {
@@ -34,19 +31,11 @@ export function addTests(env: Environment) {
 }
 
 const HASS_TESTS: Record<string, CallableFunction> = {
-	// States
-	is_state,
-	is_state_attr,
-	has_value,
-
-	// Entities
-	is_hidden_entity,
-
-	// Devices
-	is_device_attr,
-
-	// Contains
-	contains,
+	// Complex Type Checking
+	list,
+	set,
+	datetime,
+	string_like,
 
 	// Regular Expressions
 	match,

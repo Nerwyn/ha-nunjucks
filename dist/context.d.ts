@@ -4,7 +4,7 @@ import { expand } from './utils/groups';
 import { match_media, str } from './utils/miscellaneous';
 import { acos, asin, atan, atan2, average, bool, cos, float, int, is_number, log, max, median, min, sin, sqrt, statistical_mode, tan } from './utils/numeric';
 import { as_datetime, as_local, as_timedelta, as_timestamp, now, strptime, time_since, time_until, timedelta, today_at, utcnow } from './utils/time';
-import { list, set } from './utils/type';
+import { list, set } from './utils/type_conversions';
 import { zip } from './utils/zip';
 type OmitFirstArg<F> = F extends (x: any, ...args: infer P) => infer R ? (...args: P) => R : never;
 type ParametersOmitFirstArg<F> = Parameters<OmitFirstArg<F>>;

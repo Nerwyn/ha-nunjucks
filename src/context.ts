@@ -76,7 +76,7 @@ import {
 	today_at,
 	utcnow,
 } from './utils/time';
-import { list, set } from './utils/type';
+import { list, set } from './utils/type_conversions';
 import { zip } from './utils/zip';
 
 type OmitFirstArg<F> = F extends (x: any, ...args: infer P) => infer R

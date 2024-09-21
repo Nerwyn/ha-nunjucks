@@ -60,7 +60,7 @@ When the return type is expected to be a number, end users should cast these val
 
 The vast majority of the [Home Assistant template extensions](https://www.home-assistant.io/docs/configuration/templating/#home-assistant-template-extensions) have been implemented into this package. If there are functions that you use that are not currently supported or don't behave exactly like their jinja2 versions, please make a feature request or try adding it to the project yourself and create a pull request.
 
-Template extensions can be functions, tests, filters, or constants. Functions are called inline like a regular programming function, such as `states()` or `floors()`. Filters are added to the end of a string using a pipe (`|`) character. Many filters are also available as functions. Tests are functions which return booleans and can be used in an if statement like `if foo has_value`. Contants are static values, and are just called as is like `{{ True }}` or `{{ pi }}`.
+Template extensions can be functions, tests, filters, or constants. Functions are called inline like a regular programming function, such as `states()` or `floors()`. Filters are added to the end of a string using a pipe (`|`) character. Many filters are also available as functions. Tests are functions which return booleans and can be used in an if statement like `if foo has_value`, not to be confused with functions with is in their names that also return booleans and used in if statements like `if is_state`. Contants are static values, and are just called as is like `{{ True }}` or `{{ pi }}`.
 
 ### Python Constants
 
@@ -88,13 +88,13 @@ For convenience, the `hass states` object is rebuilt as a separate object that c
 
 Functions used to determine an entity's state or an attribute.
 
-| Name          | Type                   | Arguments                                           | Description                                                                                                         |
-| ------------- | ---------------------- | --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| states        | function               | entity_id, rounded (optional), with_unit (optional) | Returns the state string of the given entity. Optionally round numerical states and append the unit of measurement. |
-| is_state      | function, test         | entity_id, value                                    | Compares an entity's state with a specified state or list of states and returns `true` or `false`.                  |
-| state_attr    | function               | entity_id, attribute                                | Returns the value of the attribute or `undefined` if it doesn't exist.                                              |
-| is_state_attr | function, test         | entity_id, attribute, value                         | Tests if the given entity attribute is the specified value.                                                         |
-| has_value     | function, filter, test | entity_id                                           | Tests if the given entity is not unknown or unavailable.                                                            |
+| Name          | Type             | Arguments                                           | Description                                                                                                         |
+| ------------- | ---------------- | --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| states        | function         | entity_id, rounded (optional), with_unit (optional) | Returns the state string of the given entity. Optionally round numerical states and append the unit of measurement. |
+| is_state      | function         | entity_id, value                                    | Compares an entity's state with a specified state or list of states and returns `true` or `false`.                  |
+| state_attr    | function         | entity_id, attribute                                | Returns the value of the attribute or `undefined` if it doesn't exist.                                              |
+| is_state_attr | function         | entity_id, attribute, value                         | Tests if the given entity attribute is the specified value.                                                         |
+| has_value     | function, filter | entity_id                                           | Tests if the given entity is not unknown or unavailable.                                                            |
 
 ### [State Translated](https://www.home-assistant.io/docs/configuration/templating/#state-translated)
 
@@ -112,9 +112,9 @@ Functions used to determine an entity's state or an attribute.
 
 ### [Entities](https://www.home-assistant.io/docs/configuration/templating/#entities)
 
-| Name             | Type           | Arguments | Description                                |
-| ---------------- | -------------- | --------- | ------------------------------------------ |
-| is_hidden_entity | function, test | entity_id | Returns whether an entity has been hidden. |
+| Name             | Type     | Arguments | Description                                |
+| ---------------- | -------- | --------- | ------------------------------------------ |
+| is_hidden_entity | function | entity_id | Returns whether an entity has been hidden. |
 
 ### [Devices](https://www.home-assistant.io/docs/configuration/templating/#devices)
 
@@ -122,7 +122,7 @@ Functions used to determine an entity's state or an attribute.
 | --------------- | ---------------- | ------------------------------------------ | -------------------------------------------------------------------------------------------- |
 | device_entities | function, filter | device_id                                  | Returns a list of entities that are associated with a given device ID.                       |
 | device_attr     | function, filter | device_or_entity_id, attr_name             | Returns the value of attr_name for the given device or entity ID.                            |
-| is_device_attr  | function, test   | device_or_entity_id, attr_name, attr_value | Returns whether the value of attr_name for the given device or entity ID matches attr_value. |
+| is_device_attr  | function         | device_or_entity_id, attr_name, attr_value | Returns whether the value of attr_name for the given device or entity ID matches attr_value. |
 | device_id       | function, filter | entity_id                                  | Returns the device ID for a given entity ID or device name.                                  |
 
 ### [Floors](https://www.home-assistant.io/docs/configuration/templating/#floors)
@@ -243,6 +243,15 @@ A shorthand for an if else statement.
 | ord              | filter           | value                                         | Returns an integer representing a character's (string of length one) Unicode code point when the argument is a Unicode object, or the value of the byte when the argument is an 8-bit string.                                                                                                                                                            |
 | multiply         | filter           | value, arg                                    | Converts the input to a number and multiplies it by the argument.                                                                                                                                                                                                                                                                                        |
 | add              | filter           | value, arg                                    | Converts the input to a number and adds it to the argument.                                                                                                                                                                                                                                                                                              |
+
+### [Complex Type Checking](https://www.home-assistant.io/docs/configuration/templating/#complex-type-checking)
+
+| Name        | Type | Arguments                                                | Description                       |
+| ----------- | ---- | -------------------------------------------------------- | --------------------------------- |
+| list        | test | value                                                    | Tests if a value is a list/array. |
+| set         | test | value                                                    | Tests if a value is a set.        |
+| datetime    | test | value                                                    | Tests if a value is a datetime.   |
+| string_like | test | value Tests if a value is a string, bytes, or bytearray. |
 
 ### [Type Conversions](https://www.home-assistant.io/docs/configuration/templating/#type-conversions)
 
