@@ -1,8 +1,9 @@
 import nunjucks from 'nunjucks';
 import { CONTEXT } from './context';
+import { addFilters } from './filters';
+import { addTests } from './tests';
 nunjucks.installJinjaCompat();
-// const env = addTests(addFilters(new nunjucks.Environment()));
-const env = new nunjucks.Environment();
+const env = addTests(addFilters(new nunjucks.Environment()));
 /**
  * Render a Home Assistant template string using nunjucks
  * @param {HomeAssistant} hass The Home Assistant object

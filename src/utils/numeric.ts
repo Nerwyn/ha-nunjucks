@@ -263,13 +263,6 @@ export const tau = 2 * Math.PI;
 export const inf = Infinity;
 
 // TODO implement filter only functions
-export function round(
-	value: number,
-	precision: number,
-	method: 'even' | 'floor' | 'cell' | 'half' = 'even',
-	fallback?: string,
-) {}
-
 export function bitwise_and(value_one: number, value_two: number) {}
 
 export function bitwise_or(value_one: number, value_two: number) {}
