@@ -1,12 +1,10 @@
 import { HomeAssistant } from 'custom-card-helpers';
-import { contains } from './utils/contains';
-import { match_media } from './utils/css';
 import { closest, distance } from './utils/distance';
 import { expand } from './utils/groups';
-import { from_json, str, to_json } from './utils/json';
+import { match_media, str } from './utils/miscellaneous';
 import { acos, asin, atan, atan2, average, bool, cos, float, int, is_number, log, max, median, min, sin, sqrt, statistical_mode, tan } from './utils/numeric';
-import { list, set } from './utils/set';
 import { as_datetime, as_local, as_timedelta, as_timestamp, now, strptime, time_since, time_until, timedelta, today_at, utcnow } from './utils/time';
+import { list, set } from './utils/type';
 import { zip } from './utils/zip';
 type OmitFirstArg<F> = F extends (x: any, ...args: infer P) => infer R ? (...args: P) => R : never;
 type ParametersOmitFirstArg<F> = Parameters<OmitFirstArg<F>>;
@@ -15,6 +13,7 @@ export declare const CONTEXT: (hass: HomeAssistant) => {
     False: boolean;
     None: null;
     hass: HomeAssistant;
+    _states: Record<string, Record<string, import("home-assistant-js-websocket").HassEntity>>;
     states: (entity_id: string, rounded?: boolean | Record<string, boolean> | undefined, with_unit?: boolean | undefined) => string | undefined;
     is_state: (entity_id: string, value: string | string[]) => boolean;
     state_attr: (entity_id: string, attribute: string) => any;
@@ -54,12 +53,8 @@ export declare const CONTEXT: (hass: HomeAssistant) => {
     time_until: typeof time_until;
     timedelta: typeof timedelta;
     as_timedelta: typeof as_timedelta;
-    to_json: typeof to_json;
-    from_json: typeof from_json;
-    str: typeof str;
     distance: (...args: ParametersOmitFirstArg<typeof distance>) => number | null | undefined;
     closest: (...args: ParametersOmitFirstArg<typeof closest>) => import("home-assistant-js-websocket").HassEntity | null;
-    contains: typeof contains;
     float: typeof float;
     is_number: typeof is_number;
     int: typeof int;
@@ -86,5 +81,6 @@ export declare const CONTEXT: (hass: HomeAssistant) => {
     list: typeof list;
     zip: typeof zip;
     match_media: typeof match_media;
+    str: typeof str;
 };
 export {};

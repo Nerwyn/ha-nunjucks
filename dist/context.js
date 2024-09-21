@@ -1,6 +1,4 @@
 import { area_devices, area_entities, area_id, area_name, areas, } from './utils/areas';
-import { contains } from './utils/contains';
-import { match_media } from './utils/css';
 import { device_attr, device_entities, device_id, is_device_attr, } from './utils/devices';
 import { closest, distance } from './utils/distance';
 import { is_hidden_entity } from './utils/entities';
@@ -8,13 +6,13 @@ import { floor_areas, floor_id, floors } from './utils/floors';
 import { expand } from './utils/groups';
 import { iif } from './utils/iif';
 import { integration_entities } from './utils/integrations';
-import { from_json, str, to_json } from './utils/json';
 import { label_areas, label_devices, label_entities, labels, } from './utils/labels';
+import { match_media, str } from './utils/miscellaneous';
 import { acos, asin, atan, atan2, average, bool, cos, e, float, inf, int, is_number, log, max, median, min, pi, sin, sqrt, statistical_mode, tan, tau, } from './utils/numeric';
-import { list, set } from './utils/set';
 import { attr_name_translated, attr_value_translated, state_translated, } from './utils/state_translated';
-import { has_value, is_state, is_state_attr, state_attr, states, } from './utils/states';
+import { buildStatesObject, has_value, is_state, is_state_attr, state_attr, states, } from './utils/states';
 import { as_datetime, as_local, as_timedelta, as_timestamp, now, strptime, time_since, time_until, timedelta, today_at, utcnow, } from './utils/time';
+import { list, set } from './utils/type';
 import { zip } from './utils/zip';
 export const CONTEXT = (hass) => ({
     True: true,
@@ -22,6 +20,7 @@ export const CONTEXT = (hass) => ({
     None: null,
     hass: hass,
     // States
+    _states: buildStatesObject(hass),
     states: (...args) => states(hass, ...args),
     is_state: (...args) => is_state(hass, ...args),
     state_attr: (...args) => state_attr(hass, ...args),
@@ -71,15 +70,9 @@ export const CONTEXT = (hass) => ({
     time_until,
     timedelta,
     as_timedelta,
-    // To/From JSON
-    to_json,
-    from_json,
-    str,
     // Distance
     distance: (...args) => distance(hass, ...args),
     closest: (...args) => closest(hass, ...args),
-    // Contains
-    contains,
     // Numeric,
     float,
     is_number,
@@ -110,4 +103,5 @@ export const CONTEXT = (hass) => ({
     zip,
     // CSS
     match_media,
+    str,
 });

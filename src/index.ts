@@ -1,12 +1,12 @@
 import { HomeAssistant } from 'custom-card-helpers';
 import nunjucks from 'nunjucks';
 
+import { CONTEXT } from './context';
 import { addFilters } from './filters';
-import { addGlobals } from './globals';
 import { addTests } from './tests';
 
 nunjucks.installJinjaCompat();
-const env = addTests(addFilters(addGlobals(new nunjucks.Environment())));
+const env = addTests(addFilters(new nunjucks.Environment()));
 
 /**
  * Render a Home Assistant template string using nunjucks
@@ -27,8 +27,7 @@ export function renderTemplate(
 	) {
 		str = env
 			.renderString(structuredClone(str), {
-				hass,
-				// _states: buildStatesObject(hass),
+				...CONTEXT(hass),
 				...context,
 			})
 			.trim();
