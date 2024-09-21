@@ -132,7 +132,7 @@ describe('renderTemplate', () => {
 		assert.equal(
 			renderTemplate(
 				hass,
-				'{{ hass.states["light.lounge"].attributes.min_mireds }}',
+				'{{ _states.light.lounge.attributes.min_mireds }}',
 				context,
 			),
 			153,
@@ -140,7 +140,7 @@ describe('renderTemplate', () => {
 		assert.equal(
 			renderTemplate(
 				hass,
-				'The {{ min }} color temperature is {{ hass.states["light.lounge"].attributes.min_mireds }} mireds. Also I\'m {{ doThing("my taxes") }}',
+				'The {{ min }} color temperature is {{ _states.light.lounge.attributes.min_mireds }} mireds. Also I\'m {{ doThing("my taxes") }}',
 				context,
 			),
 			"The minimum color temperature is 153 mireds. Also I'm doing my taxes!",

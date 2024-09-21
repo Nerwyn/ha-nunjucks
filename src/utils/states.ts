@@ -1,4 +1,5 @@
 import { HomeAssistant } from 'custom-card-helpers';
+import { HassEntity } from 'home-assistant-js-websocket';
 
 export function states(
 	hass: HomeAssistant,
@@ -13,7 +14,6 @@ export function states(
 	try {
 		const stateObj = hass.states[entity_id];
 		let state: string | number | boolean = stateObj?.state;
-		// https://www.home-assistant.io/docs/configuration/templating/#formatting-sensor-states
 		if (with_unit && rounded == undefined) {
 			rounded = true;
 		}
@@ -100,4 +100,14 @@ export function has_value(hass: HomeAssistant, entity_id: string) {
 	} catch {
 		return false;
 	}
+}
+
+export function buildStatesObject(hass: HomeAssistant) {
+	const states: Record<string, Record<string, HassEntity>> = {};
+	for (const entityId in hass.states) {
+		const [domain, entity] = entityId.split('.');
+		states[domain] = states[domain] ?? {};
+		states[domain][entity] = hass.states[entityId];
+	}
+	return states;
 }

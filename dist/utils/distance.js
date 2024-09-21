@@ -91,6 +91,11 @@ export function distance(hass, ...args) {
             lon1 = hass.states[args[0]].attributes.longitude;
             i = 1;
         }
+        else if (typeof args[0] == 'object' && !Array.isArray(args[0])) {
+            lat1 = args[0].attributes.latitude;
+            lon1 = args[0].attributes.longitude;
+            i = 1;
+        }
         else if (typeof args[0] == 'number') {
             if (!(typeof args[1] == 'number')) {
                 throw Error('Latitude provided but not longitude 1');
@@ -105,6 +110,10 @@ export function distance(hass, ...args) {
         if (typeof args[i] == 'string') {
             lat2 = hass.states[args[i]].attributes.latitude;
             lon2 = hass.states[args[i]].attributes.longitude;
+        }
+        else if (typeof args[0] == 'object' && !Array.isArray(args[0])) {
+            lat2 = args[i].attributes.latitude;
+            lon2 = args[i].attributes.longitude;
         }
         else if (typeof args[i] == 'number') {
             if (!(typeof args[i + 1] == 'number')) {
@@ -158,10 +167,10 @@ export function closest(hass, ...args) {
         start = 2;
     }
     else if (typeof args[0] == 'object') {
-        if (Array.isArray(args[0])) {
+        if (Array.isArray(args[0]) || !args[0].attributes) {
             return null;
         }
-        // Assume is stateobj
+        // Is state object
         home = [
             args[0].attributes.latitude,
             args[0].attributes.longitude,
@@ -194,7 +203,15 @@ export function closest(hass, ...args) {
                 }
             }
             else {
-                entityIds0 = Object.keys(args[i]);
+                const entities = Object.keys(args[i]);
+                if (args[i][entities[0]].entity_id) {
+                    entityIds0 = entities.map((key) => args[i][key].entity_id);
+                }
+                else {
+                    for (const domain of entities) {
+                        entityIds0.push(...Object.keys(args[i][domain]).map((key) => args[i][domain][key].entity_id));
+                    }
+                }
             }
             for (const entity of entityIds0) {
                 entityIds.push(...getEntityIdsByString(entity));

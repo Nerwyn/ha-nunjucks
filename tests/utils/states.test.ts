@@ -116,14 +116,14 @@ describe('state_attr', () => {
 		assert.equal(
 			renderTemplate(
 				hass,
-				`{{ state_attr("light.lounge", "color_mode") }}`,
+				'{{ state_attr("light.lounge", "color_mode") }}',
 			),
 			'color_temp',
 		);
 		assert.equal(
 			renderTemplate(
 				hass,
-				`{{ state_attr("light.lounge", "brightness") }}`,
+				'{{ state_attr("light.lounge", "brightness") }}',
 			),
 			'155',
 		);
@@ -139,14 +139,14 @@ describe('is_state_attr', () => {
 		assert.equal(
 			renderTemplate(
 				hass,
-				`{{ is_state_attr("light.lounge", "color_mode", "color_temp") }}`,
+				'{{ is_state_attr("light.lounge", "color_mode", "color_temp") }}',
 			),
 			true,
 		);
 		assert.equal(
 			renderTemplate(
 				hass,
-				`{{ is_state_attr("light.lounge", "brightness", 155) }}`,
+				'{{ is_state_attr("light.lounge", "brightness", 155) }}',
 			),
 			true,
 		);
@@ -162,14 +162,14 @@ describe('is_state_attr', () => {
 		assert.equal(
 			renderTemplate(
 				hass,
-				`{{ is_state_attr("light.lounge", "brightness", [155, "bar"]) }}`,
+				'{{ is_state_attr("light.lounge", "brightness", [155, "bar"]) }}',
 			),
 			true,
 		);
 		assert.equal(
 			renderTemplate(
 				hass,
-				`{{ is_state_attr("light.lounge", "brightness", [154, "bar"]) }}`,
+				'{{ is_state_attr("light.lounge", "brightness", [154, "bar"]) }}',
 			),
 			false,
 		);
@@ -179,13 +179,22 @@ describe('is_state_attr', () => {
 describe('has_value', () => {
 	it('should return boolean', () => {
 		assert.equal(
-			renderTemplate(hass, `{{ has_value("light.lounge") }}`),
+			renderTemplate(hass, '{{ has_value("light.lounge") }}'),
 			true,
 		);
 		assert.equal(
-			renderTemplate(hass, `{{ has_value("input_number.volume") }}`),
+			renderTemplate(hass, '{{ has_value("input_number.volume") }}'),
 			true,
 		);
-		assert.equal(renderTemplate(hass, `{{ has_value("foobar") }}`), false);
+		assert.equal(renderTemplate(hass, '{{ has_value("foobar") }}'), false);
+	});
+});
+
+describe('states object', () => {
+	it('should allow you to access state objects using just dot notation', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ _states.light.ceiling_bulb_1.state }}'),
+			'off',
+		);
 	});
 });

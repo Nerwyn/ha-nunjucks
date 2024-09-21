@@ -48,7 +48,6 @@ import {
 	tan,
 	tau,
 } from './utils/numeric';
-import { list, set } from './utils/set';
 import {
 	attr_name_translated,
 	attr_value_translated,
@@ -74,6 +73,7 @@ import {
 	today_at,
 	utcnow,
 } from './utils/time';
+import { list, set } from './utils/type';
 import { zip } from './utils/zip';
 
 import { Environment, Template } from 'nunjucks';
@@ -149,6 +149,7 @@ const HASS_GLOBALS: Record<string, CallableFunction> = {
 	label_areas,
 	label_devices,
 	label_entities,
+
 	// Immediate If
 	iif,
 
@@ -198,7 +199,7 @@ const GLOBALS: Record<string, CallableFunction> = {
 	// Iterating Multiple Objects
 	zip,
 
-	// Other
+	// Miscellaneous
 	match_media,
 	str,
 };

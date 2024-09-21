@@ -6,7 +6,6 @@ export function states(hass, entity_id, rounded, with_unit) {
     try {
         const stateObj = hass.states[entity_id];
         let state = stateObj?.state;
-        // https://www.home-assistant.io/docs/configuration/templating/#formatting-sensor-states
         if (with_unit && rounded == undefined) {
             rounded = true;
         }
@@ -73,4 +72,13 @@ export function has_value(hass, entity_id) {
     catch {
         return false;
     }
+}
+export function buildStatesObject(hass) {
+    const states = {};
+    for (const entityId in hass.states) {
+        const [domain, entity] = entityId.split('.');
+        states[domain] = states[domain] ?? {};
+        states[domain][entity] = hass.states[entityId];
+    }
+    return states;
 }
