@@ -17,12 +17,12 @@ for (const f in FILTERS) {
 for (const f in HASS_FILTERS) {
 	env.addFilter(f, function (...args) {
 		const hass = JSON.parse(
-			new nunjucks.Template('{{ to_json(hass) }}')
-				.render(
+			decodeURIComponent(
+				new nunjucks.Template('{{ to_json(hass) }}').render(
 					// @ts-ignore
 					this.getVariables(),
-				)
-				.replace(/&quot;/g, '"'),
+				),
+			),
 		);
 		return HASS_FILTERS[f](hass, ...args);
 	});
@@ -42,12 +42,12 @@ for (const t in HASS_TESTS) {
 		t,
 		function (...args: string[]) {
 			const hass = JSON.parse(
-				new nunjucks.Template('{{ to_json(hass) }}')
-					.render(
+				decodeURIComponent(
+					new nunjucks.Template('{{ to_json(hass) }}').render(
 						// @ts-ignore
 						this.getVariables(),
-					)
-					.replace(/&quot;/g, '"'),
+					),
+				),
 			);
 			return HASS_TESTS[t](hass, ...args);
 		},

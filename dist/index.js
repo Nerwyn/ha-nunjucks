@@ -11,11 +11,9 @@ for (const f in FILTERS) {
 }
 for (const f in HASS_FILTERS) {
     env.addFilter(f, function (...args) {
-        const hass = JSON.parse(new nunjucks.Template('{{ to_json(hass) }}')
-            .render(
+        const hass = JSON.parse(decodeURIComponent(new nunjucks.Template('{{ to_json(hass) }}').render(
         // @ts-ignore
-        this.getVariables())
-            .replace(/&quot;/g, '"'));
+        this.getVariables())));
         return HASS_FILTERS[f](hass, ...args);
     });
 }
@@ -26,11 +24,9 @@ for (const t in TESTS) {
 }
 for (const t in HASS_TESTS) {
     env.addTest(t, function (...args) {
-        const hass = JSON.parse(new nunjucks.Template('{{ to_json(hass) }}')
-            .render(
+        const hass = JSON.parse(decodeURIComponent(new nunjucks.Template('{{ to_json(hass) }}').render(
         // @ts-ignore
-        this.getVariables())
-            .replace(/&quot;/g, '"'));
+        this.getVariables())));
         return HASS_TESTS[t](hass, ...args);
     });
 }
