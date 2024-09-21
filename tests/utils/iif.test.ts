@@ -56,4 +56,20 @@ describe('iif', () => {
 			'is none',
 		);
 	});
+
+	it('should work with functions nested within arguments', () => {
+		assert(
+			renderTemplate(
+				hass,
+				'{{ iif(is_state_attr("light.lounge", "max_mireds", 371)) }}',
+			),
+		);
+		assert.equal(
+			renderTemplate(
+				hass,
+				'{{ iif(is_state_attr("light.lounge", "max_mireds", 372)) }}',
+			),
+			false,
+		);
+	});
 });

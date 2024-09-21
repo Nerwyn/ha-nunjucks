@@ -217,3 +217,7 @@ export function as_timedelta(value) {
         return null;
     }
 }
+// TODO implement filter only functions
+export function timestamp_local(value, fallback) { }
+export function timestamp_utc(value, fallback) { }
+export function timestamp_custom(format_string, local = true, fallback = undefined) { }

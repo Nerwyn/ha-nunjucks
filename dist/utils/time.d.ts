@@ -10,3 +10,6 @@ export declare function time_since(datetime: PyDatetime, precision?: number): st
 export declare function time_until(datetime: PyDatetime, precision?: number): string | PyDatetime;
 export declare function timedelta(days?: number | PyTimedeltaDict, seconds?: number, microseconds?: number, milliseconds?: number, minutes?: number, hours?: number, weeks?: number): PyTimedelta;
 export declare function as_timedelta(value: string): PyTimedelta | null;
+export declare function timestamp_local(value: string, fallback?: string): void;
+export declare function timestamp_utc(value: string, fallback?: string): void;
+export declare function timestamp_custom(format_string: string, local?: boolean, fallback?: string | undefined): void;

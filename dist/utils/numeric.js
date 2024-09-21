@@ -257,3 +257,11 @@ export const e = Math.E;
 export const pi = Math.PI;
 export const tau = 2 * Math.PI;
 export const inf = Infinity;
+// TODO implement filter only functions
+export function round(value, precision, method = 'even', fallback) { }
+export function bitwise_and(value_one, value_two) { }
+export function bitwise_or(value_one, value_two) { }
+export function bitwise_xor(value_one, value_two) { }
+export function ord(value) { }
+export function multiply(value, arg) { }
+export function add(value, arg) { }

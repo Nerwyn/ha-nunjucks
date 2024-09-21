@@ -79,16 +79,18 @@ describe('area_entities', () => {
 	});
 });
 
-it('area_devices should return a stringified array of device IDs if given an area ID', () => {
-	assert.equal(
-		renderTemplate(hass, '{{ area_devices("front_yard") }}'),
-		'1c81fa4a8d5d3bbc8a9fcf3b9b88b178,e4831420557f6df04603fb0850e7850b',
-	);
-});
+describe('area_devices', () => {
+	it('area_devices should return a stringified array of device IDs if given an area ID', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ area_devices("front_yard") }}'),
+			'1c81fa4a8d5d3bbc8a9fcf3b9b88b178,e4831420557f6df04603fb0850e7850b',
+		);
+	});
 
-it('area_devices should return a stringified array of device IDs if given an area name', () => {
-	assert.equal(
-		renderTemplate(hass, '{{ area_devices("Bedroom") }}'),
-		'06c14f4b7dd701890e596ebbe354aa97',
-	);
+	it('area_devices should return a stringified array of device IDs if given an area name', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ area_devices("Bedroom") }}'),
+			'06c14f4b7dd701890e596ebbe354aa97',
+		);
+	});
 });

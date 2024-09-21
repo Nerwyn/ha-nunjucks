@@ -56,11 +56,13 @@ import { list, set } from './utils/set';
 import {
 	attr_name_translated,
 	attr_value_translated,
+	state_translated,
+} from './utils/state_translated';
+import {
 	has_value,
 	is_state,
 	is_state_attr,
 	state_attr,
-	state_translated,
 	states,
 } from './utils/states';
 import {

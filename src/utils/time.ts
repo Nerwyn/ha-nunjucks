@@ -289,3 +289,14 @@ export function as_timedelta(value: string) {
 		return null;
 	}
 }
+
+// TODO implement filter only functions
+export function timestamp_local(value: string, fallback?: string) {}
+
+export function timestamp_utc(value: string, fallback?: string) {}
+
+export function timestamp_custom(
+	format_string: string,
+	local: boolean = true,
+	fallback: string | undefined = undefined,
+) {}

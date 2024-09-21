@@ -1,6 +1,5 @@
 export function states(hass, entity_id, rounded, with_unit) {
     if (typeof rounded == 'object' && !Array.isArray(rounded)) {
-        console.log(rounded);
         with_unit = rounded.with_unit ?? with_unit;
         rounded = rounded.rounded ?? undefined;
     }
@@ -73,33 +72,5 @@ export function has_value(hass, entity_id) {
     }
     catch {
         return false;
-    }
-}
-export function state_translated(hass, entity_id, state) {
-    try {
-        return hass['formatEntityState'](hass.states[entity_id], state);
-    }
-    catch {
-        return state ?? hass.states[entity_id]?.state ?? undefined;
-    }
-}
-export function attr_name_translated(hass, entity_id, attr_name, attr_value) {
-    try {
-        return hass['formatEntityAttributeName'](hass.states[entity_id], attr_name, attr_value);
-    }
-    catch {
-        return (attr_name ??
-            hass.states[entity_id]?.attributes?.[attr_name] ??
-            undefined);
-    }
-}
-export function attr_value_translated(hass, entity_id, attr_name, attr_value) {
-    try {
-        return hass['formatEntityAttributeValue'](hass.states[entity_id], attr_name, attr_value);
-    }
-    catch {
-        return (attr_value ??
-            hass.states[entity_id]?.attributes?.[attr_name] ??
-            undefined);
     }
 }
