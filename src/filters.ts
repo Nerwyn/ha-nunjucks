@@ -52,7 +52,30 @@ import {
 	timestamp_utc,
 } from './utils/time';
 
-export const HASS_FILTERS: Record<string, CallableFunction> = {
+import { Environment, Template } from 'nunjucks';
+
+export function addFilters(env: Environment) {
+	for (const func in FILTERS) {
+		env.addFilter(func, function (...args) {
+			return FILTERS[func](...args);
+		});
+	}
+	for (const func in HASS_FILTERS) {
+		env.addFilter(func, function (...args) {
+			const hass = JSON.parse(
+				new Template('{{ hass | dump | safe }}').render(
+					// @ts-ignore
+					this.getVariables(),
+				),
+			);
+			return HASS_FILTERS[func](hass, ...args);
+		});
+	}
+
+	return env;
+}
+
+const HASS_FILTERS: Record<string, CallableFunction> = {
 	// States
 	has_value,
 
@@ -85,7 +108,7 @@ export const HASS_FILTERS: Record<string, CallableFunction> = {
 	closest,
 };
 
-export const FILTERS: Record<string, CallableFunction> = {
+const FILTERS: Record<string, CallableFunction> = {
 	// Time
 	as_datetime,
 	as_timestamp,

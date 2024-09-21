@@ -1,2 +1,2 @@
-export declare const HASS_FILTERS: Record<string, CallableFunction>;
-export declare const FILTERS: Record<string, CallableFunction>;
+import { Environment } from 'nunjucks';
+export declare function addFilters(env: Environment): Environment;

@@ -1,35 +1,9 @@
 import nunjucks from 'nunjucks';
-import { CONTEXT } from './context';
-import { FILTERS, HASS_FILTERS } from './filters';
-import { HASS_TESTS, TESTS } from './tests';
+import { addFilters } from './filters';
+import { addGlobals } from './globals';
+import { addTests } from './tests';
 nunjucks.installJinjaCompat();
-const env = new nunjucks.Environment();
-for (const f in FILTERS) {
-    env.addFilter(f, function (...args) {
-        return FILTERS[f](...args);
-    });
-}
-for (const f in HASS_FILTERS) {
-    env.addFilter(f, function (...args) {
-        const hass = JSON.parse(new nunjucks.Template('{{ hass | dump | safe }}').render(
-        // @ts-ignore
-        this.getVariables()));
-        return HASS_FILTERS[f](hass, ...args);
-    });
-}
-for (const t in TESTS) {
-    env.addTest(t, function (...args) {
-        return TESTS[t](...args);
-    });
-}
-for (const t in HASS_TESTS) {
-    env.addTest(t, function (...args) {
-        const hass = JSON.parse(new nunjucks.Template('{{ hass | dump | safe }}').render(
-        // @ts-ignore
-        this.getVariables()));
-        return HASS_TESTS[t](hass, ...args);
-    });
-}
+const env = addTests(addFilters(addGlobals(new nunjucks.Environment())));
 /**
  * Render a Home Assistant template string using nunjucks
  * @param {HomeAssistant} hass The Home Assistant object
@@ -43,7 +17,7 @@ export function renderTemplate(hass, str, context) {
             (str.includes('{%') && str.includes('%}')))) {
         str = env
             .renderString(structuredClone(str), {
-            ...CONTEXT(hass),
+            hass,
             ...context,
         })
             .trim();

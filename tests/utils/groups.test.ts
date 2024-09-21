@@ -55,35 +55,35 @@ describe('expand', () => {
 		assert.match(
 			renderTemplate(
 				hass,
-				'{{ to_json(expand("input_number.volume", "zone.home", "light.lounge")) }}',
+				'{{ expand("input_number.volume", "zone.home", "light.lounge") | to_json }}',
 			) as string,
 			/person\.jane_doe/g,
 		);
 		assert.match(
 			renderTemplate(
 				hass,
-				'{{ to_json(expand("input_number.volume", "zone.home", "light.lounge")) }}',
+				'{{ expand("input_number.volume", "zone.home", "light.lounge") | to_json }}',
 			) as string,
 			/light\.ceiling_bulb_1/g,
 		);
 		assert.match(
 			renderTemplate(
 				hass,
-				'{{ to_json(expand("input_number.volume", "zone.home", "light.lounge")) }}',
+				'{{ expand("input_number.volume", "zone.home", "light.lounge") | to_json }}',
 			) as string,
 			/light\.ceiling_bulb_2/g,
 		);
 		assert.doesNotMatch(
 			renderTemplate(
 				hass,
-				'{{ to_json(expand("input_number.volume", "zone.home", "light.lounge")) }}',
+				'{{ expand("input_number.volume", "zone.home", "light.lounge") | to_json }}',
 			) as string,
 			/zone\.home/g,
 		);
 		assert.doesNotMatch(
 			renderTemplate(
 				hass,
-				'{{ to_json(expand("input_number.volume", "zone.home", "light.lounge")) }}',
+				'{{ expand("input_number.volume", "zone.home", "light.lounge") | to_json }}',
 			) as string,
 			/light\.lounge/g,
 		);

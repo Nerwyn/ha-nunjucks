@@ -21,6 +21,3 @@ export function to_json(obj, ensure_ascii = true, pretty_print = false, sort_key
 export function from_json(value) {
     return JSON.parse(value);
 }
-export function str(value) {
-    return value.toString();
-}

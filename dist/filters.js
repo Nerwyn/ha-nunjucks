@@ -12,7 +12,24 @@ import { regex_findall, regex_findall_index, regex_replace, } from './utils/rege
 import { has_value } from './utils/states';
 import { base64_decode, ordinal, slugify, urlencode } from './utils/string';
 import { as_datetime, as_local, as_timestamp, time_since, time_until, timestamp_custom, timestamp_local, timestamp_utc, } from './utils/time';
-export const HASS_FILTERS = {
+import { Template } from 'nunjucks';
+export function addFilters(env) {
+    for (const func in FILTERS) {
+        env.addFilter(func, function (...args) {
+            return FILTERS[func](...args);
+        });
+    }
+    for (const func in HASS_FILTERS) {
+        env.addFilter(func, function (...args) {
+            const hass = JSON.parse(new Template('{{ hass | dump | safe }}').render(
+            // @ts-ignore
+            this.getVariables()));
+            return HASS_FILTERS[func](hass, ...args);
+        });
+    }
+    return env;
+}
+const HASS_FILTERS = {
     // States
     has_value,
     // Groups
@@ -37,7 +54,7 @@ export const HASS_FILTERS = {
     // Distance
     closest,
 };
-export const FILTERS = {
+const FILTERS = {
     // Time
     as_datetime,
     as_timestamp,

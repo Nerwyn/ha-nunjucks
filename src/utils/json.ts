@@ -32,7 +32,3 @@ export function to_json(
 export function from_json(value: string) {
 	return JSON.parse(value);
 }
-
-export function str(value: string) {
-	return value.toString();
-}

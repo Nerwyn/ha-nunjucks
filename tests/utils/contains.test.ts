@@ -7,7 +7,7 @@ describe('contains', () => {
 		assert(
 			renderTemplate(
 				hass,
-				'{{ contains(state_attr("light.lounge", "supported_color_modes"), "rgb") }}',
+				'{{ state_attr("light.lounge", "supported_color_modes") | contains("rgb") }}',
 			),
 		);
 	});
