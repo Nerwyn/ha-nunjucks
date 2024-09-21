@@ -1,10 +1,9 @@
 import nunjucks from 'nunjucks';
+import { CONTEXT } from './context';
 import { addFilters } from './filters';
-import { addGlobals } from './globals';
 import { addTests } from './tests';
-import { buildStatesObject } from './utils/states';
 nunjucks.installJinjaCompat();
-const env = addTests(addFilters(addGlobals(new nunjucks.Environment())));
+const env = addTests(addFilters(new nunjucks.Environment()));
 /**
  * Render a Home Assistant template string using nunjucks
  * @param {HomeAssistant} hass The Home Assistant object
@@ -18,9 +17,9 @@ export function renderTemplate(hass, str, context) {
             (str.includes('{%') && str.includes('%}')))) {
         str = env
             .renderString(structuredClone(str), {
-            hass,
-            _states: buildStatesObject(hass),
-            // ...CONTEXT(hass),
+            // hass,
+            // _states: buildStatesObject(hass),
+            ...CONTEXT(hass),
             ...context,
         })
             .trim();
