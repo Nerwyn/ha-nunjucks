@@ -9,5 +9,5 @@ module.exports = {
 			},
 		],
 	},
-	ignores: ['node_modules/*', 'dist', 'webpack.config.js'],
+	ignores: ['node_modules/*', 'dist/*', 'webpack.config.js'],
 };
