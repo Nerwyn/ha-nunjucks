@@ -1,7 +1,5 @@
 import { PyDatetime } from 'py-datetime';
 
-// TODO tests
-
 export function list(value: object[]) {
 	return Array.isArray(value);
 }
@@ -15,5 +13,12 @@ export function datetime(value: object) {
 }
 
 export function string_like(value: object) {
-	return typeof value == 'string' || value instanceof Uint8Array;
+	return (
+		typeof value == 'string' ||
+		value instanceof Buffer ||
+		value instanceof Uint8Array ||
+		value instanceof Uint16Array ||
+		value instanceof Uint32Array ||
+		value instanceof ArrayBuffer
+	);
 }
