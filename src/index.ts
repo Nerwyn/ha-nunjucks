@@ -32,7 +32,6 @@ export function renderTemplate(
 			.renderString(structuredClone(str), {
 				hass,
 				_states: buildStatesObject(hass),
-				// ...CONTEXT(hass),
 				...context,
 			})
 			.trim();

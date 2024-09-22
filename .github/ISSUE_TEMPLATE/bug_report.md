@@ -41,3 +41,7 @@ Explain what the issue is, and how things should look/behave. If possible provid
 ```
 
 **Additional information:**
+
+<!--
+Was this issue found within a project which uses this package? Which version does that project use?
+-->
