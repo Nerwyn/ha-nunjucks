@@ -266,23 +266,7 @@ A shorthand for an if else statement.
 | ---- | -------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | zip  | function | args      | Use to iterate over multiple collections in one operation. If given one array will perform the opposite action and unzip the list. |
 
-### [Functions and Filters to Process Raw Data](https://www.home-assistant.io/docs/configuration/templating/#functions-and-filters-to-process-raw-data)
-
-| Name   | Type             | Arguments                         | Description                                                                                                                                                                                                             |
-| ------ | ---------------- | --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| pack   | filter           | value, format                     | Converts a native type to a bytes type object. Returns nothing on error.                                                                                                                                                |
-| unpack | function, filter | value, format, offset (default 0) | Converts a bytes object into a native type. The offset parameter determines the offset position in bytes from the start of the input bytes based buffer. Returns nothing on error. Only returns the first bytes object. |
-
-### [Strings] (https://www.home-assistant.io/docs/configuration/templating/#string-filters)
-
-| Name          | Type   | Arguments                         | Description                                                                            |
-| ------------- | ------ | --------------------------------- | -------------------------------------------------------------------------------------- |
-| urlencode     | filter | value                             | Converts an object to a percent-encoded ASCII text string.                             |
-| slugify       | filter | value, separator ( default -)     | Converts a given string into a "slug".                                                 |
-| ordinal       | filter | value                             | Converts an integer into a number defining a position in a series.                     |
-| base64_decode | filter | value, encoding (default 'utf-8') | Decodes a base 64 string to a string. Encoding can be `utf-8`, `ascii`, or `raw/None`. |
-
-### [Regular Expressions] (https://www.home-assistant.io/docs/configuration/templating/#regular-expressions)
+### [Regular Expressions](https://www.home-assistant.io/docs/configuration/templating/#regular-expressions)
 
 | Name                | Type   | Arguments                                                                  | Description                                                                              |
 | ------------------- | ------ | -------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |

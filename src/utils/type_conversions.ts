@@ -1,5 +1,3 @@
-// TODO - validate and possibly add https://www.home-assistant.io/docs/configuration/templating/#complex-type-checking
-
 export function set(...args: string[]) {
 	return new Set(args.flat(Infinity));
 }

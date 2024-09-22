@@ -38,7 +38,6 @@ import {
 	regex_replace,
 } from './utils/regexp';
 import { has_value } from './utils/states';
-import { base64_decode, ordinal, slugify, urlencode } from './utils/string';
 import {
 	as_datetime,
 	as_local,
@@ -142,12 +141,6 @@ const FILTERS: Record<string, CallableFunction> = {
 	ord,
 	multiply,
 	add,
-
-	// String
-	urlencode,
-	slugify,
-	ordinal,
-	base64_decode,
 
 	// Regular Expressions
 	regex_replace,

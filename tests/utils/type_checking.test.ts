@@ -37,6 +37,4 @@ describe('string_like', () => {
 		assert(renderTemplate(hass, '{{ "foobar" is string_like }}'));
 		assert(renderTemplate(hass, '{{ 1234 is not string_like }}'));
 	});
-
-	it('should return if the input is bytes', () => {});
 });

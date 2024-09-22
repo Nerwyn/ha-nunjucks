@@ -11,7 +11,6 @@ import { label_areas, label_devices, label_entities } from './utils/labels';
 import { acos, add, asin, atan, atan2, average, bitwise_and, bitwise_or, bitwise_xor, bool, cos, is_number, log, max, median, min, multiply, ord, sin, sqrt, statistical_mode, tan, } from './utils/numeric';
 import { regex_findall, regex_findall_index, regex_replace, } from './utils/regexp';
 import { has_value } from './utils/states';
-import { base64_decode, ordinal, slugify, urlencode } from './utils/string';
 import { as_datetime, as_local, as_timestamp, time_since, time_until, timestamp_custom, timestamp_local, timestamp_utc, } from './utils/time';
 export function addFilters(env) {
     for (const func in FILTERS) {
@@ -89,11 +88,6 @@ const FILTERS = {
     ord,
     multiply,
     add,
-    // String
-    urlencode,
-    slugify,
-    ordinal,
-    base64_decode,
     // Regular Expressions
     regex_replace,
     regex_findall,
