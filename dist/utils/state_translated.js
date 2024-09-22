@@ -6,9 +6,9 @@ export function state_translated(hass, entity_id, state) {
         return state ?? hass.states[entity_id]?.state ?? undefined;
     }
 }
-export function attr_name_translated(hass, entity_id, attr_name, attr_value) {
+export function attr_name_translated(hass, entity_id, attr_name) {
     try {
-        return hass['formatEntityAttributeName'](hass.states[entity_id], attr_name, attr_value);
+        return hass['formatEntityAttributeName'](hass.states[entity_id], attr_name);
     }
     catch {
         return (attr_name ??

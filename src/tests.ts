@@ -1,4 +1,5 @@
 import { Environment } from 'nunjucks';
+import { contains } from './utils/contains';
 import { match, search, test } from './utils/regexp';
 import { datetime, list, set, string_like } from './utils/type_checking';
 
@@ -20,6 +21,9 @@ const TESTS: Record<string, CallableFunction> = {
 	set,
 	datetime,
 	string_like,
+
+	// Contains
+	contains,
 
 	// Regular Expressions
 	match,

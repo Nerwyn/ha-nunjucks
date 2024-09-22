@@ -22,6 +22,27 @@ describe('distance', () => {
 		);
 	});
 
+	it('should return the distance between a state object and the home zone', () => {
+		assert.equal(
+			parseInt(
+				renderTemplate(
+					hass,
+					'{{ distance(hass.states["person.john_doe"]) }}',
+				) as string,
+			),
+			parseInt('800.609239342353' as string),
+		);
+		assert.equal(
+			parseInt(
+				renderTemplate(
+					hass,
+					'{{ distance(_states.person.john_doe) }}',
+				) as string,
+			),
+			parseInt('800.609239342353' as string),
+		);
+	});
+
 	it('should return the distance between two given sets of coordinates', () => {
 		assert.equal(
 			parseInt(
@@ -45,7 +66,46 @@ describe('distance', () => {
 			parseInt(
 				renderTemplate(
 					hass,
-					'{{ distance( "person.jane_doe", "person.john_doe") }}',
+					'{{ distance("person.jane_doe", "person.john_doe") }}',
+				) as string,
+			),
+			parseInt('815.208567690914' as string),
+		);
+	});
+
+	it('should return the distance between two state objects', () => {
+		assert.equal(
+			parseInt(
+				renderTemplate(
+					hass,
+					'{{ distance(hass.states["person.john_doe"], hass.states["person.jane_doe"]) }}',
+				) as string,
+			),
+			parseInt('815.208567690914' as string),
+		);
+		assert.equal(
+			parseInt(
+				renderTemplate(
+					hass,
+					'{{ distance(_states.person.jane_doe, _states.person.john_doe) }}',
+				) as string,
+			),
+			parseInt('815.208567690914' as string),
+		);
+		assert.equal(
+			parseInt(
+				renderTemplate(
+					hass,
+					'{{ distance(hass.states["person.john_doe"], _states.person.jane_doe) }}',
+				) as string,
+			),
+			parseInt('815.208567690914' as string),
+		);
+		assert.equal(
+			parseInt(
+				renderTemplate(
+					hass,
+					'{{ distance(_states.person.john_doe, hass.states["person.jane_doe"]) }}',
 				) as string,
 			),
 			parseInt('815.208567690914' as string),
@@ -70,6 +130,27 @@ describe('distance', () => {
 				) as string,
 			),
 			parseInt('7186.499442630041' as string),
+		);
+	});
+
+	it('should return the distance between an entity and a state object', () => {
+		assert.equal(
+			parseInt(
+				renderTemplate(
+					hass,
+					'{{ distance(hass.states["person.john_doe"], "person.jane_doe") }}',
+				) as string,
+			),
+			parseInt('815.208567690914' as string),
+		);
+		assert.equal(
+			parseInt(
+				renderTemplate(
+					hass,
+					'{{ distance("person.jane_doe", _states.person.john_doe) }}',
+				) as string,
+			),
+			parseInt('815.208567690914' as string),
 		);
 	});
 });

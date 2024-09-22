@@ -133,7 +133,7 @@ export function distance(
 		if (typeof args[i] == 'string') {
 			lat2 = hass.states[args[i] as string].attributes.latitude;
 			lon2 = hass.states[args[i] as string].attributes.longitude;
-		} else if (typeof args[0] == 'object' && !Array.isArray(args[0])) {
+		} else if (typeof args[i] == 'object' && !Array.isArray(args[i])) {
 			lat2 = (args[i] as HassEntity).attributes.latitude;
 			lon2 = (args[i] as HassEntity).attributes.longitude;
 		} else if (typeof args[i] == 'number') {

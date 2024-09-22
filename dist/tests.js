@@ -1,3 +1,4 @@
+import { contains } from './utils/contains';
 import { match, search, test } from './utils/regexp';
 import { datetime, list, set, string_like } from './utils/type_checking';
 export function addTests(env) {
@@ -14,6 +15,8 @@ const TESTS = {
     set,
     datetime,
     string_like,
+    // Contains
+    contains,
     // Regular Expressions
     match,
     search,

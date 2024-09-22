@@ -11,7 +11,7 @@ A wrapper for [nunjucks](https://www.npmjs.com/package/nunjucks) for use with Ho
 
 ## What is nunjucks?
 
-[Nunjucks](https://mozilla.github.io/nunjucks/) is a templating engine for JavaScript that is heavily inspired by jinja2. Home Assistant uses jinja2 to process templates in card configurations on the backend, so the syntax of jinja2 and Nunjucks is virtually the same. This makes it an excellent alternative for Home Assistant templating for custom cards.
+[Nunjucks](https://mozilla.github.io/nunjucks/) is a templating engine for JavaScript that is heavily inspired by jinja2. Home Assistant uses jinja2 to process templates in card configurations on the backend, so the syntax of jinja2 and Nunjucks is virtually the same. This makes it an excellent alternative to Home Assistant core jinja2 templating for custom cards.
 
 While some Home Assistant native cards support templating for certain fields, implementing proper Home Assistant jinja2 template support in custom cards can be difficult. Additionally Home Assistant jinja2 templates are processed by the Python backend, and can take several seconds to render. Nunjucks templates are processed by the frontend using the frontend [hass](https://developers.home-assistant.io/docs/frontend/data/) object before your custom card's HTML is rendered, making nunjucks templating instanteous and much faster than traditional jinja2 templates.
 
@@ -31,9 +31,11 @@ import { renderTemplate } from 'ha-nunjucks';
 const renderedString = renderTemplate(this.hass, templateString);
 ```
 
+That's it! The result of `renderTemplate` is the rendered template for you to use. In unit and integration testing render time is under 1 ms and shouldn't cause any latency in your projects.
+
 Rather than rendering templates on the backend, nunjucks renders templates on the frontend. This repository uses the Home Assistant object present in all custom cards to read entity state data.
 
-You can also provide additional context to the `renderTemplate` function to pass to nunjucks if you want to make additional variables or project specific functions available to your users for use in templates.
+You can also provide context to the `renderTemplate` function to pass to nunjucks if you want to make additional variables or project specific functions available to your users for use in templates.
 
 ```typescript
 import { renderTemplate } from 'ha-nunjucks';
@@ -42,6 +44,10 @@ const context = {
   foo: 'bar',
   doThing(thing: string) {
     return `doing ${thing}!`;
+  },
+  config: {
+    entity: 'foo.bar',
+    attribute: 'baz_bah',
   },
 };
 
@@ -60,7 +66,7 @@ When the return type is expected to be a number, end users should cast these val
 
 The vast majority of the [Home Assistant template extensions](https://www.home-assistant.io/docs/configuration/templating/#home-assistant-template-extensions) have been implemented into this package. If there are functions that you use that are not currently supported or don't behave exactly like their jinja2 versions, please make a feature request or try adding it to the project yourself and create a pull request.
 
-Template extensions can be functions, tests, filters, or constants. Functions are called inline like a regular programming function, such as `states()` or `floors()`. Filters are added to the end of a string using a pipe (`|`) character. Many filters are also available as functions. Tests are functions which return booleans and can be used in an if statement like `if foo has_value`, not to be confused with functions with is in their names that also return booleans and used in if statements like `if is_state`. Contants are static values, and are just called as is like `{{ True }}` or `{{ pi }}`.
+Template extensions can be functions, tests, filters, and/or constants. Functions are called inline like a regular programming function, such as `states()` or `floors()`. Filters are added to the end of a string using a pipe character like `123.45 | int` or `"light.lounge" | state_attr("brightness")`. Tests are functions which return booleans and can be used in an if statement like `if "foo" has_value`, not to be confused with functions with is in their names that also return booleans and can be used in if statements like `if is_state`. Contants are static values, and are just called as is like `{{ True }}` or `{{ pi }}`.
 
 ### Python Constants
 
@@ -80,9 +86,13 @@ Because entity IDs contain periods in them, you cannot use dot notation when acc
 
 `{{ hass.states["light.sunroom_ceiling"].state }}`
 
-For convenience, the `hass states` object is rebuilt as a separate object that can be accessed with dot notation. Because of JavaScript limitations, it's name has been changed to `_states`.
+For convenience, the `hass states` object is rebuilt as a separate object that can be accessed with dot notation. Because of JavaScript limitations not allowing for functions and object to share the same name, it has been named `_states`.
 
 `{{ _states.light.sunroom_ceiling.state }}`
+
+You do have to use bracket notation for arrays within state objects.
+
+`{{ _states.light.sunroom_ceiling.attributes.supported_color_modes[0] }}`
 
 ### [States](https://www.home-assistant.io/docs/configuration/templating/#states)
 
@@ -90,19 +100,19 @@ Functions used to determine an entity's state or an attribute.
 
 | Name          | Type             | Arguments                                           | Description                                                                                                         |
 | ------------- | ---------------- | --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| states        | function         | entity_id, rounded (optional), with_unit (optional) | Returns the state string of the given entity. Optionally round numerical states and append the unit of measurement. |
-| is_state      | function         | entity_id, value                                    | Compares an entity's state with a specified state or list of states and returns `true` or `false`.                  |
-| state_attr    | function         | entity_id, attribute                                | Returns the value of the attribute or `undefined` if it doesn't exist.                                              |
-| is_state_attr | function         | entity_id, attribute, value                         | Tests if the given entity attribute is the specified value.                                                         |
+| states        | function, filter | entity_id, rounded (optional), with_unit (optional) | Returns the state string of the given entity. Optionally round numerical states and append the unit of measurement. |
+| is_state      | function,        | entity_id, value                                    | Compares an entity's state with a specified state or list of states and returns `true` or `false`.                  |
+| state_attr    | function, filter | entity_id, attribute                                | Returns the value of the attribute or `undefined` if it doesn't exist.                                              |
+| is_state_attr | function,        | entity_id, attribute, value                         | Tests if the given entity attribute is the specified value.                                                         |
 | has_value     | function, filter | entity_id                                           | Tests if the given entity is not unknown or unavailable.                                                            |
 
 ### [State Translated](https://www.home-assistant.io/docs/configuration/templating/#state-translated)
 
-| Name                  | Type     | Arguments                                             | Description                                                                                                                                                          |
-| --------------------- | -------- | ----------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| state_translated      | function | entity_id, state (optional)                           | Returns the formatted and translated state of an entity or provided state using a language that is currently configured in the general settings.                     |
-| attr_name_translated  | function | entity_id, attr_name (optional) attr_value (optional) | Returns the formatted and translated attribute name of an entity or provided attribute name using a language that is currently configured in the general settings.   |
-| attr_value_translated | function | entity_id, attr_name (optional) attr_value (optional) | Returns the formatted and translated attribute value of an entity or provided attribute value using a language that is currently configured in the general settings. |
+| Name                  | Type             | Arguments                                   | Description                                                                                                                                                          |
+| --------------------- | ---------------- | ------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| state_translated      | function, filter | entity_id, state (optional)                 | Returns the formatted and translated state of an entity or provided state using a language that is currently configured in the general settings.                     |
+| attr_name_translated  | function, filter | entity_id, attr_name                        | Returns the formatted and translated attribute name of an entity using a language that is currently configured in the general settings.                              |
+| attr_value_translated | function, filter | entity_id, attr_name, attr_value (optional) | Returns the formatted and translated attribute value of an entity or provided attribute value using a language that is currently configured in the general settings. |
 
 ### [Groups](https://www.home-assistant.io/docs/configuration/templating/#working-with-groups)
 
@@ -126,6 +136,8 @@ Functions used to determine an entity's state or an attribute.
 | device_id       | function, filter | entity_id                                  | Returns the device ID for a given entity ID or device name.                                  |
 
 ### [Floors](https://www.home-assistant.io/docs/configuration/templating/#floors)
+
+**NOTE**: Floor name is not readily available in the hass object, so it is not included as a function or function input.
 
 | Name        | Type             | Arguments    | Description                                                                   |
 | ----------- | ---------------- | ------------ | ----------------------------------------------------------------------------- |
@@ -151,6 +163,8 @@ Functions used to determine an entity's state or an attribute.
 
 ### [Labels](https://www.home-assistant.io/docs/configuration/templating/#labels)
 
+**NOTE**: Label name is not readily available in the hass object, so it is not included as a function or function input.
+
 | Name           | Type             | Arguments               | Description                                                                                |
 | -------------- | ---------------- | ----------------------- | ------------------------------------------------------------------------------------------ |
 | labels         | function, filter | lookup_value (optional) | Returns the full list of label IDs, or those for a given area ID, device ID, or entity ID. |
@@ -168,10 +182,12 @@ A shorthand for an if else statement.
 
 ### [Time](https://www.home-assistant.io/docs/configuration/templating/#time)
 
-**NOTE**: JS Date limitations
+**NOTE**:
 
 - JS Date does not support time precision below 1 millisecond, while Python datetime supports microsecond precision. While some of these functions allow you to input microseconds, any time unit below 1 millisecond will be lost.
 - JS Date is not as good at handling timezones as Python datetime. Be careful about timezone differences! You can try to account for this using the `utc` flags and/or by including a timezone offset in a datetime string to parse using `as_datetime` or `strptime`.
+- Including time extensions in your templates does not cause them to refresh more regularly by themselves, although they will still update whenever the hass object does. If you are a developer, you have to implement this behavior yourself in your custom cards.
+- These extensions use [ts-py-datetime](https://github.com/Nerwyn/py-datetime) for simulating Pythonic date and time functionality.
 
 | Name             | Type             | Arguments                                                                                                                                     | Description                                                                                                                                                                                                                                                                                                                                                                                        |
 | ---------------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -181,7 +197,7 @@ A shorthand for an if else statement.
 | as_datetime      | function, filter | value, fallback (optional), utc (default true)                                                                                                | Converts a string containing a timestamp, or valid UNIX timestamp, to a datetime object. If that fails, it returns the fallback value or, if omitted, raises an error. When the input is already a datetime object it will be returned as is. in case the input is a datetime.date object, midnight will be added as time.                                                                         |
 | as_timestamp     | function, filter | value, fallback (optional)                                                                                                                    | Converts a datetime object or string to UNIX timestamp. If that fails, returns the fallback value, or if omitted raises an error.                                                                                                                                                                                                                                                                  |
 | as_local         | function, filter | value                                                                                                                                         | Converts a datetime object to local time.                                                                                                                                                                                                                                                                                                                                                          |
-| strptime         | function         | value, format, fallback (optional), utc (default false)                                                                                       | Parses a string based on a [format](https://docs.python.org/3.10/library/datetime.html#strftime-and-strptime-behavior) and returns a datetime object. If that fails, it returns the default value or, if omitted, raises an error.                                                                                                                                                                 |
+| strptime         | function         | value, format, fallback (optional), utc (default false)                                                                                       | Parses a string based on a [format](https://d3js.org/d3-time-format#locale_format) and returns a datetime object. If that fails, it returns the default value or, if omitted, raises an error.                                                                                                                                                                                                     |
 | time_since       | function, filter | value, precision (default 1)                                                                                                                  | Returns a human readable string indicating the difference between now and an input past datetime object. `precision` indicates how many units (years, months, days, hours, minutes, seconds) to use, with the last unit being rounded and 0 being the same as 6. If the input datetime is in the past it returns the input. If the input datetime is not a datetime object it returns nothing.     |
 | time_until       | function, filter | value, precision (default 1)                                                                                                                  | Returns a human readable string indicating the difference between now and an input future datetime object. `precision` indicates how many units (years, months, days, hours, minutes, seconds) to use, with the last unit being rounded and 0 being the same as 6. If the input datetime is in the future it returns the input. If the input datetime is not a datetime object it returns nothing. |
 | timedelta        | function         | days (optional), seconds (optional), microseconds (optional), milliseconds (optional), minutes (optional), hours (optional), weeks (optional) | Returns a timedelta object, which represents a duration (an amount of time between two datetimes). It accepts the same arguments as the Python datetime.timedelta function – days, seconds, microseconds, milliseconds, minutes, hours, weeks. JS Date does not support microsecond precision, and precision below 1 millisecond is lost.                                                          |
@@ -199,10 +215,10 @@ A shorthand for an if else statement.
 
 ### [Distance](https://www.home-assistant.io/docs/configuration/templating/#distance)
 
-| Name     | Type             | Arguments | Description                                                                                                                                                                                                   |
-| -------- | ---------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| distance | function         | args      | Measures the distance between home, an entity, or coordinates. The unit of measurement (kilometers or miles) depends on the system’s configuration settings. Does not work with groups.                       |
-| closest  | function, filter | args      | Finds the closest entity to home, or the first entity or coordinate if multiple provided. Arguments can be entity IDs, domains, entity state objects, coordinate pairs, or arrays. Does not work with groups. |
+| Name     | Type             | Arguments | Description                                                                                                                                                                        |
+| -------- | ---------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| distance | function         | args      | Measures the distance between home, an entity, or coordinates. The unit of measurement (kilometers or miles) depends on the system’s configuration settings.                       |
+| closest  | function, filter | args      | Finds the closest entity to home, or the first entity or coordinate if multiple provided. Arguments can be entity IDs, domains, entity state objects, coordinate pairs, or arrays. |
 
 ### [Contains](https://www.home-assistant.io/docs/configuration/templating/#contains)
 
@@ -269,7 +285,7 @@ A shorthand for an if else statement.
 
 ### [Regular Expressions](https://www.home-assistant.io/docs/configuration/templating/#regular-expressions)
 
-**NOTE**: The format of regular expressions in nunjucks is different than jinja2. You may want to read the [Nunjucks](https://mozilla.github.io/nunjucks/templating.html#regular-expressions) and [mdn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions) documentation.
+**NOTE**: The format of regular expressions in nunjucks is different than jinja2. You may want to read the [Nunjucks](https://mozilla.github.io/nunjucks/templating.html#regular-expressions) and [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions) documentation.
 
 | Name                | Type   | Arguments                                      | Description                                                                                                                          |
 | ------------------- | ------ | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
@@ -282,12 +298,12 @@ A shorthand for an if else statement.
 
 ### Miscellaneous
 
-Functions that are not from the Home Assistant templating documentation
+Functions that are not from the Home Assistant templating documentation.
 
-| Name        | Arguments  | Description                                                                                                                                           |
-| ----------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| match_media | mediaquery | Returns the boolean result of the provided [CSS media query](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_media_queries/Using_media_queries). |
-| str         | value      | Return the string representation of the input.                                                                                                        |
+| Name        | Arguments     | Description                                                                                                                                           |
+| ----------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| match_media | mediaquery    | Returns the boolean result of the provided [CSS media query](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_media_queries/Using_media_queries). |
+| str         | value, filter | Return the string representation of the input.                                                                                                        |
 
 [last-commit-shield]: https://img.shields.io/github/last-commit/Nerwyn/ha-nunjucks?style=for-the-badge
 [commits]: https://github.com/Nerwyn/ha-nunjucks/commits/main

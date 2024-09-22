@@ -111,7 +111,7 @@ export function distance(hass, ...args) {
             lat2 = hass.states[args[i]].attributes.latitude;
             lon2 = hass.states[args[i]].attributes.longitude;
         }
-        else if (typeof args[0] == 'object' && !Array.isArray(args[0])) {
+        else if (typeof args[i] == 'object' && !Array.isArray(args[i])) {
             lat2 = args[i].attributes.latitude;
             lon2 = args[i].attributes.longitude;
         }

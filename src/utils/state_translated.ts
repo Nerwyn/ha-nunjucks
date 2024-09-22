@@ -22,18 +22,13 @@ export function attr_name_translated(
 	hass: HomeAssistant,
 	entity_id: string,
 	attr_name: string,
-	attr_value?: string,
 ) {
 	try {
 		return (
 			hass[
 				'formatEntityAttributeName' as keyof HomeAssistant
-			] as unknown as (
-				stateObj: HassEntity,
-				attr_name: string,
-				attr_value?: string,
-			) => string
-		)(hass.states[entity_id], attr_name, attr_value);
+			] as unknown as (stateObj: HassEntity, attr_name: string) => string
+		)(hass.states[entity_id], attr_name);
 	} catch {
 		return (
 			attr_name ??
