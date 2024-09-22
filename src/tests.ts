@@ -1,5 +1,5 @@
 import { Environment } from 'nunjucks';
-import { match, search } from './utils/regexp';
+import { match, search, test } from './utils/regexp';
 import { datetime, list, set, string_like } from './utils/type_checking';
 
 export function addTests(env: Environment) {
@@ -24,4 +24,5 @@ const TESTS: Record<string, CallableFunction> = {
 	// Regular Expressions
 	match,
 	search,
+	test,
 };

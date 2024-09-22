@@ -2,7 +2,7 @@ module.exports = {
 	plugins: { '@typescript-eslint': {} },
 	rules: {
 		'no-unused-vars': [
-			'warn', // TODO change back to error when stubbed functions implemented
+			'error',
 			{
 				argsIgnorePattern: '^_',
 				varsIgnorePattern: '^_',

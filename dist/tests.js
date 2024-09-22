@@ -1,4 +1,4 @@
-import { match, search } from './utils/regexp';
+import { match, search, test } from './utils/regexp';
 import { datetime, list, set, string_like } from './utils/type_checking';
 export function addTests(env) {
     for (const func in TESTS) {
@@ -17,4 +17,5 @@ const TESTS = {
     // Regular Expressions
     match,
     search,
+    test,
 };

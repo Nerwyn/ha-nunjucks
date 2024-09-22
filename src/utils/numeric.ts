@@ -262,15 +262,33 @@ export const pi = Math.PI;
 export const tau = 2 * Math.PI;
 export const inf = Infinity;
 
-// TODO implement filter only functions
-export function bitwise_and(value_one: number, value_two: number) {}
+export function bitwise_and(value_one: number, value_two: number) {
+	return value_one & value_two;
+}
 
-export function bitwise_or(value_one: number, value_two: number) {}
+export function bitwise_or(value_one: number, value_two: number) {
+	return value_one | value_two;
+}
 
-export function bitwise_xor(value_one: number, value_two: number) {}
+export function bitwise_xor(value_one: number, value_two: number) {
+	return value_one ^ value_two;
+}
 
-export function ord(value: string) {}
+export function bitwise_not(value: number) {
+	return ~value;
+}
 
-export function multiply(value: string, arg: number) {}
+export function ord(value: string) {
+	if (value.length == 1) {
+		return value.codePointAt(0);
+	}
+	throw Error('Expected a character, but received a string');
+}
 
-export function add(value: string, arg: number) {}
+export function multiply(value: string, arg: number) {
+	return Number(value) * Number(arg);
+}
+
+export function add(value: string, arg: number) {
+	return Number(value) + Number(arg);
+}

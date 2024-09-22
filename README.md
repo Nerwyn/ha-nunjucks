@@ -240,18 +240,19 @@ A shorthand for an if else statement.
 | bitwise_and      | filter           | value_one, value_two                          | Performs a bitwise and(&) operation with two values.                                                                                                                                                                                                                                                                                                     |
 | bitwise_or       | filter           | value_one, value_two                          | Performs a bitwise or(\|) operation with two values.                                                                                                                                                                                                                                                                                                     |
 | bitwise_xor      | filter           | value_one, value_two                          | Performs a bitwise xor(^) operation with two values.                                                                                                                                                                                                                                                                                                     |
-| ord              | filter           | value                                         | Returns an integer representing a character's (string of length one) Unicode code point when the argument is a Unicode object, or the value of the byte when the argument is an 8-bit string.                                                                                                                                                            |
+| bitwise_not      | filter           | value                                         | Performs a bitwise not(~) operation with one value.                                                                                                                                                                                                                                                                                                      |
+| ord              | filter           | value                                         | Returns an integer representing a character's (string of length one) Unicode code point.                                                                                                                                                                                                                                                                 |
 | multiply         | filter           | value, arg                                    | Converts the input to a number and multiplies it by the argument.                                                                                                                                                                                                                                                                                        |
 | add              | filter           | value, arg                                    | Converts the input to a number and adds it to the argument.                                                                                                                                                                                                                                                                                              |
 
 ### [Complex Type Checking](https://www.home-assistant.io/docs/configuration/templating/#complex-type-checking)
 
-| Name        | Type | Arguments                                                | Description                       |
-| ----------- | ---- | -------------------------------------------------------- | --------------------------------- |
-| list        | test | value                                                    | Tests if a value is a list/array. |
-| set         | test | value                                                    | Tests if a value is a set.        |
-| datetime    | test | value                                                    | Tests if a value is a datetime.   |
-| string_like | test | value Tests if a value is a string, bytes, or bytearray. |
+| Name        | Type | Arguments | Description                                        |
+| ----------- | ---- | --------- | -------------------------------------------------- |
+| list        | test | value     | Tests if a value is a list/array.                  |
+| set         | test | value     | Tests if a value is a set.                         |
+| datetime    | test | value     | Tests if a value is a datetime.                    |
+| string_like | test | value     | Tests if a value is a string, bytes, or bytearray. |
 
 ### [Type Conversions](https://www.home-assistant.io/docs/configuration/templating/#type-conversions)
 
@@ -268,13 +269,16 @@ A shorthand for an if else statement.
 
 ### [Regular Expressions](https://www.home-assistant.io/docs/configuration/templating/#regular-expressions)
 
-| Name                | Type   | Arguments                                                                  | Description                                                                              |
-| ------------------- | ------ | -------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| match               | test   | value, find, ignorecase (default false)                                    | Matches the find expression at the beginning of the string using regex.                  |
-| search              | test   | value, find, ignorecase (default false)                                    | Matches the find expression anywhere in the string using regex.                          |
-| regex_replace       | filter | value, find (default ''), replace (default ''), ignorecase (default false) | Replaces the find expression with the replace expression string using RegEx.             |
-| regex_findall       | filter | value, find (default ''), ignorecase (default false)                       | Finds all RegEx matches of the find expression in value and returns an array of matches. |
-| regex_findall_index | filter | value, find (default ''), index (default 0), ignorecase(default false)     | Performs a RegEx find all but returns the match at a provided index.                     |
+**NOTE**: The format of regular expressions in nunjucks is different than jinja2. You may want to read the [Nunjucks](https://mozilla.github.io/nunjucks/templating.html#regular-expressions) and [mdn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions) documentation.
+
+| Name                | Type   | Arguments                                      | Description                                                                                                                          |
+| ------------------- | ------ | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| match               | test   | value, find                                    | Matches the find string at the beginning of the value string using regex.                                                            |
+| search              | test   | value, find                                    | Matches the find string anywhere in the value string using regex.                                                                    |
+| test                | test   | value, find                                    | Matches the find regular expression in the value string usign regex. Regular expressions should be preceded by r, like `r/foobar/g`. |
+| regex_replace       | filter | value, find (default ''), replace (default '') | Replaces the find expression with the replace expression string using RegEx.                                                         |
+| regex_findall       | filter | value, find (default '')                       | Finds all RegEx matches of the find expression in value and returns an array of matches.                                             |
+| regex_findall_index | filter | value, find (default ''), index (default 0)    | Performs a RegEx find all but returns the match at a provided index.                                                                 |
 
 ### Miscellaneous
 

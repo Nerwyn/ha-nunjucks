@@ -310,13 +310,63 @@ describe('pi', () => {
 		assert.equal(renderTemplate(hass, '{{ pi }}'), Math.PI);
 	});
 });
+
 describe('tau', () => {
 	it('should be equal to tau', () => {
 		assert.equal(renderTemplate(hass, '{{ tau }}'), 2 * Math.PI);
 	});
 });
+
 describe('inf', () => {
 	it('should be equal to infinity', () => {
 		assert.equal(renderTemplate(hass, '{{ inf }}'), Infinity);
+	});
+});
+
+describe('bitwise_and', () => {
+	it('should return the bitwise AND operation between two numbers', () => {
+		assert.equal(renderTemplate(hass, '{{ 3 | bitwise_and(7) }}'), 3);
+	});
+});
+
+describe('bitwise_or', () => {
+	it('should return the bitwise OR operation between two numbers', () => {
+		assert.equal(renderTemplate(hass, '{{ 5 | bitwise_or(3) }}'), 7);
+	});
+});
+
+describe('bitwise_xor', () => {
+	it('should return the bitwise XOR operation between two numbers', () => {
+		assert.equal(renderTemplate(hass, '{{ 5 | bitwise_xor(3) }}'), 6);
+	});
+});
+
+describe('bitwise_not', () => {
+	it('should return the bitwise NOT operation between two numbers', () => {
+		assert.equal(renderTemplate(hass, '{{ 5 | bitwise_not }}'), -6);
+	});
+});
+
+describe('ord', () => {
+	it('should return the Unicode code point of a single character input', () => {
+		assert.equal(renderTemplate(hass, '{{ "h" | ord }}'), 104);
+	});
+
+	it('should throw an error if more than one character is provided', () => {
+		assert.throws(() => renderTemplate(hass, '{{ "foo" | ord }}'));
+	});
+});
+
+describe('multiply', () => {
+	it('should convert the input to a number and multiply it by arg', () => {
+		assert.equal(renderTemplate(hass, '{{ 5 | multiply(6) }}'), 30);
+		assert.equal(renderTemplate(hass, '{{ "7" | multiply(6) }}'), 42);
+	});
+});
+
+describe('add', () => {
+	it('should convert the input to a number and add it to arg', () => {
+		assert.equal(renderTemplate(hass, '{{ 5 | add(6) }}'), 11);
+		assert.equal(renderTemplate(hass, '{{ "7" | add(6) }}'), 13);
 	});
 });
