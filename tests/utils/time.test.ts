@@ -234,6 +234,18 @@ describe('as_timestamp', () => {
 	});
 });
 
+describe('as_local', () => {
+	it('should convert a datetime object to local time', () => {
+		assert.equal(
+			renderTemplate(
+				hass,
+				'{{ as_local(as_datetime("2020-11-10 8:12:50+0200")) }}',
+			),
+			'2020-11-10 01:12:50',
+		);
+	});
+});
+
 describe('strptime', () => {
 	it('should parse a datetime string using format codes', () => {
 		assert.equal(
@@ -635,5 +647,82 @@ describe('as_timedelta', () => {
 				'0:00:05',
 			);
 		});
+	});
+});
+
+describe('timestamp_local', () => {
+	it('should convert a UNIX timestamp to the ISO format string representation in your local timezone', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ 199999990 | timestamp_local }}'),
+			'1976-05-03T15:33:10-0400',
+		);
+	});
+
+	it('should return a fallback value on error', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ "bar" | timestamp_local("foo") }}'),
+			'foo',
+		);
+	});
+});
+
+describe('timestamp_utc', () => {
+	it('should convert a UNIX timestamp to the ISO format string representation in your local timezone', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ 199999990 | timestamp_utc }}'),
+			'1976-05-03T19:33:10+0000',
+		);
+	});
+
+	it('should return a fallback value on error', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ "bar" | timestamp_utc("foo") }}'),
+			'foo',
+		);
+	});
+});
+
+describe('timestamp_custom', () => {
+	it('should convert a UNIX timestamp to its string representation based on a custom format in your local timezone as default', () => {
+		assert.equal(
+			renderTemplate(
+				hass,
+				'{{ 199999990 | timestamp_custom("%Y%m%d %H%M%S") }}',
+			),
+			'19760503 153310',
+		);
+	});
+	it('should convert a UNIX timestamp to its string representation based on a custom format in UTC if local is false', () => {
+		assert.equal(
+			renderTemplate(
+				hass,
+				'{{ 199999990 | timestamp_custom("%Y%m%d %H%M%S", false) }}',
+			),
+			'19760503 193310',
+		);
+		assert.equal(
+			renderTemplate(
+				hass,
+				'{{ 199999990 | timestamp_custom("%Y%m%d %H%M%S", local=false) }}',
+			),
+			'19760503 193310',
+		);
+	});
+
+	it('should return a fallback value on error', () => {
+		assert.equal(
+			renderTemplate(
+				hass,
+				'{{ "bar" | timestamp_custom("%Y%m%d %H%M%S", true, "foo") }}',
+			),
+			'foo',
+		);
+		assert.equal(
+			renderTemplate(
+				hass,
+				'{{ "bar" | timestamp_custom("%Y%m%d %H%M%S", fallback="foo") }}',
+			),
+			'foo',
+		);
 	});
 });

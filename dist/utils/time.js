@@ -217,7 +217,46 @@ export function as_timedelta(value) {
         return null;
     }
 }
-// TODO implement filter only functions
-export function timestamp_local(value, fallback) { }
-export function timestamp_utc(value, fallback) { }
-export function timestamp_custom(format_string, local = true, fallback = undefined) { }
+export function timestamp_local(value, fallback) {
+    try {
+        const res = dt.datetime(value).strftime('%Y-%m-%dT%H:%M:%S%Z');
+        isNaNCheck(res);
+        return res;
+    }
+    catch (e) {
+        if (fallback) {
+            return fallback;
+        }
+        throw e;
+    }
+}
+export function timestamp_utc(value, fallback) {
+    try {
+        const res = dt.datetime.utc(value).strftime('%Y-%m-%dT%H:%M:%S%Z');
+        isNaNCheck(res);
+        return res;
+    }
+    catch (e) {
+        if (fallback) {
+            return fallback;
+        }
+        throw e;
+    }
+}
+export function timestamp_custom(value, format_string, local = true, fallback = undefined) {
+    if (typeof local == 'object' && !Array.isArray(local)) {
+        fallback = local.fallback ?? fallback;
+        local = local.local ?? true;
+    }
+    try {
+        const res = (local ? dt.datetime(value) : dt.datetime.utc(value)).strftime(format_string);
+        isNaNCheck(res);
+        return res;
+    }
+    catch (e) {
+        if (fallback) {
+            return fallback;
+        }
+        throw e;
+    }
+}

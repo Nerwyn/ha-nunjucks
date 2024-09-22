@@ -290,13 +290,52 @@ export function as_timedelta(value: string) {
 	}
 }
 
-// TODO implement filter only functions
-export function timestamp_local(value: string, fallback?: string) {}
+export function timestamp_local(value: number, fallback?: string) {
+	try {
+		const res = dt.datetime(value).strftime('%Y-%m-%dT%H:%M:%S%Z');
+		isNaNCheck(res);
+		return res;
+	} catch (e) {
+		if (fallback) {
+			return fallback;
+		}
+		throw e;
+	}
+}
 
-export function timestamp_utc(value: string, fallback?: string) {}
+export function timestamp_utc(value: number, fallback?: string) {
+	try {
+		const res = dt.datetime.utc(value).strftime('%Y-%m-%dT%H:%M:%S%Z');
+		isNaNCheck(res);
+		return res;
+	} catch (e) {
+		if (fallback) {
+			return fallback;
+		}
+		throw e;
+	}
+}
 
 export function timestamp_custom(
+	value: number,
 	format_string: string,
-	local: boolean = true,
+	local: boolean | Record<string, string | boolean> = true,
 	fallback: string | undefined = undefined,
-) {}
+) {
+	if (typeof local == 'object' && !Array.isArray(local)) {
+		fallback = (local.fallback as string) ?? fallback;
+		local = (local.local as boolean) ?? true;
+	}
+	try {
+		const res = (
+			local ? dt.datetime(value) : dt.datetime.utc(value)
+		).strftime(format_string);
+		isNaNCheck(res);
+		return res;
+	} catch (e) {
+		if (fallback) {
+			return fallback;
+		}
+		throw e;
+	}
+}
