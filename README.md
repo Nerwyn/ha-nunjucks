@@ -68,6 +68,8 @@ The vast majority of the [Home Assistant template extensions](https://www.home-a
 
 Template extensions can be functions, tests, filters, and/or constants. Functions are called inline like a regular programming function, such as `states()` or `floors()`. Filters are added to the end of a string using a pipe character like `123.45 | int` or `"light.lounge" | state_attr("brightness")`. Tests are functions which return booleans and can be used in an if statement like `if "foo" has_value`, not to be confused with functions with is in their names that also return booleans and can be used in if statements like `if is_state`. Contants are static values, and are just called as is like `{{ True }}` or `{{ pi }}`.
 
+In addition to the template extensions implemented in this package, you also have access to the nunjucks builtin functions and filters. [Read the nunjucks templating documentation for more information](https://mozilla.github.io/nunjucks/templating.html).
+
 ### Python Constants
 
 These just remap Python built-in constants to JavaScript ones.
@@ -208,10 +210,10 @@ A shorthand for an if else statement.
 
 ### [To/From JSON](https://www.home-assistant.io/docs/configuration/templating/#tofrom-json)
 
-| Name      | Type   | Arguments                                  | Description                                                                                                                                                                                                                                                                             |
-| --------- | ------ | ------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| to_json   | filter | obj, ensure_ascii, pretty_print, sort_keys | Turn an object into a JSON string. `ensure_ascii` converts unicode characters into escape sequences. `pretty_print` formats the output with new lines and an indent of two spaces. `sort_keys` sorts the keys of the JSON object. **Consider using the nunjucks `dump` filter instead** |
-| from_json | filter | value                                      | Parse a string as JSON.                                                                                                                                                                                                                                                                 |
+| Name      | Type   | Arguments                                  | Description                                                                                                                                                                                                                                                                               |
+| --------- | ------ | ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| to_json   | filter | obj, ensure_ascii, pretty_print, sort_keys | Turn an object into a JSON string. `ensure_ascii` converts unicode characters into escape sequences. `pretty_print` formats the output with new lines and an indent of two spaces. `sort_keys` sorts the keys of the JSON object. **Consider using the nunjucks `safe` filter with this** |
+| from_json | filter | value                                      | Parse a string as JSON.                                                                                                                                                                                                                                                                   |
 
 ### [Distance](https://www.home-assistant.io/docs/configuration/templating/#distance)
 
