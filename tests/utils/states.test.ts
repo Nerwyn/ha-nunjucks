@@ -186,15 +186,19 @@ describe('has_value', () => {
 			renderTemplate(hass, '{{ has_value("input_number.volume") }}'),
 			true,
 		);
+		assert.equal(
+			renderTemplate(hass, '{{ "input_number.volume" | has_value }}'),
+			true,
+		);
 		assert.equal(renderTemplate(hass, '{{ has_value("foobar") }}'), false);
 	});
 });
 
-// describe('states object', () => {
-// 	it('should allow you to access state objects using just dot notation', () => {
-// 		assert.equal(
-// 			renderTemplate(hass, '{{ _states.light.ceiling_bulb_1.state }}'),
-// 			'off',
-// 		);
-// 	});
-// });
+describe('states object', () => {
+	it('should allow you to access state objects using just dot notation', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ _states.light.ceiling_bulb_1.state }}'),
+			'off',
+		);
+	});
+});
