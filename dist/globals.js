@@ -1,3 +1,4 @@
+import { HASS } from '.';
 import { area_devices, area_entities, area_id, area_name, areas, } from './utils/areas';
 import { device_attr, device_entities, device_id, is_device_attr, } from './utils/devices';
 import { closest, distance } from './utils/distance';
@@ -14,7 +15,6 @@ import { has_value, is_state, is_state_attr, state_attr, states, } from './utils
 import { as_datetime, as_local, as_timedelta, as_timestamp, now, strptime, time_since, time_until, timedelta, today_at, utcnow, } from './utils/time';
 import { list, set } from './utils/type_conversions';
 import { zip } from './utils/zip';
-import { Template } from 'nunjucks';
 export function addGlobals(env) {
     for (const func in GLOBALS) {
         env.addGlobal(func, function (...args) {
@@ -23,10 +23,7 @@ export function addGlobals(env) {
     }
     for (const func in HASS_GLOBALS) {
         env.addGlobal(func, function (...args) {
-            const hass = JSON.parse(new Template('{{ hass | dump | safe }}').render(
-            // @ts-ignore
-            this.getVariables()));
-            return HASS_GLOBALS[func](hass, ...args);
+            return HASS_GLOBALS[func](HASS, ...args);
         });
     }
     for (const c in CONST_GLOBALS) {

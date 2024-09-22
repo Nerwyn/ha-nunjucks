@@ -1,3 +1,4 @@
+import { HASS } from '.';
 import {
 	area_devices,
 	area_entities,
@@ -76,7 +77,7 @@ import {
 import { list, set } from './utils/type_conversions';
 import { zip } from './utils/zip';
 
-import { Environment, Template } from 'nunjucks';
+import { Environment } from 'nunjucks';
 
 export function addGlobals(env: Environment) {
 	for (const func in GLOBALS) {
@@ -87,13 +88,7 @@ export function addGlobals(env: Environment) {
 
 	for (const func in HASS_GLOBALS) {
 		env.addGlobal(func, function (...args: string[]) {
-			const hass = JSON.parse(
-				new Template('{{ hass | dump | safe }}').render(
-					// @ts-ignore
-					this.getVariables(),
-				),
-			);
-			return HASS_GLOBALS[func](hass, ...args);
+			return HASS_GLOBALS[func](HASS, ...args);
 		});
 	}
 

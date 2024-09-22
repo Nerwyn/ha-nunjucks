@@ -1,4 +1,5 @@
 import { HomeAssistant } from 'custom-card-helpers';
+export declare let HASS: HomeAssistant;
 /**
  * Render a Home Assistant template string using nunjucks
  * @param {HomeAssistant} hass The Home Assistant object

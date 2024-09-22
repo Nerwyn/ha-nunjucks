@@ -1,3 +1,4 @@
+import { HASS } from '.';
 import { area_devices, area_entities, area_id, area_name } from './utils/areas';
 import { contains } from './utils/contains';
 import { device_attr, device_entities, device_id } from './utils/devices';
@@ -49,7 +50,7 @@ import {
 	timestamp_utc,
 } from './utils/time';
 
-import { Environment, Template } from 'nunjucks';
+import { Environment } from 'nunjucks';
 
 export function addFilters(env: Environment) {
 	for (const func in FILTERS) {
@@ -57,15 +58,10 @@ export function addFilters(env: Environment) {
 			return FILTERS[func](...args);
 		});
 	}
+
 	for (const func in HASS_FILTERS) {
 		env.addFilter(func, function (...args) {
-			const hass = JSON.parse(
-				new Template('{{ hass | dump | safe }}').render(
-					// @ts-ignore
-					this.getVariables(),
-				),
-			);
-			return HASS_FILTERS[func](hass, ...args);
+			return HASS_FILTERS[func](HASS, ...args);
 		});
 	}
 

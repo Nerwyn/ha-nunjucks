@@ -2,6 +2,7 @@ import nunjucks from 'nunjucks';
 import { CONTEXT } from './context';
 import { addFilters } from './filters';
 import { addTests } from './tests';
+export let HASS;
 nunjucks.installJinjaCompat();
 const env = addTests(addFilters(new nunjucks.Environment()));
 /**
@@ -15,6 +16,7 @@ export function renderTemplate(hass, str, context) {
     if (typeof str == 'string' &&
         ((str.includes('{{') && str.includes('}}')) ||
             (str.includes('{%') && str.includes('%}')))) {
+        HASS = hass;
         str = env
             .renderString(structuredClone(str), {
             // hass,

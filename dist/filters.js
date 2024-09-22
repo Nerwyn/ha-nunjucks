@@ -1,3 +1,4 @@
+import { HASS } from '.';
 import { area_devices, area_entities, area_id, area_name } from './utils/areas';
 import { contains } from './utils/contains';
 import { device_attr, device_entities, device_id } from './utils/devices';
@@ -12,7 +13,6 @@ import { regex_findall, regex_findall_index, regex_replace, } from './utils/rege
 import { has_value } from './utils/states';
 import { base64_decode, ordinal, slugify, urlencode } from './utils/string';
 import { as_datetime, as_local, as_timestamp, time_since, time_until, timestamp_custom, timestamp_local, timestamp_utc, } from './utils/time';
-import { Template } from 'nunjucks';
 export function addFilters(env) {
     for (const func in FILTERS) {
         env.addFilter(func, function (...args) {
@@ -21,10 +21,7 @@ export function addFilters(env) {
     }
     for (const func in HASS_FILTERS) {
         env.addFilter(func, function (...args) {
-            const hass = JSON.parse(new Template('{{ hass | dump | safe }}').render(
-            // @ts-ignore
-            this.getVariables()));
-            return HASS_FILTERS[func](hass, ...args);
+            return HASS_FILTERS[func](HASS, ...args);
         });
     }
     return env;

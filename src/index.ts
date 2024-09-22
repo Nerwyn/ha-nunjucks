@@ -5,6 +5,7 @@ import { CONTEXT } from './context';
 import { addFilters } from './filters';
 import { addTests } from './tests';
 
+export let HASS: HomeAssistant;
 nunjucks.installJinjaCompat();
 const env = addTests(addFilters(new nunjucks.Environment()));
 
@@ -25,6 +26,7 @@ export function renderTemplate(
 		((str.includes('{{') && str.includes('}}')) ||
 			(str.includes('{%') && str.includes('%}')))
 	) {
+		HASS = hass;
 		str = env
 			.renderString(structuredClone(str), {
 				// hass,
