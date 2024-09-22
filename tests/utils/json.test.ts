@@ -5,7 +5,7 @@ import { hass } from '../hass';
 describe('to_json', () => {
 	it('should turn an object into a string', () => {
 		assert.equal(
-			renderTemplate(hass, '{{ testObj | to_json }}', {
+			renderTemplate(hass, '{{ testObj | to_json | safe }}', {
 				testObj: { foo: 'bar' },
 			}),
 			'{"foo":"bar"}',
@@ -14,9 +14,13 @@ describe('to_json', () => {
 
 	it('should turn an object into a string and pretty print it if enabled', () => {
 		assert.equal(
-			renderTemplate(hass, '{{ testObj | to_json(pretty_print=true) }}', {
-				testObj: { foo: 'bar' },
-			}),
+			renderTemplate(
+				hass,
+				'{{ testObj | to_json(pretty_print=true) | safe }}',
+				{
+					testObj: { foo: 'bar' },
+				},
+			),
 			`{
   "foo": "bar"
 }`,
@@ -25,9 +29,13 @@ describe('to_json', () => {
 
 	it("should turn an object into a string and sort it's keys if enabled", () => {
 		assert.equal(
-			renderTemplate(hass, '{{ testObj | to_json(sort_keys=true) }}', {
-				testObj: { foo: 'bar', baz: 'bah' },
-			}),
+			renderTemplate(
+				hass,
+				'{{ testObj | to_json(sort_keys=true) | safe }}',
+				{
+					testObj: { foo: 'bar', baz: 'bah' },
+				},
+			),
 			'{"baz":"bah","foo":"bar"}',
 		);
 	});

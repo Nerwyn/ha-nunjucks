@@ -47,7 +47,7 @@ export function renderTemplate(
 			return false;
 		}
 
-		return str.replace(/&quot;/g, '"');
+		return str;
 	}
 
 	return str;

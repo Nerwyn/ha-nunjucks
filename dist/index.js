@@ -34,7 +34,7 @@ export function renderTemplate(hass, str, context) {
         if (str.toLowerCase() == 'false') {
             return false;
         }
-        return str.replace(/&quot;/g, '"');
+        return str;
     }
     return str;
 }

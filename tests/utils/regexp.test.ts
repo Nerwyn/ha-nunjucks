@@ -55,7 +55,7 @@ describe('regex_findall', () => {
 		assert.equal(
 			renderTemplate(
 				hass,
-				'{{ "the quick brown fox jumped over the lazy dog" | regex_findall("the") | to_json }}',
+				'{{ "the quick brown fox jumped over the lazy dog" | regex_findall("the") | to_json | safe }}',
 			),
 			'["the","the"]',
 		);
@@ -65,7 +65,7 @@ describe('regex_findall', () => {
 		assert.equal(
 			renderTemplate(
 				hass,
-				'{{ "the quick brown fox jumped over the lazy dog" | regex_findall(r/th./g) | to_json }}',
+				'{{ "the quick brown fox jumped over the lazy dog" | regex_findall(r/th./g) | to_json | safe }}',
 			),
 			'["the","the"]',
 		);
