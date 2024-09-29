@@ -1,12 +1,12 @@
-import { PyDatetime } from 'py-datetime';
+import { datetime } from 'ts-py-datetime';
 export function list(value) {
     return Array.isArray(value);
 }
 export function set(value) {
     return value instanceof Set;
 }
-export function datetime(value) {
-    return value instanceof PyDatetime;
+export function is_datetime(value) {
+    return value instanceof datetime;
 }
 export function string_like(value) {
     return (typeof value == 'string' ||

@@ -12,7 +12,7 @@ import { match_media, str } from './utils/miscellaneous';
 import { acos, asin, atan, atan2, average, bool, cos, e, float, inf, int, is_number, log, max, median, min, pi, sin, sqrt, statistical_mode, tan, tau, } from './utils/numeric';
 import { attr_name_translated, attr_value_translated, state_translated, } from './utils/state_translated';
 import { has_value, is_state, is_state_attr, state_attr, states, } from './utils/states';
-import { as_datetime, as_local, as_timedelta, as_timestamp, now, strptime, time_since, time_until, timedelta, today_at, utcnow, } from './utils/time';
+import { as_datetime, as_local, as_timedelta, as_timestamp, get_timedelta, now, strptime, time_since, time_until, today_at, utcnow, } from './utils/time';
 import { list, set } from './utils/type_conversions';
 import { zip } from './utils/zip';
 export function addGlobals(env) {
@@ -85,7 +85,7 @@ const GLOBALS = {
     strptime,
     time_since,
     time_until,
-    timedelta,
+    timedelta: get_timedelta,
     as_timedelta,
     // Numeric,
     float,

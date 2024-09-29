@@ -30,11 +30,11 @@
 	"dependencies": {
 		"custom-card-helpers": "latest",
 		"nunjucks": "latest",
-		"py-datetime": "github:Nerwyn/py-datetime"
+		"ts-py-datetime": "github:Nerwyn/ts-py-datetime#0.10.0-beta.001"
 	},
 	"devDependencies": {
-		"@types/nunjucks": "latest",
 		"@types/mocha": "latest",
+		"@types/nunjucks": "latest",
 		"@typescript-eslint/eslint-plugin": "latest",
 		"@typescript-eslint/parser": "latest",
 		"eslint": "latest",

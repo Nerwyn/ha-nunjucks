@@ -1,7 +1,7 @@
 import { Environment } from 'nunjucks';
 import { contains } from './utils/contains';
 import { match, search, test } from './utils/regexp';
-import { datetime, list, set, string_like } from './utils/type_checking';
+import { is_datetime, list, set, string_like } from './utils/type_checking';
 
 export function addTests(env: Environment) {
 	for (const func in TESTS) {
@@ -19,7 +19,7 @@ const TESTS: Record<string, CallableFunction> = {
 	// Complex Type Checking
 	list,
 	set,
-	datetime,
+	datetime: is_datetime,
 	string_like,
 
 	// Contains

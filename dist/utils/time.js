@@ -1,4 +1,4 @@
-import dt, { PyDate, PyDatetime, } from 'py-datetime';
+import dt, { date, datetime } from 'ts-py-datetime';
 import { isNaNCheck } from './numeric';
 export function now() {
     return dt.datetime.now();
@@ -9,8 +9,8 @@ export function utcnow() {
 export function today_at(value = '00:00') {
     const [hour, minutes, seconds, milliseconds] = value.split(':');
     const now = dt.datetime.now();
-    const res = dt.datetime(now.year, now.month, now.day, Number(hour), Number(minutes), Number(seconds), Number(milliseconds));
-    isNaNCheck(res.str());
+    const res = dt.datetime(now.year, now.month, now.day, Number(hour ?? 0), Number(minutes ?? 0), Number(seconds ?? 0), Number(milliseconds ?? 0));
+    isNaNCheck(res.toString());
     return res;
 }
 export function as_datetime(value, fallback = undefined, utc = true) {
@@ -44,18 +44,23 @@ export function as_datetime(value, fallback = undefined, utc = true) {
                 value = parseFloat(value);
             }
         }
-        if (!res) {
+        else if (typeof value == 'number') {
             if (utc) {
-                res = dt.datetime.utc(value);
+                res = dt.datetime.utcfromtimestamp(value);
             }
             else {
-                res = dt.datetime(value);
+                res = dt.datetime.fromtimestamp(value);
             }
         }
-        isNaNCheck(res.str());
-        if (value.year &&
-            value.hour == undefined) {
-            return new PyDatetime(res.year, res.month, res.day);
+        else if (value instanceof date) {
+            res = dt.datetime(value.year, value.month, value.day);
+        }
+        else {
+            res = value;
+        }
+        isNaNCheck((res ?? 'NaN').toString());
+        if (value.year && value.hour == undefined) {
+            return new datetime(res?.year, res?.month, res?.day);
         }
         return res;
     }
@@ -75,8 +80,13 @@ export function as_timestamp(value, fallback) {
             }
             res = Date.parse(value) / 1000;
         }
+        else if (typeof value == 'number') {
+            res =
+                dt.datetime.utcfromtimestamp(value).jsDate.getTime() /
+                    1000;
+        }
         else {
-            res = dt.datetime.utc(value).jsDate.getTime() / 1000;
+            res = value.jsDate.getTime() / 1000;
         }
         isNaNCheck(res.toString());
         return res;
@@ -89,13 +99,13 @@ export function as_timestamp(value, fallback) {
     }
 }
 export function as_local(value) {
-    return dt.datetime(dt.datetime(value).jsDate);
+    return dt.datetime.fromjsdate(dt.datetime(value).jsDate);
 }
 export function strptime(value, format, fallback = undefined, utc = false) {
     if (typeof fallback == 'object' &&
         !Array.isArray(fallback) &&
-        !(fallback instanceof PyDatetime) &&
-        !(fallback instanceof PyDate)) {
+        !(fallback instanceof datetime) &&
+        !(fallback instanceof date)) {
         utc = fallback.utc ?? utc;
         fallback = fallback.fallback ?? undefined;
     }
@@ -112,16 +122,16 @@ export function strptime(value, format, fallback = undefined, utc = false) {
         throw e;
     }
 }
-function timeDiff(datetime, precision = 1, until = false) {
-    if (!(datetime instanceof PyDatetime)) {
-        return datetime;
+function timeDiff(input, precision = 1, until = false) {
+    if (!(input instanceof datetime)) {
+        return input;
     }
-    let diff = now().valueOf() - as_local(datetime).valueOf();
+    let diff = now().valueOf() - as_local(input).valueOf();
     if (until) {
         diff = -1 * diff;
     }
     if (diff <= 0) {
-        return datetime;
+        return input;
     }
     if (precision == 0 || precision > 6) {
         precision = 6;
@@ -153,13 +163,13 @@ function timeDiff(datetime, precision = 1, until = false) {
     }
     return res.trim();
 }
-export function time_since(datetime, precision = 1) {
-    return timeDiff(datetime, precision);
+export function time_since(input, precision = 1) {
+    return timeDiff(input, precision);
 }
-export function time_until(datetime, precision = 1) {
-    return timeDiff(datetime, precision, true);
+export function time_until(input, precision = 1) {
+    return timeDiff(input, precision, true);
 }
-export function timedelta(days, seconds, microseconds, milliseconds, minutes, hours, weeks) {
+export function get_timedelta(days, seconds, microseconds, milliseconds, minutes, hours, weeks) {
     let res;
     if (days != null && typeof days != 'number') {
         res = dt.timedelta(days);
@@ -167,7 +177,7 @@ export function timedelta(days, seconds, microseconds, milliseconds, minutes, ho
     else {
         res = dt.timedelta(days ?? 0, seconds ?? 0, milliseconds ?? 0 + 0.001 * (microseconds ?? 0), minutes ?? 0, hours ?? 0, weeks ?? 0);
     }
-    isNaNCheck(res.str());
+    isNaNCheck(res.toString());
     return res;
 }
 export function as_timedelta(value) {
@@ -210,7 +220,7 @@ export function as_timedelta(value) {
         else {
             return null;
         }
-        isNaNCheck(res.str());
+        isNaNCheck(res.toString());
         return res;
     }
     catch {
@@ -219,7 +229,9 @@ export function as_timedelta(value) {
 }
 export function timestamp_local(value, fallback) {
     try {
-        const res = dt.datetime(value).strftime('%Y-%m-%dT%H:%M:%S%Z');
+        const res = dt.datetime
+            .fromtimestamp(value)
+            .strftime('%Y-%m-%dT%H:%M:%S%Z');
         isNaNCheck(res);
         return res;
     }
@@ -232,7 +244,9 @@ export function timestamp_local(value, fallback) {
 }
 export function timestamp_utc(value, fallback) {
     try {
-        const res = dt.datetime.utc(value).strftime('%Y-%m-%dT%H:%M:%S%Z');
+        const res = dt.datetime
+            .utcfromtimestamp(value)
+            .strftime('%Y-%m-%dT%H:%M:%S%Z');
         isNaNCheck(res);
         return res;
     }
@@ -249,7 +263,9 @@ export function timestamp_custom(value, format_string, local = true, fallback = 
         local = local.local ?? true;
     }
     try {
-        const res = (local ? dt.datetime(value) : dt.datetime.utc(value)).strftime(format_string);
+        const res = (local
+            ? dt.datetime.fromtimestamp(value)
+            : dt.datetime.utcfromtimestamp(value)).strftime(format_string);
         isNaNCheck(res);
         return res;
     }

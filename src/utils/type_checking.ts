@@ -1,4 +1,4 @@
-import { PyDatetime } from 'py-datetime';
+import { datetime } from 'ts-py-datetime';
 
 export function list(value: object[]) {
 	return Array.isArray(value);
@@ -8,8 +8,8 @@ export function set(value: object[]) {
 	return value instanceof Set;
 }
 
-export function datetime(value: object) {
-	return value instanceof PyDatetime;
+export function is_datetime(value: object) {
+	return value instanceof datetime;
 }
 
 export function string_like(value: object) {

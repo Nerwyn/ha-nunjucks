@@ -66,11 +66,11 @@ import {
 	as_local,
 	as_timedelta,
 	as_timestamp,
+	get_timedelta,
 	now,
 	strptime,
 	time_since,
 	time_until,
-	timedelta,
 	today_at,
 	utcnow,
 } from './utils/time';
@@ -164,7 +164,7 @@ const GLOBALS: Record<string, CallableFunction> = {
 	strptime,
 	time_since,
 	time_until,
-	timedelta,
+	timedelta: get_timedelta,
 	as_timedelta,
 
 	// Numeric,

@@ -1,6 +1,6 @@
 import { contains } from './utils/contains';
 import { match, search, test } from './utils/regexp';
-import { datetime, list, set, string_like } from './utils/type_checking';
+import { is_datetime, list, set, string_like } from './utils/type_checking';
 export function addTests(env) {
     for (const func in TESTS) {
         env.addTest(func, function (...args) {
@@ -13,7 +13,7 @@ const TESTS = {
     // Complex Type Checking
     list,
     set,
-    datetime,
+    datetime: is_datetime,
     string_like,
     // Contains
     contains,
