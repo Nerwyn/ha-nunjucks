@@ -66,7 +66,6 @@ import {
 	as_local,
 	as_timedelta,
 	as_timestamp,
-	get_timedelta,
 	now,
 	strptime,
 	time_since,
@@ -78,6 +77,7 @@ import { list, set } from './utils/type_conversions';
 import { zip } from './utils/zip';
 
 import { Environment } from 'nunjucks';
+import dt, { date, datetime, time, timedelta } from 'ts-py-datetime';
 
 export function addGlobals(env: Environment) {
 	for (const func in GLOBALS) {
@@ -95,6 +95,12 @@ export function addGlobals(env: Environment) {
 	for (const c in CONST_GLOBALS) {
 		env.addGlobal(c, CONST_GLOBALS[c]);
 	}
+
+	env.addGlobal('dt', dt);
+	env.addGlobal('date', date);
+	env.addGlobal('time', time);
+	env.addGlobal('datetime', datetime);
+	env.addGlobal('timedelta', timedelta);
 
 	return env;
 }
@@ -164,7 +170,6 @@ const GLOBALS: Record<string, CallableFunction> = {
 	strptime,
 	time_since,
 	time_until,
-	timedelta: get_timedelta,
 	as_timedelta,
 
 	// Numeric,

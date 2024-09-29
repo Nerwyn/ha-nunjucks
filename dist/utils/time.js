@@ -169,17 +169,6 @@ export function time_since(input, precision = 1) {
 export function time_until(input, precision = 1) {
     return timeDiff(input, precision, true);
 }
-export function get_timedelta(days, seconds, microseconds, milliseconds, minutes, hours, weeks) {
-    let res;
-    if (days != null && typeof days != 'number') {
-        res = dt.timedelta(days);
-    }
-    else {
-        res = dt.timedelta(days ?? 0, seconds ?? 0, milliseconds ?? 0 + 0.001 * (microseconds ?? 0), minutes ?? 0, hours ?? 0, weeks ?? 0);
-    }
-    isNaNCheck(res.toString());
-    return res;
-}
 export function as_timedelta(value) {
     try {
         let res;

@@ -1,4 +1,4 @@
-import { date, datetime, timedelta, TimedeltaParams } from 'ts-py-datetime';
+import { date, datetime, timedelta } from 'ts-py-datetime';
 export declare function now(): datetime;
 export declare function utcnow(): datetime;
 export declare function today_at(value?: string): datetime;
@@ -8,7 +8,6 @@ export declare function as_local(value: datetime): datetime;
 export declare function strptime(value: string, format: string, fallback?: datetime | string | undefined | Record<string, datetime | string | boolean>, utc?: boolean): string | datetime | Record<string, string | boolean | datetime>;
 export declare function time_since(input: datetime, precision?: number): string | datetime;
 export declare function time_until(input: datetime, precision?: number): string | datetime;
-export declare function get_timedelta(days?: number | TimedeltaParams, seconds?: number, microseconds?: number, milliseconds?: number, minutes?: number, hours?: number, weeks?: number): timedelta;
 export declare function as_timedelta(value: string): timedelta | null;
 export declare function timestamp_local(value: number, fallback?: string): string;
 export declare function timestamp_utc(value: number, fallback?: string): string;

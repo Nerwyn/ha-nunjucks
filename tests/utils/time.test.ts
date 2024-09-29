@@ -1,4 +1,5 @@
 import assert from 'assert';
+import dt from 'ts-py-datetime';
 import { renderTemplate } from '../../src';
 import { hass } from '../hass';
 
@@ -459,18 +460,11 @@ describe('time_until', () => {
 	});
 });
 
-describe('timedelta', () => {
+describe('dt.timedelta', () => {
 	it('should return a timedelta object with string representation', () => {
 		assert.equal(
-			renderTemplate(hass, '{{ timedelta(4, 32, 0, 0, 32, 8, 2) }}'),
+			renderTemplate(hass, '{{ dt.timedelta(4, 32, 0, 32, 8, 2) }}'),
 			'18 days, 8:32:32',
-		);
-	});
-
-	it("should ignore microseconds in it's string representation due to JS limitations", () => {
-		assert.equal(
-			renderTemplate(hass, '{{ timedelta(4, 32, 11, 120, 32, 8, 2) }}'),
-			'18 days, 8:32:32.120000',
 		);
 	});
 
@@ -478,7 +472,7 @@ describe('timedelta', () => {
 		assert.equal(
 			renderTemplate(
 				hass,
-				'{{ strptime("2020-11-10T8:12:50", "%Y-%m-%dT%H:%M:%S") - timedelta(days=3, hours=2, minutes=1) }}',
+				'{{ strptime("2020-11-10T8:12:50", "%Y-%m-%dT%H:%M:%S") - dt.timedelta(days=3, hours=2, minutes=1) }}',
 			),
 			'1604747510',
 		);
@@ -723,6 +717,81 @@ describe('timestamp_custom', () => {
 				'{{ "bar" | timestamp_custom("%Y%m%d %H%M%S", fallback="foo") }}',
 			),
 			'foo',
+		);
+	});
+});
+
+describe('dt', () => {
+	it('should return its constants when called upon', () => {
+		assert.equal(renderTemplate(hass, '{{ dt.MINYEAR }}'), '100');
+		assert.equal(renderTemplate(hass, '{{ dt.MAXYEAR }}'), '9999');
+	});
+
+	it('should allow for use of its construction functions', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ dt.datetime(2020, 6, 12) }} '),
+			'2020-06-12 00:00:00',
+		);
+		assert.equal(
+			renderTemplate(hass, '{{ dt.datetime(2020, 6, 12, 11, 34, 22) }} '),
+			'2020-06-12 11:34:22',
+		);
+		assert.equal(
+			renderTemplate(
+				hass,
+				'{{ dt.datetime(2020, 6, 12, 11, 34, 22, 987) }} ',
+			),
+			'2020-06-12 11:34:22.987000',
+		);
+		assert.equal(
+			renderTemplate(hass, '{{ dt.date(2020, 6, 12) }} '),
+			'2020-06-12',
+		);
+		assert.equal(
+			renderTemplate(hass, '{{ dt.time(11, 34, 22) }} '),
+			'11:34:22',
+		);
+		assert.equal(
+			renderTemplate(hass, '{{ dt.time(11, 34, 22, 987) }} '),
+			'11:34:22.987000',
+		);
+		assert.equal(
+			renderTemplate(
+				hass,
+				'{{ dt.timedelta(hours=11, minutes=34, milliseconds=987) }} ',
+			),
+			'11:34:00.987000',
+		);
+	});
+
+	it('should allow for use of instance methods', () => {
+		assert.equal(
+			renderTemplate(
+				hass,
+				'{{ dt.datetime(2019, 11, 10, 9, 8, 7, 123).ctime() }}',
+			),
+			'Sun Nov 09:08:07 2019',
+		);
+	});
+});
+
+describe('datetime classes', () => {
+	it('should allow access to their static constants and methods', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ datetime.min }}'),
+			dt.datetime.min.toString(),
+		);
+		assert.equal(
+			renderTemplate(hass, '{{ date.fromordinal(999999) }}'),
+			'2738-11-26',
+		);
+		assert.equal(
+			renderTemplate(hass, '{{ time.fromisoformat("11:10:09") }}'),
+			'11:10:09',
+		);
+		assert.equal(
+			renderTemplate(hass, '{{ timedelta.max.total_seconds() }}'),
+			'86400000000000',
 		);
 	});
 });

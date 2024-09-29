@@ -30,7 +30,7 @@
 	"dependencies": {
 		"custom-card-helpers": "latest",
 		"nunjucks": "latest",
-		"ts-py-datetime": "github:Nerwyn/ts-py-datetime#0.10.0-beta.001"
+		"ts-py-datetime": "github:Nerwyn/ts-py-datetime#0.10.0-beta.002"
 	},
 	"devDependencies": {
 		"@types/mocha": "latest",

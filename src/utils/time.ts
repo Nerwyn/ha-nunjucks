@@ -1,4 +1,4 @@
-import dt, { date, datetime, timedelta, TimedeltaParams } from 'ts-py-datetime';
+import dt, { date, datetime, timedelta } from 'ts-py-datetime';
 
 import { isNaNCheck } from './numeric';
 
@@ -203,32 +203,6 @@ export function time_since(input: datetime, precision: number = 1) {
 
 export function time_until(input: datetime, precision: number = 1) {
 	return timeDiff(input, precision, true);
-}
-
-export function get_timedelta(
-	days?: number | TimedeltaParams,
-	seconds?: number,
-	microseconds?: number,
-	milliseconds?: number,
-	minutes?: number,
-	hours?: number,
-	weeks?: number,
-) {
-	let res;
-	if (days != null && typeof days != 'number') {
-		res = dt.timedelta(days);
-	} else {
-		res = dt.timedelta(
-			days ?? 0,
-			seconds ?? 0,
-			milliseconds ?? 0 + 0.001 * (microseconds ?? 0),
-			minutes ?? 0,
-			hours ?? 0,
-			weeks ?? 0,
-		);
-	}
-	isNaNCheck(res.toString());
-	return res;
 }
 
 export function as_timedelta(value: string) {
