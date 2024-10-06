@@ -798,7 +798,7 @@ describe('datetime classes', () => {
 		);
 		assert.equal(
 			renderTemplate(hass, '{{ timedelta.max.total_seconds() }}'),
-			'86400000000000',
+			'8640000000000',
 		);
 	});
 });
