@@ -59,9 +59,6 @@ export function as_datetime(value, fallback = undefined, utc = true) {
             res = value;
         }
         isNaNCheck((res ?? 'NaN').toString());
-        if (value.year && value.hour == undefined) {
-            return new datetime(res?.year, res?.month, res?.day);
-        }
         return res;
     }
     catch (e) {

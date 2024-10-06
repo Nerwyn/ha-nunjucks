@@ -762,6 +762,13 @@ describe('dt', () => {
 			),
 			'11:34:00.987000',
 		);
+		assert.equal(
+			renderTemplate(
+				hass,
+				'{{ dt.datetime(year=2020, month=5, day=2, hour=14, second=45) }}',
+			),
+			'2020-05-02 14:00:45',
+		);
 	});
 
 	it('should allow for use of instance methods', () => {
@@ -770,7 +777,7 @@ describe('dt', () => {
 				hass,
 				'{{ dt.datetime(2019, 11, 10, 9, 8, 7, 123).ctime() }}',
 			),
-			'Sun Nov 09:08:07 2019',
+			'Sun Nov 10 09:08:07 2019',
 		);
 	});
 });
