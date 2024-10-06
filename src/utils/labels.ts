@@ -1,6 +1,33 @@
 import { HomeAssistant } from 'custom-card-helpers';
 
+interface LabelRegistryEntry {
+	created_at: number;
+	modified_at: number;
+	label_id: string;
+	name: string;
+	icon?: string;
+	color?: string;
+	description?: string;
+}
+
+let labelRegistry: LabelRegistryEntry[];
+
+export async function fetchLabelRegistry(hass: HomeAssistant) {
+	if (hass.connection) {
+		labelRegistry = await hass.connection
+			.sendMessagePromise({
+				type: 'config/label_registry/list',
+			})
+			.then((labels) =>
+				(labels as LabelRegistryEntry[]).sort((ent1, ent2) =>
+					ent1.name.localeCompare(ent2.name),
+				),
+			);
+	}
+}
+
 export function labels(hass: HomeAssistant, lookup_value?: string) {
+	console.log(labelRegistry);
 	try {
 		const areas = hass['areas' as keyof HomeAssistant] as Record<
 			string,

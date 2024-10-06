@@ -1,4 +1,15 @@
+let labelRegistry;
+export async function fetchLabelRegistry(hass) {
+    if (hass.connection) {
+        labelRegistry = await hass.connection
+            .sendMessagePromise({
+            type: 'config/label_registry/list',
+        })
+            .then((labels) => labels.sort((ent1, ent2) => ent1.name.localeCompare(ent2.name)));
+    }
+}
 export function labels(hass, lookup_value) {
+    console.log(labelRegistry);
     try {
         const areas = hass['areas'];
         const devices = hass['devices'];

@@ -2,8 +2,9 @@ import nunjucks from 'nunjucks';
 import { addFilters } from './filters';
 import { addGlobals } from './globals';
 import { addTests } from './tests';
+import { fetchLabelRegistry } from './utils/labels';
 import { buildStatesObject } from './utils/states';
-export let HASS;
+export let HASS = undefined;
 nunjucks.installJinjaCompat();
 const env = addTests(addFilters(addGlobals(new nunjucks.Environment())));
 /**
@@ -17,6 +18,9 @@ export function renderTemplate(hass, str, context) {
     if (typeof str == 'string' &&
         ((str.includes('{{') && str.includes('}}')) ||
             (str.includes('{%') && str.includes('%}')))) {
+        if (!HASS) {
+            fetchLabelRegistry(hass);
+        }
         HASS = hass;
         str = env
             .renderString(structuredClone(str), {
