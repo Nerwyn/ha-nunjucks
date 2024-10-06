@@ -186,7 +186,7 @@ A shorthand for an if else statement.
 
 **NOTE**:
 
-- JS Date does not support time precision below 1 millisecond, while Python datetime supports microsecond precision. While some of these functions allow you to input microseconds, any time unit below 1 millisecond will be lost.
+- JS Date does not support time precision below 1 millisecond, while Python datetime supports microsecond precision. Microsecond arguments are not available for these methods.
 - JS Date is not as good at handling timezones as Python datetime. Be careful about timezone differences! You can try to account for this using the `utc` flags and/or by including a timezone offset in a datetime string to parse using `as_datetime` or `strptime`.
 - Including time extensions in your templates does not cause them to refresh more regularly by themselves, although they will still update whenever the hass object does. If you are a developer, you have to implement this behavior yourself in your custom cards.
 
@@ -214,7 +214,7 @@ In addition to these functions, you have access to [a datetime library](https://
 | dt.date      | function | year, month, day                                                                                                         | Returns a date object.                                                                                                       |
 | dt.datetime  | function | year, month, day, hour (default 0), minute (default 0), second (default 0), millisecond (default 0), utc (default false) | Returns a datetime object, like the ones used by the functions above.                                                        |
 | dt.time      | function | hour (default 0), minute (default 0), second (default 0), millisecond (default 0)                                        | Returns a time object.                                                                                                       |
-| dt.timedelta | function | days (optional), seconds (optional), milliseconds (optional), minutes (optional), hours (optional), weeks (optional)     | Returns a timedelta object. JS Date does not support microsecond precision, and precision below 1 millisecond is lost.       |
+| dt.timedelta | function | days (optional), seconds (optional), milliseconds (optional), minutes (optional), hours (optional), weeks (optional)     | Returns a timedelta object.                                                                                                  |
 | date         | class    |                                                                                                                          | The date class, which has static methods which can be called upon.                                                           |
 | datetime     | class    |                                                                                                                          | The datetime class, which has static methods which can be called upon.                                                       |
 | time         | class    |                                                                                                                          | The time class, which has static methods which can be called upon.                                                           |
