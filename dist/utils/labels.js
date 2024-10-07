@@ -29,7 +29,6 @@ export function labels(hass, lookup_value) {
 }
 export function label_id(lookup_value) {
     for (const id in labelRegistry) {
-        console.log(labelRegistry[id]);
         if (labelRegistry[id].name == lookup_value) {
             return id;
         }

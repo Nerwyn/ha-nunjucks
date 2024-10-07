@@ -50,7 +50,6 @@ export function labels(hass: HomeAssistant, lookup_value?: string) {
 
 export function label_id(lookup_value: string) {
 	for (const id in labelRegistry) {
-		console.log(labelRegistry[id]);
 		if (labelRegistry[id].name == lookup_value) {
 			return id;
 		}
