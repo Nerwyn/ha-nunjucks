@@ -4,7 +4,7 @@ import { addGlobals } from './globals';
 import { addTests } from './tests';
 import { fetchLabelRegistry } from './utils/labels';
 import { buildStatesObject } from './utils/states';
-export let HASS = undefined;
+export let HASS;
 nunjucks.installJinjaCompat();
 const env = addTests(addFilters(addGlobals(new nunjucks.Environment())));
 /**
@@ -15,13 +15,13 @@ const env = addTests(addFilters(addGlobals(new nunjucks.Environment())));
  * @returns {string | boolean} The rendered template string if a string was provided, otherwise the unaltered input
  */
 export function renderTemplate(hass, str, context) {
+    if (!HASS) {
+        fetchLabelRegistry(hass);
+    }
+    HASS = hass;
     if (typeof str == 'string' &&
         ((str.includes('{{') && str.includes('}}')) ||
             (str.includes('{%') && str.includes('%}')))) {
-        if (!HASS) {
-            fetchLabelRegistry(hass);
-        }
-        HASS = hass;
         str = env
             .renderString(structuredClone(str), {
             hass,

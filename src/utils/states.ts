@@ -1,5 +1,6 @@
 import { HomeAssistant } from 'custom-card-helpers';
 import { HassEntity } from 'home-assistant-js-websocket';
+import { entityRegistry } from './entities';
 
 export function states(
 	hass: HomeAssistant,
@@ -18,14 +19,8 @@ export function states(
 			rounded = true;
 		}
 		if (rounded && !isNaN(stateObj?.state as unknown as number)) {
-			const precision = parseInt(
-				(
-					hass[
-						'entities' as keyof HomeAssistant
-					] as unknown as Record<string, Record<string, string>>
-				)[entity_id]?.display_precision ?? 0,
-			) as number;
-
+			const precision =
+				entityRegistry(hass)[entity_id]?.display_precision ?? 0;
 			state = Number(state).toPrecision(precision);
 		}
 		if (with_unit && stateObj?.attributes?.unit_of_measurement) {

@@ -1,52 +1,46 @@
 import { HomeAssistant } from 'custom-card-helpers';
+import { areaRegistry } from './areas';
+import { deviceRegistry } from './devices';
+import { entityRegistry } from './entities';
+
+interface FloorRegistryEntry {
+	created_at: number;
+	modified_at: number;
+	aliases: string[];
+	floor_id: string;
+	name: string;
+	level?: number;
+	icon?: string;
+}
+
+export const floorRegistry = (hass: HomeAssistant) =>
+	hass['floors' as keyof HomeAssistant] as unknown as Record<
+		string,
+		FloorRegistryEntry
+	>;
 
 export function floors(hass: HomeAssistant) {
-	try {
-		const areas = hass['areas' as keyof HomeAssistant] as Record<
-			string,
-			Record<string, string>
-		>;
-		const floorArr = [];
-		for (const areaId in areas) {
-			floorArr.push(areas[areaId].floor_id);
-		}
-		floorArr.sort();
-		return Array.from(new Set(floorArr));
-	} catch {
-		return undefined;
-	}
+	return Object.keys(floorRegistry(hass));
 }
 
 export function floor_id(hass: HomeAssistant, lookup_value: string) {
 	try {
-		const areas = hass['areas' as keyof HomeAssistant] as Record<
-			string,
-			Record<string, string>
-		>;
-		const devices = hass['devices' as keyof HomeAssistant] as Record<
-			string,
-			Record<string, string>
-		>;
-		const entities = hass['entities' as keyof HomeAssistant] as Record<
-			string,
-			Record<string, string>
-		>;
-
 		let areaId = lookup_value;
-		if (entities[lookup_value]) {
-			areaId = entities[lookup_value].area_id ?? areaId;
-			lookup_value = entities[lookup_value].device_id ?? lookup_value;
+		if (entityRegistry(hass)[lookup_value]) {
+			areaId = entityRegistry(hass)[lookup_value].area_id ?? areaId;
+			lookup_value =
+				entityRegistry(hass)[lookup_value].device_id ?? lookup_value;
 		}
 		if (lookup_value) {
-			if (devices[lookup_value]) {
-				areaId = devices[lookup_value].area_id ?? areaId;
+			if (deviceRegistry(hass)[lookup_value]) {
+				areaId = deviceRegistry(hass)[lookup_value].area_id ?? areaId;
 			}
-			if (areas[areaId]) {
-				return areas[areaId].floor_id;
+			if (areaRegistry(hass)[areaId]) {
+				return areaRegistry(hass)[areaId].floor_id;
 			} else {
-				for (const areaId in areas) {
-					if (areas[areaId].name == lookup_value) {
-						return areas[areaId].floor_id;
+				for (const areaId in areaRegistry(hass)) {
+					if (areaRegistry(hass)[areaId].name == lookup_value) {
+						return areaRegistry(hass)[areaId].floor_id;
 					}
 				}
 			}
@@ -57,16 +51,39 @@ export function floor_id(hass: HomeAssistant, lookup_value: string) {
 	}
 }
 
-export function floor_areas(hass: HomeAssistant, floor_id: string) {
+export function floor_name(hass: HomeAssistant, lookup_value: string) {
+	if (floorRegistry(hass)[lookup_value]) {
+		return floorRegistry(hass)[lookup_value].name;
+	}
+
+	const floorId = floor_id(hass, lookup_value);
+	if (floorId) {
+		return floorRegistry(hass)[floorId].name;
+	}
+	return undefined;
+}
+
+export function floor_areas(hass: HomeAssistant, floor_name_or_id: string) {
 	try {
 		const res = [];
-		if (floor_id) {
-			const areas = hass['areas' as keyof HomeAssistant] as Record<
-				string,
-				Record<string, string>
-			>;
-			for (const areaId in areas) {
-				if (areas[areaId].floor_id == floor_id) {
+		if (floor_name_or_id) {
+			let floorId: string | undefined = undefined;
+			if (floorRegistry(hass)[floor_name_or_id]) {
+				floorId = floor_name_or_id;
+			} else {
+				for (const id in Object.keys(floors)) {
+					if (floorRegistry(hass)[id].name == floor_name_or_id) {
+						floorId = floorRegistry(hass)[id].name;
+						break;
+					}
+				}
+			}
+			if (!floorId) {
+				return [];
+			}
+
+			for (const areaId in areaRegistry(hass)) {
+				if (areaRegistry(hass)[areaId].floor_id == floorId) {
 					res.push(areaId);
 				}
 			}

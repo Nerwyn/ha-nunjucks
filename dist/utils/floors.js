@@ -1,38 +1,29 @@
+import { areaRegistry } from './areas';
+import { deviceRegistry } from './devices';
+import { entityRegistry } from './entities';
+export const floorRegistry = (hass) => hass['floors'];
 export function floors(hass) {
-    try {
-        const areas = hass['areas'];
-        const floorArr = [];
-        for (const areaId in areas) {
-            floorArr.push(areas[areaId].floor_id);
-        }
-        floorArr.sort();
-        return Array.from(new Set(floorArr));
-    }
-    catch {
-        return undefined;
-    }
+    return Object.keys(floorRegistry(hass));
 }
 export function floor_id(hass, lookup_value) {
     try {
-        const areas = hass['areas'];
-        const devices = hass['devices'];
-        const entities = hass['entities'];
         let areaId = lookup_value;
-        if (entities[lookup_value]) {
-            areaId = entities[lookup_value].area_id ?? areaId;
-            lookup_value = entities[lookup_value].device_id ?? lookup_value;
+        if (entityRegistry(hass)[lookup_value]) {
+            areaId = entityRegistry(hass)[lookup_value].area_id ?? areaId;
+            lookup_value =
+                entityRegistry(hass)[lookup_value].device_id ?? lookup_value;
         }
         if (lookup_value) {
-            if (devices[lookup_value]) {
-                areaId = devices[lookup_value].area_id ?? areaId;
+            if (deviceRegistry(hass)[lookup_value]) {
+                areaId = deviceRegistry(hass)[lookup_value].area_id ?? areaId;
             }
-            if (areas[areaId]) {
-                return areas[areaId].floor_id;
+            if (areaRegistry(hass)[areaId]) {
+                return areaRegistry(hass)[areaId].floor_id;
             }
             else {
-                for (const areaId in areas) {
-                    if (areas[areaId].name == lookup_value) {
-                        return areas[areaId].floor_id;
+                for (const areaId in areaRegistry(hass)) {
+                    if (areaRegistry(hass)[areaId].name == lookup_value) {
+                        return areaRegistry(hass)[areaId].floor_id;
                     }
                 }
             }
@@ -43,13 +34,37 @@ export function floor_id(hass, lookup_value) {
         return undefined;
     }
 }
-export function floor_areas(hass, floor_id) {
+export function floor_name(hass, lookup_value) {
+    if (floorRegistry(hass)[lookup_value]) {
+        return floorRegistry(hass)[lookup_value].name;
+    }
+    const floorId = floor_id(hass, lookup_value);
+    if (floorId) {
+        return floorRegistry(hass)[floorId].name;
+    }
+    return undefined;
+}
+export function floor_areas(hass, floor_name_or_id) {
     try {
         const res = [];
-        if (floor_id) {
-            const areas = hass['areas'];
-            for (const areaId in areas) {
-                if (areas[areaId].floor_id == floor_id) {
+        if (floor_name_or_id) {
+            let floorId = undefined;
+            if (floorRegistry(hass)[floor_name_or_id]) {
+                floorId = floor_name_or_id;
+            }
+            else {
+                for (const id in Object.keys(floors)) {
+                    if (floorRegistry(hass)[id].name == floor_name_or_id) {
+                        floorId = floorRegistry(hass)[id].name;
+                        break;
+                    }
+                }
+            }
+            if (!floorId) {
+                return [];
+            }
+            for (const areaId in areaRegistry(hass)) {
+                if (areaRegistry(hass)[areaId].floor_id == floorId) {
                     res.push(areaId);
                 }
             }

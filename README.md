@@ -139,13 +139,12 @@ Functions used to determine an entity's state or an attribute.
 
 ### [Floors](https://www.home-assistant.io/docs/configuration/templating/#floors)
 
-**NOTE**: Floor name is not readily available in the hass object, so it is not included as a function or function input.
-
-| Name        | Type             | Arguments    | Description                                                                   |
-| ----------- | ---------------- | ------------ | ----------------------------------------------------------------------------- |
-| floors      | function         |              | Returns the full list of floor IDs that include an area.                      |
-| floor_id    | function, filter | lookup_value | Returns the floor ID for a given device ID, entity ID, area ID, or area name. |
-| floor_areas | function, filter | floor_id     | Returns the list of area IDs tied to a given floor ID.                        |
+| Name        | Type             | Arguments        | Description                                                                               |
+| ----------- | ---------------- | ---------------- | ----------------------------------------------------------------------------------------- |
+| floors      | function         |                  | Returns the full list of floor IDs that include an area.                                  |
+| floor_id    | function, filter | lookup_value     | Returns the floor ID for a given device ID, entity ID, area ID, or area name.             |
+| floor_name  | function, filter | lookup_value     | Returns the floor name for a given device ID, entity ID, area ID, area name, or floor ID. |
+| floor_areas | function, filter | floor_name_or_id | Returns the list of area IDs tied to a given floor ID or name.                            |
 
 ### [Areas](https://www.home-assistant.io/docs/configuration/templating/#areas)
 
@@ -165,14 +164,14 @@ Functions used to determine an entity's state or an attribute.
 
 ### [Labels](https://www.home-assistant.io/docs/configuration/templating/#labels)
 
-**NOTE**: Label name is not readily available in the hass object, so it is not included as a function or function input.
-
 | Name           | Type             | Arguments               | Description                                                                                |
 | -------------- | ---------------- | ----------------------- | ------------------------------------------------------------------------------------------ |
 | labels         | function, filter | lookup_value (optional) | Returns the full list of label IDs, or those for a given area ID, device ID, or entity ID. |
-| label_areas    | function, filter | label_id                | Returns the list of area IDs tied to a given label ID.                                     |
-| label_devices  | function, filter | label_id                | Returns the list of device IDs tied to a given label ID.                                   |
-| label_entities | function, filter | label_id                | Returns the list of entity IDs tied to a given label ID.                                   |
+| label_id       | function, filter | lookup_value            | Returns the label ID for a given label name.                                               |
+| label_name     | function, filter | lookup_value            | Returns the label name for a given label ID.                                               |
+| label_areas    | function, filter | label_name_or_id        | Returns the list of area IDs tied to a given label ID or name.                             |
+| label_devices  | function, filter | label_name_or_id        | Returns the list of device IDs tied to a given label ID or name.                           |
+| label_entities | function, filter | label_name_or_id        | Returns the list of entity IDs tied to a given label ID or name.                           |
 
 ### [Immediate If](https://www.home-assistant.io/docs/configuration/templating/#immediate-if-iif)
 

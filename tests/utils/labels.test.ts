@@ -35,28 +35,67 @@ describe('labels', () => {
 	});
 });
 
+describe('label_id', () => {
+	it('should return a label ID for a given label name', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ label_id("Infrared Remote") }}'),
+			'ir',
+		);
+	});
+});
+
+describe('label_name', () => {
+	it('should return a label name for a given label ID', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ label_name("ir") }}'),
+			'Infrared Remote',
+		);
+	});
+});
+
 describe('label_areas', () => {
-	it('label_areas should return a list of area IDs for a given label ID', () => {
+	it('should return a list of area IDs for a given label ID', () => {
 		assert.equal(
 			renderTemplate(hass, '{{ label_areas("outside") }}'),
+			'front_yard',
+		);
+	});
+
+	it('should return a list of area IDs for a given label name', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ label_areas("Outside") }}'),
 			'front_yard',
 		);
 	});
 });
 
 describe('label_devices', () => {
-	it('label_devices should return a list of device IDs for a given label ID', () => {
+	it('should return a list of device IDs for a given label ID', () => {
 		assert.equal(
 			renderTemplate(hass, '{{ label_devices("ir") }}'),
+			'06c14f4b7dd701890e596ebbe354aa97',
+		);
+	});
+
+	it('should return a list of device IDs for a given label name', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ label_devices("Infrared Remote") }}'),
 			'06c14f4b7dd701890e596ebbe354aa97',
 		);
 	});
 });
 
 describe('label_entities', () => {
-	it('label_entities should return a list of entity IDs for a given label ID', () => {
+	it('should return a list of entity IDs for a given label ID', () => {
 		assert.equal(
 			renderTemplate(hass, '{{ label_entities("lighting") }}'),
+			'light.driveway_lamps',
+		);
+	});
+
+	it('should return a list of entity IDs for a given label name', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ label_entities("Lighting") }}'),
 			'light.driveway_lamps',
 		);
 	});

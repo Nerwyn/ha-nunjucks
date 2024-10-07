@@ -1,11 +1,12 @@
+import { entityRegistry } from './entities';
 import { state_attr } from './states';
+export const deviceRegistry = (hass) => hass['devices'];
 export function device_entities(hass, device_id) {
     try {
         const res = [];
         if (device_id) {
-            const entities = hass['entities'];
-            for (const entityId in entities) {
-                if (entities[entityId].device_id == device_id) {
+            for (const entityId in entityRegistry(hass)) {
+                if (entityRegistry(hass)[entityId].device_id == device_id) {
                     res.push(entityId);
                 }
             }
@@ -18,8 +19,7 @@ export function device_entities(hass, device_id) {
 }
 export function device_attr(hass, device_or_entity_id, attr_name) {
     try {
-        const devices = hass['devices'];
-        return (devices[device_or_entity_id]?.[attr_name] ??
+        return (deviceRegistry(hass)[device_or_entity_id]?.[attr_name] ??
             state_attr(hass, device_or_entity_id, attr_name));
     }
     catch {
@@ -49,13 +49,11 @@ export function is_device_attr(hass, device_or_entity_id, attr_name, attr_value)
 export function device_id(hass, entity_id) {
     try {
         if (entity_id) {
-            const entities = hass['entities'];
-            if (entities[entity_id]) {
-                return entities[entity_id].device_id;
+            if (entityRegistry(hass)[entity_id]) {
+                return entityRegistry(hass)[entity_id].device_id;
             }
-            const devices = hass['devices'];
-            for (const deviceId in devices) {
-                const device = devices[deviceId];
+            for (const deviceId in deviceRegistry(hass)) {
+                const device = deviceRegistry(hass)[deviceId];
                 if (device.name == entity_id ||
                     device.name_by_user == entity_id) {
                     return deviceId;

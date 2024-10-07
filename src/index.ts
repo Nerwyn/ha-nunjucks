@@ -7,7 +7,7 @@ import { addTests } from './tests';
 import { fetchLabelRegistry } from './utils/labels';
 import { buildStatesObject } from './utils/states';
 
-export let HASS: HomeAssistant | undefined = undefined;
+export let HASS: HomeAssistant;
 nunjucks.installJinjaCompat();
 const env = addTests(addFilters(addGlobals(new nunjucks.Environment())));
 
@@ -23,16 +23,16 @@ export function renderTemplate(
 	str: string,
 	context?: object,
 ): string | boolean {
+	if (!HASS) {
+		fetchLabelRegistry(hass);
+	}
+	HASS = hass;
+
 	if (
 		typeof str == 'string' &&
 		((str.includes('{{') && str.includes('}}')) ||
 			(str.includes('{%') && str.includes('%}')))
 	) {
-		if (!HASS) {
-			fetchLabelRegistry(hass);
-		}
-
-		HASS = hass;
 		str = env
 			.renderString(structuredClone(str), {
 				hass,

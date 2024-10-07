@@ -3,7 +3,7 @@ import { area_devices, area_entities, area_id, area_name } from './utils/areas';
 import { contains } from './utils/contains';
 import { device_attr, device_entities, device_id } from './utils/devices';
 import { closest } from './utils/distance';
-import { floor_areas, floor_id } from './utils/floors';
+import { floor_areas, floor_id, floor_name } from './utils/floors';
 import { expand } from './utils/groups';
 import { iif } from './utils/iif';
 import { from_json, to_json } from './utils/json';
@@ -11,6 +11,8 @@ import {
 	label_areas,
 	label_devices,
 	label_entities,
+	label_id,
+	label_name,
 	labels,
 } from './utils/labels';
 import { str } from './utils/miscellaneous';
@@ -101,6 +103,7 @@ const HASS_FILTERS: Record<string, CallableFunction> = {
 
 	// Floors
 	floor_id,
+	floor_name,
 	floor_areas,
 
 	// Areas
@@ -123,6 +126,10 @@ const HASS_FILTERS: Record<string, CallableFunction> = {
 };
 
 const FILTERS: Record<string, CallableFunction> = {
+	// Labels
+	label_id,
+	label_name,
+
 	// Time
 	today_at,
 	as_datetime,

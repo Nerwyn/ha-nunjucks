@@ -51,6 +51,53 @@ describe('floor_id', () => {
 	});
 });
 
+describe('floor_name', () => {
+	it('should return a floor name if given a device ID', () => {
+		assert.equal(
+			renderTemplate(
+				hass,
+				'{{ floor_name("08d6a7f58fc934fba97d2ec2a66e7bba") }}',
+			),
+			'First Floor',
+		);
+	});
+
+	it('should return a floor name if given an entity ID', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ floor_name("remote.bedroom") }}'),
+			'Second Floor',
+		);
+	});
+
+	it('should return a floor name if given a group entity ID', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ floor_name("light.driveway_lamps") }}'),
+			'First Floor',
+		);
+	});
+
+	it('should return a floor name if given an area ID', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ floor_name("kitchen") }}'),
+			'First Floor',
+		);
+	});
+
+	it('should return a floor name if given an area name', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ floor_name("Front Yard") }}'),
+			'First Floor',
+		);
+	});
+
+	it('should return a floor name if given a floor ID', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ floor_name("second_floor") }}'),
+			'Second Floor',
+		);
+	});
+});
+
 describe('floor_areas', () => {
 	it('should return a stringified array of area IDs associated with a floor ID', () => {
 		assert.equal(

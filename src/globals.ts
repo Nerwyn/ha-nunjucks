@@ -14,7 +14,7 @@ import {
 } from './utils/devices';
 import { closest, distance } from './utils/distance';
 import { is_hidden_entity } from './utils/entities';
-import { floor_areas, floor_id, floors } from './utils/floors';
+import { floor_areas, floor_id, floor_name, floors } from './utils/floors';
 import { expand } from './utils/groups';
 import { iif } from './utils/iif';
 import { integration_entities } from './utils/integrations';
@@ -22,6 +22,8 @@ import {
 	label_areas,
 	label_devices,
 	label_entities,
+	label_id,
+	label_name,
 	labels,
 } from './utils/labels';
 import { match_media, str } from './utils/miscellaneous';
@@ -133,6 +135,7 @@ const HASS_GLOBALS: Record<string, CallableFunction> = {
 	// Floors
 	floors,
 	floor_id,
+	floor_name,
 	floor_areas,
 
 	// Areas
@@ -160,6 +163,10 @@ const HASS_GLOBALS: Record<string, CallableFunction> = {
 };
 
 const GLOBALS: Record<string, CallableFunction> = {
+	// Labels
+	label_id,
+	label_name,
+
 	// Time
 	now,
 	utcnow,

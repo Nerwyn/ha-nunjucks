@@ -1,15 +1,43 @@
 import { HomeAssistant } from 'custom-card-helpers';
+import { entityRegistry } from './entities';
 import { state_attr } from './states';
+
+export interface DeviceRegistryEntry {
+	created_at: number;
+	modified_at: number;
+	id: string;
+	config_entries: string[];
+	connections: Array<[string, string]>;
+	identifiers: Array<[string, string]>;
+	manufacturer: string | null;
+	model: string | null;
+	model_id: string | null;
+	name: string | null;
+	labels: string[];
+	sw_version: string | null;
+	hw_version: string | null;
+	serial_number: string | null;
+	via_device_id: string | null;
+	area_id: string | null;
+	name_by_user: string | null;
+	entry_type: 'service' | null;
+	disabled_by: 'user' | 'integration' | 'config_entry' | null;
+	configuration_url: string | null;
+	primary_config_entry: string | null;
+}
+
+export const deviceRegistry = (hass: HomeAssistant) =>
+	hass['devices' as keyof HomeAssistant] as unknown as Record<
+		string,
+		DeviceRegistryEntry
+	>;
 
 export function device_entities(hass: HomeAssistant, device_id: string) {
 	try {
 		const res: string[] = [];
 		if (device_id) {
-			const entities = hass[
-				'entities' as keyof HomeAssistant
-			] as unknown as Record<string, Record<string, string>>;
-			for (const entityId in entities) {
-				if (entities[entityId].device_id == device_id) {
+			for (const entityId in entityRegistry(hass)) {
+				if (entityRegistry(hass)[entityId].device_id == device_id) {
 					res.push(entityId);
 				}
 			}
@@ -23,14 +51,11 @@ export function device_entities(hass: HomeAssistant, device_id: string) {
 export function device_attr(
 	hass: HomeAssistant,
 	device_or_entity_id: string,
-	attr_name: string,
+	attr_name: keyof DeviceRegistryEntry,
 ) {
 	try {
-		const devices = hass[
-			'devices' as keyof HomeAssistant
-		] as unknown as Record<string, Record<string, string>>;
 		return (
-			devices[device_or_entity_id]?.[attr_name] ??
+			deviceRegistry(hass)[device_or_entity_id]?.[attr_name] ??
 			state_attr(hass, device_or_entity_id, attr_name)
 		);
 	} catch {
@@ -41,7 +66,7 @@ export function device_attr(
 export function is_device_attr(
 	hass: HomeAssistant,
 	device_or_entity_id: string,
-	attr_name: string,
+	attr_name: keyof DeviceRegistryEntry,
 	attr_value: string,
 ) {
 	try {
@@ -72,18 +97,12 @@ export function is_device_attr(
 export function device_id(hass: HomeAssistant, entity_id: string) {
 	try {
 		if (entity_id) {
-			const entities = hass[
-				'entities' as keyof HomeAssistant
-			] as unknown as Record<string, Record<string, string>>;
-			if (entities[entity_id]) {
-				return entities[entity_id].device_id;
+			if (entityRegistry(hass)[entity_id]) {
+				return entityRegistry(hass)[entity_id].device_id;
 			}
 
-			const devices = hass[
-				'devices' as keyof HomeAssistant
-			] as unknown as Record<string, Record<string, string>>;
-			for (const deviceId in devices) {
-				const device = devices[deviceId];
+			for (const deviceId in deviceRegistry(hass)) {
+				const device = deviceRegistry(hass)[deviceId];
 				if (
 					device.name == entity_id ||
 					device.name_by_user == entity_id
