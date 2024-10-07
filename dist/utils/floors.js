@@ -53,9 +53,9 @@ export function floor_areas(hass, floor_name_or_id) {
                 floorId = floor_name_or_id;
             }
             else {
-                for (const id in Object.keys(floors)) {
+                for (const id in floorRegistry(hass)) {
                     if (floorRegistry(hass)[id].name == floor_name_or_id) {
-                        floorId = floorRegistry(hass)[id].name;
+                        floorId = id;
                         break;
                     }
                 }

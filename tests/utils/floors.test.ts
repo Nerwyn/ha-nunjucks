@@ -105,4 +105,11 @@ describe('floor_areas', () => {
 			'front_yard,kitchen,lounge',
 		);
 	});
+
+	it('should return a stringified array of area IDs associated with a floor name', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ floor_areas("First Floor") }}'),
+			'front_yard,kitchen,lounge',
+		);
+	});
 });
