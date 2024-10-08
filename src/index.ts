@@ -24,7 +24,7 @@ export function renderTemplate(
 	context?: object,
 ): string | boolean {
 	if (!HASS) {
-		fetchLabelRegistry(hass);
+		fetchLabelRegistry(hass).then();
 	}
 	HASS = hass;
 

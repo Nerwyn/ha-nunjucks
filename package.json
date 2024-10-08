@@ -29,7 +29,7 @@
 	"dependencies": {
 		"home-assistant-js-websocket": "latest",
 		"nunjucks": "latest",
-		"ts-py-datetime": "^0.10.0-beta.8"
+		"ts-py-datetime": "latest"
 	},
 	"devDependencies": {
 		"@types/mocha": "latest",

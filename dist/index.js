@@ -16,7 +16,7 @@ const env = addTests(addFilters(addGlobals(new nunjucks.Environment())));
  */
 export function renderTemplate(hass, str, context) {
     if (!HASS) {
-        fetchLabelRegistry(hass);
+        fetchLabelRegistry(hass).then();
     }
     HASS = hass;
     if (typeof str == 'string' &&
