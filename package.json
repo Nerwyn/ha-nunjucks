@@ -28,7 +28,7 @@
 		"README.md"
 	],
 	"dependencies": {
-		"custom-card-helpers": "latest",
+		"home-assistant-js-websocket": "latest",
 		"nunjucks": "latest",
 		"ts-py-datetime": "^0.10.0-beta.7"
 	},

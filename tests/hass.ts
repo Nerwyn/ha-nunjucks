@@ -1,4 +1,4 @@
-import { HomeAssistant } from 'custom-card-helpers';
+import { HomeAssistant } from '../src/models/hass';
 
 export const hass = {
 	states: {

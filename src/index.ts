@@ -1,5 +1,5 @@
-import { HomeAssistant } from 'custom-card-helpers';
 import nunjucks from 'nunjucks';
+import { HomeAssistant } from './models/hass';
 
 import { addFilters } from './filters';
 import { addGlobals } from './globals';

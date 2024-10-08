@@ -1,4 +1,4 @@
-import { HomeAssistant } from 'custom-card-helpers';
+import { HomeAssistant } from '../models/hass';
 export declare function fetchLabelRegistry(hass: HomeAssistant): Promise<void>;
 export declare function labels(hass: HomeAssistant, lookup_value?: string): string[];
 export declare function label_id(lookup_value: string): string | undefined;

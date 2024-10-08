@@ -1,5 +1,5 @@
-import { HomeAssistant } from 'custom-card-helpers';
 import { HassEntity } from 'home-assistant-js-websocket';
+import { HomeAssistant } from '../models/hass';
 
 export function state_translated(
 	hass: HomeAssistant,

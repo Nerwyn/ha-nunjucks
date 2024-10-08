@@ -1,17 +1,5 @@
-import { HomeAssistant } from 'custom-card-helpers';
-import { areaRegistry } from './areas';
-import { deviceRegistry } from './devices';
-import { entityRegistry } from './entities';
-
-interface LabelRegistryEntry {
-	created_at: number;
-	modified_at: number;
-	label_id: string;
-	name: string;
-	icon?: string;
-	color?: string;
-	description?: string;
-}
+import { HomeAssistant } from '../models/hass';
+import { LabelRegistryEntry } from '../models/registries';
 
 const labelRegistry: Record<string, LabelRegistryEntry> = {};
 
@@ -39,9 +27,9 @@ export function labels(hass: HomeAssistant, lookup_value?: string) {
 		}
 
 		return (
-			entityRegistry(hass)[lookup_value]?.labels ??
-			deviceRegistry(hass)[lookup_value]?.labels ??
-			areaRegistry(hass)[lookup_value]?.labels
+			hass.entities[lookup_value]?.labels ??
+			hass.devices[lookup_value]?.labels ??
+			hass.areas[lookup_value]?.labels
 		);
 	} catch {
 		return [];
@@ -74,10 +62,8 @@ export function label_areas(hass: HomeAssistant, label_name_or_id: string) {
 			if (!labelId) {
 				return [];
 			}
-			for (const areaId in areaRegistry(hass)) {
-				if (
-					(areaRegistry(hass)[areaId].labels ?? []).includes(labelId)
-				) {
+			for (const areaId in hass.areas) {
+				if ((hass.areas[areaId].labels ?? []).includes(labelId)) {
 					areaIds.push(areaId);
 				}
 			}
@@ -102,12 +88,8 @@ export function label_devices(hass: HomeAssistant, label_name_or_id: string) {
 			if (!labelId) {
 				return [];
 			}
-			for (const devicesId in deviceRegistry(hass)) {
-				if (
-					(deviceRegistry(hass)[devicesId].labels ?? []).includes(
-						labelId,
-					)
-				) {
+			for (const devicesId in hass.devices) {
+				if ((hass.devices[devicesId].labels ?? []).includes(labelId)) {
 					deviceIds.push(devicesId);
 				}
 			}
@@ -132,12 +114,8 @@ export function label_entities(hass: HomeAssistant, label_name_or_id: string) {
 			if (!labelId) {
 				return [];
 			}
-			for (const entityId in entityRegistry(hass)) {
-				if (
-					(entityRegistry(hass)[entityId].labels ?? []).includes(
-						labelId,
-					)
-				) {
+			for (const entityId in hass.entities) {
+				if ((hass.entities[entityId].labels ?? []).includes(labelId)) {
 					entityIds.push(entityId);
 				}
 			}

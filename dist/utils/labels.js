@@ -1,6 +1,3 @@
-import { areaRegistry } from './areas';
-import { deviceRegistry } from './devices';
-import { entityRegistry } from './entities';
 const labelRegistry = {};
 export async function fetchLabelRegistry(hass) {
     if (hass.connection) {
@@ -19,9 +16,9 @@ export function labels(hass, lookup_value) {
         if (!lookup_value) {
             return Object.keys(labelRegistry);
         }
-        return (entityRegistry(hass)[lookup_value]?.labels ??
-            deviceRegistry(hass)[lookup_value]?.labels ??
-            areaRegistry(hass)[lookup_value]?.labels);
+        return (hass.entities[lookup_value]?.labels ??
+            hass.devices[lookup_value]?.labels ??
+            hass.areas[lookup_value]?.labels);
     }
     catch {
         return [];
@@ -52,8 +49,8 @@ export function label_areas(hass, label_name_or_id) {
             if (!labelId) {
                 return [];
             }
-            for (const areaId in areaRegistry(hass)) {
-                if ((areaRegistry(hass)[areaId].labels ?? []).includes(labelId)) {
+            for (const areaId in hass.areas) {
+                if ((hass.areas[areaId].labels ?? []).includes(labelId)) {
                     areaIds.push(areaId);
                 }
             }
@@ -79,8 +76,8 @@ export function label_devices(hass, label_name_or_id) {
             if (!labelId) {
                 return [];
             }
-            for (const devicesId in deviceRegistry(hass)) {
-                if ((deviceRegistry(hass)[devicesId].labels ?? []).includes(labelId)) {
+            for (const devicesId in hass.devices) {
+                if ((hass.devices[devicesId].labels ?? []).includes(labelId)) {
                     deviceIds.push(devicesId);
                 }
             }
@@ -106,8 +103,8 @@ export function label_entities(hass, label_name_or_id) {
             if (!labelId) {
                 return [];
             }
-            for (const entityId in entityRegistry(hass)) {
-                if ((entityRegistry(hass)[entityId].labels ?? []).includes(labelId)) {
+            for (const entityId in hass.entities) {
+                if ((hass.entities[entityId].labels ?? []).includes(labelId)) {
                     entityIds.push(entityId);
                 }
             }

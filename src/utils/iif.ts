@@ -1,4 +1,4 @@
-import { HomeAssistant } from 'custom-card-helpers';
+import { HomeAssistant } from '../models/hass';
 
 import { renderTemplate } from '..';
 
