@@ -5,17 +5,13 @@ const labelRegistry: Record<string, LabelRegistryEntry> = {};
 
 export async function fetchLabelRegistry(hass: HomeAssistant) {
 	if (hass.connection) {
-		const labelRegistryArray = await hass.connection
-			.sendMessagePromise({
+		const labels: LabelRegistryEntry[] =
+			await hass.connection.sendMessagePromise({
 				type: 'config/label_registry/list',
-			})
-			.then((labels) =>
-				(labels as LabelRegistryEntry[]).sort((ent1, ent2) =>
-					ent1.name.localeCompare(ent2.name),
-				),
-			);
-		for (const labelRegistryEntry of labelRegistryArray) {
-			labelRegistry[labelRegistryEntry.label_id] = labelRegistryEntry;
+			});
+		labels.sort((ent1, ent2) => ent1.name.localeCompare(ent2.name));
+		for (const label of labels) {
+			labelRegistry[label.label_id] = label;
 		}
 	}
 }

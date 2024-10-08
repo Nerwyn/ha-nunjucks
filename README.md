@@ -13,7 +13,7 @@ A wrapper for [nunjucks](https://www.npmjs.com/package/nunjucks) for use with Ho
 
 [Nunjucks](https://mozilla.github.io/nunjucks/) is a templating engine for JavaScript that is heavily inspired by jinja2. Home Assistant uses jinja2 to process templates in card configurations on the backend, so the syntax of jinja2 and Nunjucks is virtually the same. This makes it an excellent alternative to Home Assistant core jinja2 templating for custom cards.
 
-While some Home Assistant native cards support templating for certain fields, implementing proper Home Assistant jinja2 template support in custom cards can be difficult. Additionally Home Assistant jinja2 templates are processed by the Python backend, and can take several seconds to render. Nunjucks templates are processed by the frontend using the frontend [hass](https://developers.home-assistant.io/docs/frontend/data/) object before your custom card's HTML is rendered, making nunjucks templating instanteous and much faster than traditional jinja2 templates.
+While some Home Assistant native cards support templating for certain fields, implementing proper Home Assistant jinja2 template support in custom cards can be difficult. Additionally Home Assistant jinja2 templates are processed by the Python backend, and can take several seconds to render. Nunjucks templates are processed by the frontend using the frontend [`hass`](https://developers.home-assistant.io/docs/frontend/data/) object before your custom card's HTML is rendered, making nunjucks templating synchronous, instanteous. and much faster than traditional jinja2 templates.
 
 ## Usage
 
@@ -88,7 +88,7 @@ Because entity IDs contain periods in them, you cannot use dot notation when acc
 
 `{{ hass.states["light.sunroom_ceiling"].state }}`
 
-For convenience, the `hass states` object is rebuilt as a separate object that can be accessed with dot notation. Because of JavaScript limitations not allowing for functions and object to share the same name, it has been named `_states`.
+For convenience, the `hass.states` object is rebuilt as a separate object that can be accessed with dot notation. Because of JavaScript limitations not allowing for functions and object to share the same name, it has been named `_states`.
 
 `{{ _states.light.sunroom_ceiling.state }}`
 
@@ -164,6 +164,8 @@ Functions used to determine an entity's state or an attribute.
 
 ### [Labels](https://www.home-assistant.io/docs/configuration/templating/#labels)
 
+**NOTE**: Labels are not available in the `hass` object and must be retrieved asynchronously from the Home Assistant backend the first time `renderTemplate` is called. Since this package is otherwise synchronous, this can cause a race condition where no labels are found the first time `renderTemplate` is run. This generally resolves itself once the template re-renders.
+
 | Name           | Type             | Arguments               | Description                                                                                |
 | -------------- | ---------------- | ----------------------- | ------------------------------------------------------------------------------------------ |
 | labels         | function, filter | lookup_value (optional) | Returns the full list of label IDs, or those for a given area ID, device ID, or entity ID. |
@@ -187,7 +189,7 @@ A shorthand for an if else statement.
 
 - JS Date does not support time precision below 1 millisecond, while Python datetime supports microsecond precision. Microsecond arguments are not available for these methods.
 - JS Date is not as good at handling timezones as Python datetime. Be careful about timezone differences! You can try to account for this using the `utc` flags and/or by including a timezone offset in a datetime string to parse using `as_datetime` or `strptime`.
-- Including time extensions in your templates does not cause them to refresh more regularly by themselves, although they will still update whenever the hass object does. If you are a developer, you have to implement this behavior yourself in your custom cards.
+- Including time extensions in your templates does not cause them to refresh more regularly by themselves, although they will still update whenever the `hass` object does. If you are a developer, you have to implement this behavior yourself in your custom cards.
 
 | Name             | Type             | Arguments                                                | Description                                                                                                                                                                                                                                                                                                                                                                                        |
 | ---------------- | ---------------- | -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

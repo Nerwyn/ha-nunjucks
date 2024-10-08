@@ -84,7 +84,7 @@ import dt, { date, datetime, time, timedelta } from 'ts-py-datetime';
 export function addGlobals(env: Environment) {
 	for (const func in GLOBALS) {
 		env.addGlobal(func, function (...args: string[]) {
-			return (GLOBALS[func] as CallableFunction)(...args);
+			return GLOBALS[func](...args);
 		});
 	}
 
