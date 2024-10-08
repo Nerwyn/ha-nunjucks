@@ -36,6 +36,7 @@ export interface DeviceRegistryEntry extends RegistryEntry {
 }
 
 type EntityCategory = 'config' | 'diagnostic';
+
 export interface EntityRegistryDisplayEntry {
 	entity_id: string;
 	name?: string;

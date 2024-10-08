@@ -18,7 +18,8 @@ export function labels(hass, lookup_value) {
         }
         return (hass.entities[lookup_value]?.labels ??
             hass.devices[lookup_value]?.labels ??
-            hass.areas[lookup_value]?.labels);
+            hass.areas[lookup_value]?.labels ??
+            []);
     }
     catch {
         return [];
@@ -33,7 +34,7 @@ export function label_id(lookup_value) {
     return undefined;
 }
 export function label_name(lookup_value) {
-    return labelRegistry[lookup_value].name;
+    return labelRegistry[lookup_value]?.name;
 }
 export function label_areas(hass, label_name_or_id) {
     try {

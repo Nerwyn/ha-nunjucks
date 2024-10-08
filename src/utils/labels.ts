@@ -29,7 +29,8 @@ export function labels(hass: HomeAssistant, lookup_value?: string) {
 		return (
 			hass.entities[lookup_value]?.labels ??
 			hass.devices[lookup_value]?.labels ??
-			hass.areas[lookup_value]?.labels
+			hass.areas[lookup_value]?.labels ??
+			[]
 		);
 	} catch {
 		return [];
@@ -46,7 +47,7 @@ export function label_id(lookup_value: string) {
 }
 
 export function label_name(lookup_value: string) {
-	return labelRegistry[lookup_value].name;
+	return labelRegistry[lookup_value]?.name;
 }
 
 export function label_areas(hass: HomeAssistant, label_name_or_id: string) {

@@ -1,4 +1,3 @@
-import { HassEntity } from 'home-assistant-js-websocket';
 import { HomeAssistant } from '../models/hass';
 
 export function state_translated(
@@ -7,12 +6,7 @@ export function state_translated(
 	state?: string,
 ) {
 	try {
-		return (
-			hass['formatEntityState' as keyof HomeAssistant] as unknown as (
-				stateObj: HassEntity,
-				state?: string,
-			) => string
-		)(hass.states[entity_id], state);
+		return hass.formatEntityState(hass.states[entity_id], state);
 	} catch {
 		return state ?? hass.states[entity_id]?.state ?? undefined;
 	}
@@ -24,11 +18,10 @@ export function attr_name_translated(
 	attr_name: string,
 ) {
 	try {
-		return (
-			hass[
-				'formatEntityAttributeName' as keyof HomeAssistant
-			] as unknown as (stateObj: HassEntity, attr_name: string) => string
-		)(hass.states[entity_id], attr_name);
+		return hass.formatEntityAttributeName(
+			hass.states[entity_id],
+			attr_name,
+		);
 	} catch {
 		return (
 			attr_name ??
@@ -45,15 +38,11 @@ export function attr_value_translated(
 	attr_value?: string,
 ) {
 	try {
-		return (
-			hass[
-				'formatEntityAttributeValue' as keyof HomeAssistant
-			] as unknown as (
-				stateObj: HassEntity,
-				attr_name: string,
-				attr_value?: string,
-			) => string
-		)(hass.states[entity_id], attr_name, attr_value);
+		return hass.formatEntityAttributeValue(
+			hass.states[entity_id],
+			attr_name,
+			attr_value,
+		);
 	} catch {
 		return (
 			attr_value ??
