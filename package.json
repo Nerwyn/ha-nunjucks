@@ -3,6 +3,9 @@
 	"version": "1.3.0",
 	"description": "Wrapper for nunjucks for use with Home Assistant frontend custom components to render templates",
 	"main": "./dist/index.js",
+	"files": [
+		"dist/**"
+	],
 	"type": "module",
 	"scripts": {
 		"test": "ts-mocha 'tests/**/*.test.ts'",
@@ -23,14 +26,10 @@
 		"url": "https://github.com/Nerwyn/ha-nunjucks/issues"
 	},
 	"homepage": "https://github.com/Nerwyn/ha-nunjucks#readme",
-	"files": [
-		"./dist",
-		"README.md"
-	],
 	"dependencies": {
 		"home-assistant-js-websocket": "latest",
 		"nunjucks": "latest",
-		"ts-py-datetime": "^0.10.0-beta.7"
+		"ts-py-datetime": "^0.10.0-beta.8"
 	},
 	"devDependencies": {
 		"@types/mocha": "latest",
