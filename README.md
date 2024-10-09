@@ -7,7 +7,7 @@
 
 [![Github][github]][github]
 
-A wrapper for [nunjucks](https://www.npmjs.com/package/nunjucks) for use with Home Assistant frontend custom components to render [templates](https://www.home-assistant.io/docs/configuration/templating/) instanteneously at HTML render time. This repository offers an easy way for developers to add templating support to Home Assistant custom cards.
+A wrapper for [nunjucks](https://www.npmjs.com/package/nunjucks) for use with Home Assistant frontend custom components to render [templates](https://www.home-assistant.io/docs/configuration/templating/) instanteneously at HTML render time. This repository offers a fast and easy way for developers to add templating support to Home Assistant custom cards.
 
 ## What is nunjucks?
 
@@ -315,10 +315,10 @@ In addition to these functions, you have access to [a datetime library](https://
 
 Functions that are not from the Home Assistant templating documentation.
 
-| Name        | Arguments     | Description                                                                                                                                           |
-| ----------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| match_media | mediaquery    | Returns the boolean result of the provided [CSS media query](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_media_queries/Using_media_queries). |
-| str         | value, filter | Return the string representation of the input.                                                                                                        |
+| Name        | Type             | Arguments | Description                                                                                                                                           |
+| ----------- | ---------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| match_media | mediaquery       | value     | Returns the boolean result of the provided [CSS media query](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_media_queries/Using_media_queries). |
+| str         | function, filter | value     | Return the string representation of the input.                                                                                                        |
 
 [last-commit-shield]: https://img.shields.io/github/last-commit/Nerwyn/ha-nunjucks?style=for-the-badge
 [commits]: https://github.com/Nerwyn/ha-nunjucks/commits/main
