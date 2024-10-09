@@ -317,7 +317,7 @@ Functions that are not from the Home Assistant templating documentation.
 
 | Name        | Type             | Arguments | Description                                                                                                                                           |
 | ----------- | ---------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| match_media | mediaquery       | value     | Returns the boolean result of the provided [CSS media query](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_media_queries/Using_media_queries). |
+| match_media | function         | value     | Returns the boolean result of the provided [CSS media query](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_media_queries/Using_media_queries). |
 | str         | function, filter | value     | Return the string representation of the input.                                                                                                        |
 
 [last-commit-shield]: https://img.shields.io/github/last-commit/Nerwyn/ha-nunjucks?style=for-the-badge
