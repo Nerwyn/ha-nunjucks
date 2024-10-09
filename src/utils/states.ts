@@ -62,21 +62,10 @@ export function is_state_attr(
 	hass: HomeAssistant,
 	entity_id: string,
 	attribute: string,
-	value: string | string[],
+	value: string,
 ) {
 	try {
-		const stateAttr = state_attr(hass, entity_id, attribute);
-		if (
-			typeof value == 'string' &&
-			value.startsWith('[') &&
-			value.endsWith(']')
-		) {
-			value = JSON.parse(value);
-		}
-		if (Array.isArray(value)) {
-			return value.includes(stateAttr);
-		}
-		return stateAttr == value;
+		return state_attr(hass, entity_id, attribute) == value;
 	} catch {
 		return false;
 	}

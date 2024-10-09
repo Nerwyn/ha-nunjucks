@@ -21,7 +21,6 @@ export function labels(hass: HomeAssistant, lookup_value?: string) {
 		if (!lookup_value) {
 			return Object.keys(labelRegistry);
 		}
-
 		return (
 			hass.entities[lookup_value]?.labels ??
 			hass.devices[lookup_value]?.labels ??

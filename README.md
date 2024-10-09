@@ -105,7 +105,7 @@ Functions used to determine an entity's state or an attribute.
 | states        | function, filter | entity_id, rounded (optional), with_unit (optional) | Returns the state string of the given entity. Optionally round numerical states and append the unit of measurement. |
 | is_state      | function,        | entity_id, value                                    | Compares an entity's state with a specified state or list of states and returns `true` or `false`.                  |
 | state_attr    | function, filter | entity_id, attribute                                | Returns the value of the attribute or `undefined` if it doesn't exist.                                              |
-| is_state_attr | function,        | entity_id, attribute, value                         | Tests if the given entity attribute is the specified value.                                                         |
+| is_state_attr | function         | entity_id, attribute, value                         | Tests if the given entity attribute is the specified value.                                                         |
 | has_value     | function, filter | entity_id                                           | Tests if the given entity is not unknown or unavailable.                                                            |
 
 ### [State Translated](https://www.home-assistant.io/docs/configuration/templating/#state-translated)

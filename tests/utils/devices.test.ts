@@ -53,14 +53,6 @@ describe('is_device_attr', () => {
 			),
 			true,
 		);
-
-		assert.equal(
-			renderTemplate(
-				hass,
-				'{{ is_device_attr("08d6a7f58fc934fba97d2ec2a66e7bba", "name" ,["foobar", 7, "Bar Light 1"]) }}',
-			),
-			true,
-		);
 	});
 
 	it('is_device_attr should act as is_state_attr if provided ID is not for a device', () => {

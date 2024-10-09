@@ -41,22 +41,9 @@ export function is_device_attr(
 ) {
 	try {
 		if (attr_value != undefined) {
-			const deviceAttr = device_attr(
-				hass,
-				device_or_entity_id,
-				attr_name,
+			return (
+				device_attr(hass, device_or_entity_id, attr_name) == attr_value
 			);
-			if (
-				typeof attr_value == 'string' &&
-				attr_value.startsWith('[') &&
-				attr_value.endsWith(']')
-			) {
-				attr_value = JSON.parse(attr_value);
-			}
-			if (Array.isArray(attr_value)) {
-				return attr_value.includes(deviceAttr);
-			}
-			return deviceAttr == attr_value;
 		}
 		return false;
 	} catch {

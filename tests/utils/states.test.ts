@@ -158,22 +158,6 @@ describe('is_state_attr', () => {
 			false,
 		);
 	});
-	it('should also work with arrays', () => {
-		assert.equal(
-			renderTemplate(
-				hass,
-				'{{ is_state_attr("light.lounge", "brightness", [155, "bar"]) }}',
-			),
-			true,
-		);
-		assert.equal(
-			renderTemplate(
-				hass,
-				'{{ is_state_attr("light.lounge", "brightness", [154, "bar"]) }}',
-			),
-			false,
-		);
-	});
 });
 
 describe('has_value', () => {
