@@ -64,12 +64,12 @@ export function has_value(hass, entity_id) {
         return false;
     }
 }
-export function buildStatesObject(hass) {
-    const states = {};
-    for (const entityId in hass.states) {
-        const [domain, entity] = entityId.split('.');
-        states[domain] = states[domain] ?? {};
-        states[domain][entity] = hass.states[entityId];
+export function buildStatesObject() {
+    for (const entityId in window.haNunjucks.hass.states) {
+        const [domain, id] = entityId.split('.');
+        window.haNunjucks.states[domain] ??= {};
+        window.haNunjucks.states[domain][id] =
+            window.haNunjucks.hass.states[entityId];
     }
-    return states;
+    return window.haNunjucks.states;
 }

@@ -8,11 +8,22 @@ import { fetchLabelRegistry } from './utils/labels';
 import { buildStatesObject } from './utils/states';
 
 if (!window.haNunjucks) {
-	window.haNunjucks = {};
+	window.haNunjucks = {} as typeof window.haNunjucks;
 	nunjucks.installJinjaCompat();
+
 	window.haNunjucks.env = addTests(
 		addFilters(addGlobals(new nunjucks.Environment())),
 	);
+
+	window.haNunjucks.states = {};
+	window.hassConnection?.then((hassConnection) => {
+		const entities = hassConnection?.conn?._entityRegistryDisplay?.state
+			?.entities as Record<string, string>[];
+		for (const entity of entities) {
+			const [domain, _id] = entity.ei.split('.');
+			window.haNunjucks.states![domain] ??= {};
+		}
+	});
 }
 
 /**
@@ -27,7 +38,7 @@ export function renderTemplate(
 	str: string,
 	context?: object,
 ): string | boolean {
-	if (!window.haNunjucks.labelRegistry) {
+	if (!window.haNunjucks?.labelRegistry) {
 		fetchLabelRegistry(hass);
 	}
 	window.haNunjucks.hass = hass;
@@ -40,7 +51,7 @@ export function renderTemplate(
 		str = window.haNunjucks.env
 			.renderString(structuredClone(str), {
 				hass,
-				_states: buildStatesObject(hass),
+				_states: buildStatesObject(),
 				...context,
 			})
 			.trim();

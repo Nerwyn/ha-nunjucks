@@ -8,6 +8,15 @@ if (!window.haNunjucks) {
     window.haNunjucks = {};
     nunjucks.installJinjaCompat();
     window.haNunjucks.env = addTests(addFilters(addGlobals(new nunjucks.Environment())));
+    window.haNunjucks.states = {};
+    window.hassConnection?.then((hassConnection) => {
+        const entities = hassConnection?.conn?._entityRegistryDisplay?.state
+            ?.entities;
+        for (const entity of entities) {
+            const [domain, _id] = entity.ei.split('.');
+            window.haNunjucks.states[domain] ??= {};
+        }
+    });
 }
 /**
  * Render a Home Assistant template string using nunjucks
@@ -17,7 +26,7 @@ if (!window.haNunjucks) {
  * @returns {string | boolean} The rendered template string if a string was provided, otherwise the unaltered input
  */
 export function renderTemplate(hass, str, context) {
-    if (!window.haNunjucks.labelRegistry) {
+    if (!window.haNunjucks?.labelRegistry) {
         fetchLabelRegistry(hass);
     }
     window.haNunjucks.hass = hass;
@@ -27,7 +36,7 @@ export function renderTemplate(hass, str, context) {
         str = window.haNunjucks.env
             .renderString(structuredClone(str), {
             hass,
-            _states: buildStatesObject(hass),
+            _states: buildStatesObject(),
             ...context,
         })
             .trim();
