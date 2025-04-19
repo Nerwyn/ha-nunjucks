@@ -13,7 +13,7 @@ A wrapper for [nunjucks](https://www.npmjs.com/package/nunjucks) for use with Ho
 
 [Nunjucks](https://mozilla.github.io/nunjucks/) is a templating engine for JavaScript that is heavily inspired by jinja2. Home Assistant uses jinja2 to process templates in card configurations on the backend, so the syntax of jinja2 and Nunjucks is virtually the same. This makes it an excellent alternative to Home Assistant core jinja2 templating for custom cards.
 
-While some Home Assistant native cards support templating for certain fields, implementing proper Home Assistant jinja2 template support in custom cards can be difficult. Additionally Home Assistant jinja2 templates are processed by the Python backend, and can take several seconds to render. Nunjucks templates are processed by the frontend using the frontend [`hass`](https://developers.home-assistant.io/docs/frontend/data/) object before your custom card's HTML is rendered, making nunjucks templating synchronous, instanteous. and much faster than traditional jinja2 templates.
+While some Home Assistant native cards support templating for certain fields, implementing proper Home Assistant jinja2 template support in custom cards can be difficult. Additionally Home Assistant jinja2 templates are processed by the Python backend, and use subscriptions which must be managed and do not play as well with dynamic custom variables. Nunjucks templates are processed by the frontend using the frontend [`hass`](https://developers.home-assistant.io/docs/frontend/data/) object before your custom card's HTML is rendered, making nunjucks templating synchronous, near instanteous, and easier to use than traditional jinja2 templates.
 
 ## Usage
 
@@ -33,7 +33,7 @@ const renderedString = renderTemplate(this.hass, templateString);
 
 That's it! The result of `renderTemplate` is the rendered template for you to use. In unit and integration testing render time is under 1 ms and shouldn't cause any latency in your projects.
 
-Rather than rendering templates on the backend, nunjucks renders templates on the frontend. This repository uses the Home Assistant object present in all custom cards to read entity state data.
+Rather than rendering templates on the backend, nunjucks renders templates on the frontend. This repository uses the Home Assistant object present in all custom cards to read entity state data. A single shared Nunjucks environment is used for the frontend across all custom element instances that use Nunjucks, which helps with initial load times.
 
 You can also provide context to the `renderTemplate` function to pass to nunjucks if you want to make additional variables or project specific functions available to your users for use in templates.
 
