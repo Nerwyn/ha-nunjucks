@@ -1,4 +1,4 @@
-import { HomeAssistant } from '../models/hass';
+import { HomeAssistant } from '../models/interfaces/hass';
 export declare function areas(hass: HomeAssistant): string[];
 export declare function area_id(hass: HomeAssistant, lookup_value: string): string | null | undefined;
 export declare function area_name(hass: HomeAssistant, lookup_value: string): string | undefined;

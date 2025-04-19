@@ -1,4 +1,3 @@
-import { HASS } from '.';
 import { area_devices, area_entities, area_id, area_name, areas, } from './utils/areas';
 import { device_attr, device_entities, device_id, is_device_attr, } from './utils/devices';
 import { closest, distance } from './utils/distance';
@@ -24,7 +23,7 @@ export function addGlobals(env) {
     }
     for (const func in HASS_GLOBALS) {
         env.addGlobal(func, function (...args) {
-            return HASS_GLOBALS[func](HASS, ...args);
+            return HASS_GLOBALS[func](window.haNunjucks.hass, ...args);
         });
     }
     for (const c in CONST_GLOBALS) {

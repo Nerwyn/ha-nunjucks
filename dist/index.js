@@ -4,9 +4,11 @@ import { addGlobals } from './globals';
 import { addTests } from './tests';
 import { fetchLabelRegistry } from './utils/labels';
 import { buildStatesObject } from './utils/states';
-export let HASS;
-nunjucks.installJinjaCompat();
-const env = addTests(addFilters(addGlobals(new nunjucks.Environment())));
+if (!window.haNunjucks) {
+    window.haNunjucks = {};
+    nunjucks.installJinjaCompat();
+    window.haNunjucks.env = addTests(addFilters(addGlobals(new nunjucks.Environment())));
+}
 /**
  * Render a Home Assistant template string using nunjucks
  * @param {HomeAssistant} hass The Home Assistant object
@@ -15,14 +17,14 @@ const env = addTests(addFilters(addGlobals(new nunjucks.Environment())));
  * @returns {string | boolean} The rendered template string if a string was provided, otherwise the unaltered input
  */
 export function renderTemplate(hass, str, context) {
-    if (!HASS) {
+    if (!window.haNunjucks.labelRegistry) {
         fetchLabelRegistry(hass);
     }
-    HASS = hass;
+    window.haNunjucks.hass = hass;
     if (typeof str == 'string' &&
         ((str.includes('{{') && str.includes('}}')) ||
             (str.includes('{%') && str.includes('%}')))) {
-        str = env
+        str = window.haNunjucks.env
             .renderString(structuredClone(str), {
             hass,
             _states: buildStatesObject(hass),
@@ -32,11 +34,9 @@ export function renderTemplate(hass, str, context) {
         if ([undefined, null, 'undefined', 'null', 'None'].includes(str)) {
             return '';
         }
-        if (str.toLowerCase() == 'true') {
-            return true;
-        }
-        if (str.toLowerCase() == 'false') {
-            return false;
+        const lowerStr = str.toLowerCase();
+        if (['true', 'false'].includes(lowerStr)) {
+            return lowerStr == 'true';
         }
         return str;
     }

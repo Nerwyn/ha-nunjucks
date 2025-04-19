@@ -1,17 +1,16 @@
-import { HomeAssistant } from '../models/hass';
-import { LabelRegistryEntry } from '../models/registries';
-
-const labelRegistry: Record<string, LabelRegistryEntry> = {};
+import { HomeAssistant } from '../models/interfaces/hass';
+import { LabelRegistryEntry } from '../models/interfaces/registries';
 
 export async function fetchLabelRegistry(hass: HomeAssistant) {
 	if (hass.connection) {
+		window.haNunjucks.labelRegistry = {};
 		const labels: LabelRegistryEntry[] =
 			await hass.connection.sendMessagePromise({
 				type: 'config/label_registry/list',
 			});
 		labels.sort((ent1, ent2) => ent1.name.localeCompare(ent2.name));
 		for (const label of labels) {
-			labelRegistry[label.label_id] = label;
+			window.haNunjucks.labelRegistry[label.label_id] = label;
 		}
 	}
 }
@@ -19,7 +18,7 @@ export async function fetchLabelRegistry(hass: HomeAssistant) {
 export function labels(hass: HomeAssistant, lookup_value?: string) {
 	try {
 		if (!lookup_value) {
-			return Object.keys(labelRegistry);
+			return Object.keys(window.haNunjucks.labelRegistry);
 		}
 		return (
 			hass.entities[lookup_value]?.labels ??
@@ -33,8 +32,8 @@ export function labels(hass: HomeAssistant, lookup_value?: string) {
 }
 
 export function label_id(lookup_value: string) {
-	for (const id in labelRegistry) {
-		if (labelRegistry[id].name == lookup_value) {
+	for (const id in window.haNunjucks.labelRegistry) {
+		if (window.haNunjucks.labelRegistry[id].name == lookup_value) {
 			return id;
 		}
 	}
@@ -42,7 +41,7 @@ export function label_id(lookup_value: string) {
 }
 
 export function label_name(lookup_value: string) {
-	return labelRegistry[lookup_value]?.name;
+	return window.haNunjucks.labelRegistry[lookup_value]?.name;
 }
 
 export function label_areas(hass: HomeAssistant, label_name_or_id: string) {
@@ -50,7 +49,7 @@ export function label_areas(hass: HomeAssistant, label_name_or_id: string) {
 		const areaIds = [];
 		let labelId: string | undefined = undefined;
 		if (label_name_or_id) {
-			if (labelRegistry[label_name_or_id]) {
+			if (window.haNunjucks.labelRegistry[label_name_or_id]) {
 				labelId = label_name_or_id;
 			} else {
 				labelId = label_id(label_name_or_id);
@@ -76,7 +75,7 @@ export function label_devices(hass: HomeAssistant, label_name_or_id: string) {
 		const deviceIds = [];
 		if (label_name_or_id) {
 			let labelId: string | undefined = undefined;
-			if (labelRegistry[label_name_or_id]) {
+			if (window.haNunjucks.labelRegistry[label_name_or_id]) {
 				labelId = label_name_or_id;
 			} else {
 				labelId = label_id(label_name_or_id);
@@ -102,7 +101,7 @@ export function label_entities(hass: HomeAssistant, label_name_or_id: string) {
 		const entityIds = [];
 		if (label_name_or_id) {
 			let labelId: string | undefined = undefined;
-			if (labelRegistry[label_name_or_id]) {
+			if (window.haNunjucks.labelRegistry[label_name_or_id]) {
 				labelId = label_name_or_id;
 			} else {
 				labelId = label_id(label_name_or_id);

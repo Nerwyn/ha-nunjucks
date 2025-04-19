@@ -1,4 +1,3 @@
-import { HASS } from '.';
 import { area_devices, area_entities, area_id, area_name } from './utils/areas';
 import { contains } from './utils/contains';
 import { device_attr, device_entities, device_id } from './utils/devices';
@@ -75,7 +74,7 @@ export function addFilters(env: Environment) {
 
 	for (const func in HASS_FILTERS) {
 		env.addFilter(func, function (...args) {
-			return HASS_FILTERS[func](HASS, ...args);
+			return HASS_FILTERS[func](window.haNunjucks.hass, ...args);
 		});
 	}
 

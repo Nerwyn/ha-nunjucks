@@ -1,5 +1,4 @@
-import { HomeAssistant } from './models/hass';
-export declare let HASS: HomeAssistant;
+import { HomeAssistant } from './models/interfaces/hass';
 /**
  * Render a Home Assistant template string using nunjucks
  * @param {HomeAssistant} hass The Home Assistant object

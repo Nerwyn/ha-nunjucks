@@ -1,19 +1,19 @@
-const labelRegistry = {};
 export async function fetchLabelRegistry(hass) {
     if (hass.connection) {
+        window.haNunjucks.labelRegistry = {};
         const labels = await hass.connection.sendMessagePromise({
             type: 'config/label_registry/list',
         });
         labels.sort((ent1, ent2) => ent1.name.localeCompare(ent2.name));
         for (const label of labels) {
-            labelRegistry[label.label_id] = label;
+            window.haNunjucks.labelRegistry[label.label_id] = label;
         }
     }
 }
 export function labels(hass, lookup_value) {
     try {
         if (!lookup_value) {
-            return Object.keys(labelRegistry);
+            return Object.keys(window.haNunjucks.labelRegistry);
         }
         return (hass.entities[lookup_value]?.labels ??
             hass.devices[lookup_value]?.labels ??
@@ -25,22 +25,22 @@ export function labels(hass, lookup_value) {
     }
 }
 export function label_id(lookup_value) {
-    for (const id in labelRegistry) {
-        if (labelRegistry[id].name == lookup_value) {
+    for (const id in window.haNunjucks.labelRegistry) {
+        if (window.haNunjucks.labelRegistry[id].name == lookup_value) {
             return id;
         }
     }
     return undefined;
 }
 export function label_name(lookup_value) {
-    return labelRegistry[lookup_value]?.name;
+    return window.haNunjucks.labelRegistry[lookup_value]?.name;
 }
 export function label_areas(hass, label_name_or_id) {
     try {
         const areaIds = [];
         let labelId = undefined;
         if (label_name_or_id) {
-            if (labelRegistry[label_name_or_id]) {
+            if (window.haNunjucks.labelRegistry[label_name_or_id]) {
                 labelId = label_name_or_id;
             }
             else {
@@ -67,7 +67,7 @@ export function label_devices(hass, label_name_or_id) {
         const deviceIds = [];
         if (label_name_or_id) {
             let labelId = undefined;
-            if (labelRegistry[label_name_or_id]) {
+            if (window.haNunjucks.labelRegistry[label_name_or_id]) {
                 labelId = label_name_or_id;
             }
             else {
@@ -94,7 +94,7 @@ export function label_entities(hass, label_name_or_id) {
         const entityIds = [];
         if (label_name_or_id) {
             let labelId = undefined;
-            if (labelRegistry[label_name_or_id]) {
+            if (window.haNunjucks.labelRegistry[label_name_or_id]) {
                 labelId = label_name_or_id;
             }
             else {

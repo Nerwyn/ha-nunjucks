@@ -1,4 +1,4 @@
-import { HomeAssistant } from '../src/models/hass';
+import { HomeAssistant } from '../src/models/interfaces/hass';
 
 export const hass = {
 	states: {

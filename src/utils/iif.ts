@@ -1,4 +1,4 @@
-import { HomeAssistant } from '../models/hass';
+import { HomeAssistant } from '../models/interfaces/hass';
 
 import { renderTemplate } from '..';
 

@@ -1,4 +1,4 @@
-import { HomeAssistant } from '../models/hass';
+import { HomeAssistant } from '../models/interfaces/hass';
 
 export function is_hidden_entity(hass: HomeAssistant, entity_id: string) {
 	try {

@@ -1,7 +1,6 @@
 {
 	"extension": ["ts"],
-	"require": ["ts-node/register"],
+	"require": ["ts-node/register", "jsdom-global/register"],
 	"node-option": ["import=tsx/esm"],
-	"recursive": true,
-	"watch-files": ["tests/**/*.test.ts"]
+	"recursive": true
 }

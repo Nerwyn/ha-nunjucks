@@ -1,5 +1,5 @@
 import { HassEntity } from 'home-assistant-js-websocket';
-import { HomeAssistant } from '../models/hass';
+import { HomeAssistant } from '../models/interfaces/hass';
 
 export function states(
 	hass: HomeAssistant,

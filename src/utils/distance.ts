@@ -1,5 +1,5 @@
 import { HassEntities, HassEntity } from 'home-assistant-js-websocket';
-import { HomeAssistant } from '../models/hass';
+import { HomeAssistant } from '../models/interfaces/hass';
 
 // Author: https://github.com/maurycyp
 // Source: https://github.com/maurycyp/vincenty

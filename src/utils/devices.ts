@@ -1,5 +1,5 @@
-import { HomeAssistant } from '../models/hass';
-import { DeviceRegistryEntry } from '../models/registries';
+import { HomeAssistant } from '../models/interfaces/hass';
+import { DeviceRegistryEntry } from '../models/interfaces/registries';
 import { state_attr } from './states';
 
 export function device_entities(hass: HomeAssistant, device_id: string) {

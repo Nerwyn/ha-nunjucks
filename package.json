@@ -1,6 +1,6 @@
 {
 	"name": "ha-nunjucks",
-	"version": "1.3.0",
+	"version": "1.4.0",
 	"description": "Wrapper for nunjucks for use with Home Assistant frontend custom components to render templates",
 	"main": "./dist/index.js",
 	"files": [
@@ -8,7 +8,7 @@
 	],
 	"type": "module",
 	"scripts": {
-		"test": "ts-mocha 'tests/**/*.test.ts'",
+		"test": "ts-mocha tests/**/*.test.ts",
 		"build": "tsc",
 		"prelint": "tsc --noemit",
 		"lint": "eslint --config ./.eslintrc.config.cjs"
@@ -39,12 +39,14 @@
 		"eslint": "latest",
 		"eslint-config-prettier": "latest",
 		"eslint-plugin-prettier": "latest",
+		"jsdom-global": "latest",
 		"lint-staged": "latest",
+		"mocha": "latest",
 		"prettier": "latest",
 		"prettier-plugin-organize-imports": "latest",
 		"ts-loader": "latest",
 		"ts-mocha": "latest",
-		"ts-node": "latest",
+		"ts-node": "^10.9.2",
 		"tsx": "latest",
 		"typescript": "latest"
 	}
