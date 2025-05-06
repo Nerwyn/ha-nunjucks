@@ -4,8 +4,7 @@ export function buildStatesObject(hass: HomeAssistant) {
 	for (const entityId in hass.states) {
 		const [domain, id] = entityId.split('.');
 		window.haNunjucks.states[domain] ??= {};
-		window.haNunjucks.states[domain][id] =
-			window.haNunjucks.hass.states[entityId];
+		window.haNunjucks.states[domain][id] = hass.states[entityId];
 	}
 }
 
