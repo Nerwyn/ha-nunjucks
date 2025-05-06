@@ -1,5 +1,5 @@
 import { HomeAssistant } from '../models/interfaces/hass';
-export declare function fetchLabelRegistry(hass: HomeAssistant): Promise<void>;
+export declare function fetchLabelRegistry(): Promise<void>;
 export declare function labels(hass: HomeAssistant, lookup_value?: string): string[];
 export declare function label_id(lookup_value: string): string | undefined;
 export declare function label_name(lookup_value: string): string;

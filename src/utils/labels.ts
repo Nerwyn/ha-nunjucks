@@ -1,9 +1,9 @@
 import { HomeAssistant } from '../models/interfaces/hass';
 import { LabelRegistryEntry } from '../models/interfaces/registries';
 
-export async function fetchLabelRegistry(hass: HomeAssistant) {
+export async function fetchLabelRegistry() {
 	const labels: LabelRegistryEntry[] =
-		await hass.connection.sendMessagePromise({
+		await window.haNunjucks.hass.connection.sendMessagePromise({
 			type: 'config/label_registry/list',
 		});
 	labels.sort((ent1, ent2) => ent1.name.localeCompare(ent2.name));

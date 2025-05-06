@@ -27,8 +27,9 @@ if (!window.haNunjucks) {
 			return;
 		}
 
-		fetchLabelRegistry(ha.hass);
-		buildStatesObject(ha.hass);
+		window.haNunjucks.hass = ha.hass;
+		fetchLabelRegistry();
+		buildStatesObject();
 	};
 	registrySetup();
 
@@ -58,7 +59,7 @@ export function renderTemplate(
 	}
 
 	window.haNunjucks.hass = hass;
-	buildStatesObject(hass);
+	buildStatesObject();
 	str = window.haNunjucks.env
 		.renderString(structuredClone(str), {
 			hass,

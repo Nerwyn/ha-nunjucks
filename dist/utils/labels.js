@@ -1,5 +1,5 @@
-export async function fetchLabelRegistry(hass) {
-    const labels = await hass.connection.sendMessagePromise({
+export async function fetchLabelRegistry() {
+    const labels = await window.haNunjucks.hass.connection.sendMessagePromise({
         type: 'config/label_registry/list',
     });
     labels.sort((ent1, ent2) => ent1.name.localeCompare(ent2.name));

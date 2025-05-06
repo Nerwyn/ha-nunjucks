@@ -20,8 +20,9 @@ if (!window.haNunjucks) {
             setTimeout(registrySetup, 10);
             return;
         }
-        fetchLabelRegistry(ha.hass);
-        buildStatesObject(ha.hass);
+        window.haNunjucks.hass = ha.hass;
+        fetchLabelRegistry();
+        buildStatesObject();
     };
     registrySetup();
     // Initialize global ha-nunjucks environment
@@ -41,7 +42,7 @@ export function renderTemplate(hass, str, context, validate = true) {
         return str;
     }
     window.haNunjucks.hass = hass;
-    buildStatesObject(hass);
+    buildStatesObject();
     str = window.haNunjucks.env
         .renderString(structuredClone(str), {
         hass,
