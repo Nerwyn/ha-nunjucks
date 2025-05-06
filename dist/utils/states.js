@@ -1,3 +1,11 @@
+export function buildStatesObject(hass) {
+    for (const entityId in hass.states) {
+        const [domain, id] = entityId.split('.');
+        window.haNunjucks.states[domain] ??= {};
+        window.haNunjucks.states[domain][id] =
+            window.haNunjucks.hass.states[entityId];
+    }
+}
 export function states(hass, entity_id, rounded, with_unit) {
     if (typeof rounded == 'object' && !Array.isArray(rounded)) {
         with_unit = rounded.with_unit ?? with_unit;
@@ -63,13 +71,4 @@ export function has_value(hass, entity_id) {
     catch {
         return false;
     }
-}
-export function buildStatesObject() {
-    for (const entityId in window.haNunjucks.hass.states) {
-        const [domain, id] = entityId.split('.');
-        window.haNunjucks.states[domain] ??= {};
-        window.haNunjucks.states[domain][id] =
-            window.haNunjucks.hass.states[entityId];
-    }
-    return window.haNunjucks.states;
 }

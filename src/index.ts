@@ -1,5 +1,5 @@
 import nunjucks from 'nunjucks';
-import { HomeAssistant } from './models/interfaces/hass';
+import { HassElement, HomeAssistant } from './models/interfaces/hass';
 
 import { addFilters } from './filters';
 import { addGlobals } from './globals';
@@ -8,22 +8,35 @@ import { fetchLabelRegistry } from './utils/labels';
 import { buildStatesObject } from './utils/states';
 
 if (!window.haNunjucks) {
-	window.haNunjucks = {} as typeof window.haNunjucks;
-	nunjucks.installJinjaCompat();
+	window.haNunjucks = {
+		states: {},
+		labelRegistry: {},
+	} as typeof window.haNunjucks;
 
+	// Async setup label registry and states object on import
+	const registrySetup = async () => {
+		const ha = document.querySelector('home-assistant') as HassElement;
+		if (
+			!ha ||
+			!ha.hass ||
+			!ha.hass.connected ||
+			!ha.hass.connection ||
+			!ha.hass.connection.connected
+		) {
+			setTimeout(registrySetup, 10);
+			return;
+		}
+
+		fetchLabelRegistry(ha.hass);
+		buildStatesObject(ha.hass);
+	};
+	registrySetup();
+
+	// Initialize global ha-nunjucks environment
+	nunjucks.installJinjaCompat();
 	window.haNunjucks.env = addTests(
 		addFilters(addGlobals(new nunjucks.Environment())),
 	);
-
-	window.haNunjucks.states = {};
-	window.hassConnection?.then((hassConnection) => {
-		const entities = hassConnection?.conn?._entityRegistryDisplay?.state
-			?.entities as Record<string, string>[];
-		for (const entity of entities) {
-			const [domain, _id] = entity.ei.split('.');
-			window.haNunjucks.states![domain] ??= {};
-		}
-	});
 }
 
 /**
@@ -31,42 +44,46 @@ if (!window.haNunjucks) {
  * @param {HomeAssistant} hass The Home Assistant object
  * @param {string} str The template string to render
  * @param {object} [context] Additional context to expose to nunjucks
+ * @param {boolean} [validate=true] Validate that the input contains a template.
  * @returns {string | boolean} The rendered template string if a string was provided, otherwise the unaltered input
  */
 export function renderTemplate(
 	hass: HomeAssistant,
 	str: string,
 	context?: object,
+	validate: boolean = true,
 ): string | boolean {
-	if (!window.haNunjucks?.labelRegistry) {
-		fetchLabelRegistry(hass);
-	}
-	window.haNunjucks.hass = hass;
-
-	if (
-		typeof str == 'string' &&
-		((str.includes('{{') && str.includes('}}')) ||
-			(str.includes('{%') && str.includes('%}')))
-	) {
-		str = window.haNunjucks.env
-			.renderString(structuredClone(str), {
-				hass,
-				_states: buildStatesObject(),
-				...context,
-			})
-			.trim();
-
-		if ([undefined, null, 'undefined', 'null', 'None'].includes(str)) {
-			return '';
-		}
-
-		const lowerStr = str.toLowerCase();
-		if (['true', 'false'].includes(lowerStr)) {
-			return lowerStr == 'true';
-		}
-
+	if (validate && !hasTemplate(str)) {
 		return str;
 	}
 
+	window.haNunjucks.hass = hass;
+	buildStatesObject(hass);
+	str = window.haNunjucks.env
+		.renderString(structuredClone(str), {
+			hass,
+			_states: window.haNunjucks.states,
+			...context,
+		})
+		.trim();
+
+	if ([undefined, null, 'undefined', 'null', 'None'].includes(str)) {
+		return '';
+	}
+
+	const lowerStr = str.toLowerCase();
+	if (['true', 'false'].includes(lowerStr)) {
+		return lowerStr == 'true';
+	}
+
 	return str;
+}
+
+/**
+ * Test if the input contains a valid template
+ * @param {any} str the variable to check
+ * @returns if the input is a string that contains a template
+ */
+export function hasTemplate(str: any) {
+	return /{{.*?}}|{%.*?%}/.test(str);
 }

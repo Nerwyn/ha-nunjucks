@@ -1,13 +1,10 @@
 export async function fetchLabelRegistry(hass) {
-    if (hass.connection) {
-        window.haNunjucks.labelRegistry = {};
-        const labels = await hass.connection.sendMessagePromise({
-            type: 'config/label_registry/list',
-        });
-        labels.sort((ent1, ent2) => ent1.name.localeCompare(ent2.name));
-        for (const label of labels) {
-            window.haNunjucks.labelRegistry[label.label_id] = label;
-        }
+    const labels = await hass.connection.sendMessagePromise({
+        type: 'config/label_registry/list',
+    });
+    labels.sort((ent1, ent2) => ent1.name.localeCompare(ent2.name));
+    for (const label of labels) {
+        window.haNunjucks.labelRegistry[label.label_id] = label;
     }
 }
 export function labels(hass, lookup_value) {

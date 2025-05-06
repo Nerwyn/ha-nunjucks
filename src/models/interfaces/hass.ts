@@ -85,3 +85,7 @@ export interface HomeAssistant {
 	): string;
 	formatEntityAttributeName(stateObj: HassEntity, attribute: string): string;
 }
+
+export interface HassElement extends HTMLElement {
+	hass: HomeAssistant;
+}

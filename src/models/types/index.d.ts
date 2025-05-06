@@ -7,7 +7,6 @@ export {};
 
 declare global {
 	interface Window {
-		hassConnection: Promise<Record<string, any>>;
 		haNunjucks: {
 			env: Environment;
 			hass: HomeAssistant;
