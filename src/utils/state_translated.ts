@@ -1,3 +1,4 @@
+import { date, datetime, time } from 'ts-py-datetime';
 import { HomeAssistant } from '../models/interfaces/hass';
 
 export function state_translated(
@@ -49,5 +50,20 @@ export function attr_value_translated(
 			hass.states[entity_id]?.attributes?.[attr_name] ??
 			undefined
 		);
+	}
+}
+
+export function number_translated(value: number) {
+	if (isNaN(value)) {
+		return value;
+	}
+	return window.haNunjucks.numberFormat.format(value);
+}
+
+export function date_translated(value: date | time | datetime) {
+	try {
+		return window.haNunjucks.datetimeFormat.format(value.jsDate);
+	} catch {
+		return value;
 	}
 }

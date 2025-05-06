@@ -54,6 +54,34 @@ const context = {
 const renderedString = renderTemplate(this.hass, templateString, context);
 ```
 
+`renderTemplate` will try to validate that inputs contain valid templates by default using the exported function `hasTemplate`. You can disable this by setting the fourth argument of `renderTemplate` to `false`. This way you can perform this check yourself before any additional templating setup you perform in your code.
+
+```typescript
+import { hasTemplate, renderTemplate } from 'ha-nunjucks';
+
+if (!hasTemplate(templateString)) {
+  return templateString;
+}
+
+const context = {
+  foo: 'bar',
+  doThing(thing: string) {
+    return `doing ${thing}!`;
+  },
+  config: {
+    entity: 'foo.bar',
+    attribute: 'baz_bah',
+  },
+};
+
+const renderedString = renderTemplate(
+  this.hass,
+  templateString,
+  context,
+  false,
+);
+```
+
 ### Return Types
 
 `renderTemplate` will return a string unless the result is `true` or `false` (_not_ case sensitive), in which case it will return a boolean.
@@ -115,6 +143,8 @@ Functions used to determine an entity's state or an attribute.
 | state_translated      | function, filter | entity_id, state (optional)                 | Returns the formatted and translated state of an entity or provided state using a language that is currently configured in the general settings.                     |
 | attr_name_translated  | function, filter | entity_id, attr_name                        | Returns the formatted and translated attribute name of an entity using a language that is currently configured in the general settings.                              |
 | attr_value_translated | function, filter | entity_id, attr_name, attr_value (optional) | Returns the formatted and translated attribute value of an entity or provided attribute value using a language that is currently configured in the general settings. |
+| number_translated     | function, filter | value                                       | Returns the formatted and translated input number using a language that is currently configured in the general settings.                                             |
+| date_translated       | function, filter | value                                       | Returns the formatted and translated input date, time, or datetime using a language that is currently configured in the general settings.                            |
 
 ### [Groups](https://www.home-assistant.io/docs/configuration/templating/#working-with-groups)
 
@@ -164,7 +194,7 @@ Functions used to determine an entity's state or an attribute.
 
 ### [Labels](https://www.home-assistant.io/docs/configuration/templating/#labels)
 
-**NOTE**: Labels are not available in the `hass` object and must be retrieved asynchronously from the Home Assistant backend the first time `renderTemplate` is called. Since this package is otherwise synchronous, this can cause a race condition where no labels are found the first time `renderTemplate` is run. This generally resolves itself once the template re-renders.
+**NOTE**: Labels are not available in the `hass` object and must be retrieved asynchronously from the Home Assistant backend the first time `ha-nunjucks` is imported. Since this package is otherwise synchronous, this can cause a race condition where no labels are found the first time `renderTemplate` is run. This generally resolves itself once the template re-renders.
 
 | Name           | Type             | Arguments               | Description                                                                                |
 | -------------- | ---------------- | ----------------------- | ------------------------------------------------------------------------------------------ |

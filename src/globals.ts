@@ -53,6 +53,8 @@ import {
 import {
 	attr_name_translated,
 	attr_value_translated,
+	date_translated,
+	number_translated,
 	state_translated,
 } from './utils/state_translated';
 import {
@@ -177,6 +179,7 @@ const GLOBALS: Record<string, CallableFunction> = {
 	time_since,
 	time_until,
 	as_timedelta,
+	date_translated,
 
 	// Numeric,
 	float,
@@ -197,6 +200,7 @@ const GLOBALS: Record<string, CallableFunction> = {
 	average,
 	median,
 	statistical_mode,
+	number_translated,
 
 	// Type Conversions
 	set,

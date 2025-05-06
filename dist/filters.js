@@ -10,7 +10,7 @@ import { label_areas, label_devices, label_entities, label_id, label_name, label
 import { str } from './utils/miscellaneous';
 import { acos, add, asin, atan, atan2, average, bitwise_and, bitwise_not, bitwise_or, bitwise_xor, bool, cos, is_number, log, max, median, min, multiply, ord, sin, sqrt, statistical_mode, tan, } from './utils/numeric';
 import { regex_findall, regex_findall_index, regex_replace, } from './utils/regexp';
-import { attr_name_translated, attr_value_translated, state_translated, } from './utils/state_translated';
+import { attr_name_translated, attr_value_translated, date_translated, number_translated, state_translated, } from './utils/state_translated';
 import { has_value, state_attr, states } from './utils/states';
 import { as_datetime, as_local, as_timestamp, time_since, time_until, timestamp_custom, timestamp_local, timestamp_utc, today_at, } from './utils/time';
 export function addFilters(env) {
@@ -74,6 +74,7 @@ const FILTERS = {
     timestamp_local,
     timestamp_utc,
     timestamp_custom,
+    date_translated,
     // To/From JSON
     to_json,
     from_json,
@@ -107,6 +108,7 @@ const FILTERS = {
     ord,
     multiply,
     add,
+    number_translated,
     // Regular Expressions
     regex_replace,
     regex_findall,

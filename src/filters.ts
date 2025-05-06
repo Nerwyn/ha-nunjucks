@@ -48,6 +48,8 @@ import {
 import {
 	attr_name_translated,
 	attr_value_translated,
+	date_translated,
+	number_translated,
 	state_translated,
 } from './utils/state_translated';
 import { has_value, state_attr, states } from './utils/states';
@@ -139,6 +141,7 @@ const FILTERS: Record<string, CallableFunction> = {
 	timestamp_local,
 	timestamp_utc,
 	timestamp_custom,
+	date_translated,
 
 	// To/From JSON
 	to_json,
@@ -176,6 +179,7 @@ const FILTERS: Record<string, CallableFunction> = {
 	ord,
 	multiply,
 	add,
+	number_translated,
 
 	// Regular Expressions
 	regex_replace,

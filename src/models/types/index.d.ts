@@ -12,6 +12,8 @@ declare global {
 			hass: HomeAssistant;
 			states: Record<string, Record<string, HassEntity>>;
 			labelRegistry: Record<string, LabelRegistryEntry>;
+			numberFormat: Intl.NumberFormat;
+			datetimeFormat: Intl.DateTimeFormat;
 		};
 	}
 }

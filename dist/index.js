@@ -23,6 +23,8 @@ if (!window.haNunjucks) {
         window.haNunjucks.hass = ha.hass;
         fetchLabelRegistry();
         buildStatesObject();
+        window.haNunjucks.numberFormat = new Intl.NumberFormat(ha.hass.language);
+        window.haNunjucks.datetimeFormat = new Intl.DateTimeFormat(ha.hass.language);
     };
     registrySetup();
     // Initialize global ha-nunjucks environment
