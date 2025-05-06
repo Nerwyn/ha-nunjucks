@@ -35,6 +35,7 @@ if (!window.haNunjucks) {
 		);
 		window.haNunjucks.datetimeFormat = new Intl.DateTimeFormat(
 			ha.hass.language,
+			{ dateStyle: 'short', timeStyle: 'medium' },
 		);
 	};
 	registrySetup();
