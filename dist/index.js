@@ -20,11 +20,13 @@ if (!window.haNunjucks) {
             setTimeout(registrySetup, 10);
             return;
         }
+        // Number and datetime translators
+        window.haNunjucks.numberFormat = new Intl.NumberFormat(ha.hass.language);
+        window.haNunjucks.datetimeFormat = new Intl.DateTimeFormat(ha.hass.language, { dateStyle: 'full', timeStyle: 'long' });
+        // Label registry and states object
         window.haNunjucks.hass = ha.hass;
         fetchLabelRegistry();
         buildStatesObject();
-        window.haNunjucks.numberFormat = new Intl.NumberFormat(ha.hass.language);
-        window.haNunjucks.datetimeFormat = new Intl.DateTimeFormat(ha.hass.language, { dateStyle: 'short', timeStyle: 'medium' });
     };
     registrySetup();
     // Initialize global ha-nunjucks environment

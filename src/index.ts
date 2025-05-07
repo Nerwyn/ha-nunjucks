@@ -27,16 +27,19 @@ if (!window.haNunjucks) {
 			return;
 		}
 
-		window.haNunjucks.hass = ha.hass;
-		fetchLabelRegistry();
-		buildStatesObject();
+		// Number and datetime translators
 		window.haNunjucks.numberFormat = new Intl.NumberFormat(
 			ha.hass.language,
 		);
 		window.haNunjucks.datetimeFormat = new Intl.DateTimeFormat(
 			ha.hass.language,
-			{ dateStyle: 'short', timeStyle: 'medium' },
+			{ dateStyle: 'full', timeStyle: 'long' },
 		);
+
+		// Label registry and states object
+		window.haNunjucks.hass = ha.hass;
+		fetchLabelRegistry();
+		buildStatesObject();
 	};
 	registrySetup();
 
