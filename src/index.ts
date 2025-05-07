@@ -99,11 +99,13 @@ export function renderTemplate(
 	return str;
 }
 
+const hasTemplateRegex = /{{.*?}}|{%.*?%}/;
+
 /**
  * Test if the input contains a valid template
  * @param {any} str the variable to check
  * @returns if the input is a string that contains a template
  */
 export function hasTemplate(str: any) {
-	return /{{.*?}}|{%.*?%}/.test(str);
+	return hasTemplateRegex.test(str);
 }
