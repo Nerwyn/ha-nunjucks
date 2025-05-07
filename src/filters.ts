@@ -49,8 +49,10 @@ import {
 	attr_name_translated,
 	attr_value_translated,
 	date_translated,
+	datetime_translated,
 	number_translated,
 	state_translated,
+	time_translated,
 } from './utils/state_translated';
 import { has_value, state_attr, states } from './utils/states';
 import {
@@ -142,6 +144,8 @@ const FILTERS: Record<string, CallableFunction> = {
 	timestamp_utc,
 	timestamp_custom,
 	date_translated,
+	time_translated,
+	datetime_translated,
 
 	// To/From JSON
 	to_json,

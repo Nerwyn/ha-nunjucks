@@ -54,8 +54,10 @@ import {
 	attr_name_translated,
 	attr_value_translated,
 	date_translated,
+	datetime_translated,
 	number_translated,
 	state_translated,
+	time_translated,
 } from './utils/state_translated';
 import {
 	has_value,
@@ -180,6 +182,8 @@ const GLOBALS: Record<string, CallableFunction> = {
 	time_until,
 	as_timedelta,
 	date_translated,
+	time_translated,
+	datetime_translated,
 
 	// Numeric,
 	float,

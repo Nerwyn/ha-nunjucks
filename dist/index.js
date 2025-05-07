@@ -22,6 +22,8 @@ if (!window.haNunjucks) {
         }
         // Number and datetime translators
         window.haNunjucks.numberFormat = new Intl.NumberFormat(ha.hass.language);
+        window.haNunjucks.dateFormat = new Intl.DateTimeFormat(ha.hass.language, { dateStyle: 'full' });
+        window.haNunjucks.timeFormat = new Intl.DateTimeFormat(ha.hass.language, { timeStyle: 'long' });
         window.haNunjucks.datetimeFormat = new Intl.DateTimeFormat(ha.hass.language, { dateStyle: 'full', timeStyle: 'long' });
         // Label registry and states object
         window.haNunjucks.hass = ha.hass;

@@ -144,7 +144,9 @@ Functions used to determine an entity's state or an attribute.
 | attr_name_translated  | function, filter | entity_id, attr_name                        | Returns the formatted and translated attribute name of an entity using a language that is currently configured in the general settings.                              |
 | attr_value_translated | function, filter | entity_id, attr_name, attr_value (optional) | Returns the formatted and translated attribute value of an entity or provided attribute value using a language that is currently configured in the general settings. |
 | number_translated     | function, filter | value                                       | Returns the formatted and translated input number using a language that is currently configured in the general settings.                                             |
-| date_translated       | function, filter | value                                       | Returns the formatted and translated input date, time, or datetime using a language that is currently configured in the general settings.                            |
+| date_translated       | function, filter | value                                       | Returns the formatted and translated input time or datetime using a language that is currently configured in the general settings.                                   |
+| time_translated       | function, filter | value                                       | Returns the formatted and translated input date or datetime using a language that is currently configured in the general settings.                                   |
+| datetime_translated   | function, filter | value                                       | Returns the formatted and translated input datetime using a language that is currently configured in the general settings.                                           |
 
 ### [Groups](https://www.home-assistant.io/docs/configuration/templating/#working-with-groups)
 

@@ -60,7 +60,23 @@ export function number_translated(value: number) {
 	return window.haNunjucks.numberFormat.format(value);
 }
 
-export function date_translated(value: date | time | datetime) {
+export function date_translated(value: date | datetime) {
+	try {
+		return window.haNunjucks.dateFormat.format(value.jsDate);
+	} catch {
+		return value;
+	}
+}
+
+export function time_translated(value: time | datetime) {
+	try {
+		return window.haNunjucks.timeFormat.format(value.jsDate);
+	} catch {
+		return value;
+	}
+}
+
+export function datetime_translated(value: datetime) {
 	try {
 		return window.haNunjucks.datetimeFormat.format(value.jsDate);
 	} catch {

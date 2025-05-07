@@ -13,6 +13,8 @@ declare global {
 			states: Record<string, Record<string, HassEntity>>;
 			labelRegistry: Record<string, LabelRegistryEntry>;
 			numberFormat: Intl.NumberFormat;
+			dateFormat: Intl.DateTimeFormat;
+			timeFormat: Intl.DateTimeFormat;
 			datetimeFormat: Intl.DateTimeFormat;
 		};
 	}

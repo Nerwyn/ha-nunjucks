@@ -34,6 +34,22 @@ export function number_translated(value) {
 }
 export function date_translated(value) {
     try {
+        return window.haNunjucks.dateFormat.format(value.jsDate);
+    }
+    catch {
+        return value;
+    }
+}
+export function time_translated(value) {
+    try {
+        return window.haNunjucks.timeFormat.format(value.jsDate);
+    }
+    catch {
+        return value;
+    }
+}
+export function datetime_translated(value) {
+    try {
         return window.haNunjucks.datetimeFormat.format(value.jsDate);
     }
     catch {
