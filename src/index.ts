@@ -35,7 +35,6 @@ if (!window.haNunjucks) {
 			ha.hass.language,
 			{ dateStyle: 'full' },
 		);
-
 		window.haNunjucks.timeFormat = new Intl.DateTimeFormat(
 			ha.hass.language,
 			{ timeStyle: 'long' },
