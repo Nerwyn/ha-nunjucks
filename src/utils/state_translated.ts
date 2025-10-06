@@ -54,6 +54,7 @@ export function attr_value_translated(
 }
 
 export function number_translated(value: number, precision?: number) {
+	value = Number(value);
 	if (isNaN(value)) {
 		return value;
 	}

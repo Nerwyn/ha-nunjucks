@@ -27,6 +27,7 @@ export function attr_value_translated(hass, entity_id, attr_name, attr_value) {
     }
 }
 export function number_translated(value, precision) {
+    value = Number(value);
     if (isNaN(value)) {
         return value;
     }
