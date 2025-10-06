@@ -163,7 +163,7 @@ function timeDiff(
 	if (diff <= 0) {
 		return input;
 	}
-	if (precision == 0 || precision > 6) {
+	if (precision < 1 || precision > 6) {
 		precision = 6;
 	}
 
@@ -181,7 +181,7 @@ function timeDiff(
 	let p = 0;
 	for (let i = 0; i < units.length; i++) {
 		let value = diff / toSeconds[units[i]];
-		if (i == precision - 1) {
+		if (i == p - 1) {
 			value = Math.round(value);
 		} else {
 			value = Math.floor(value);
@@ -189,8 +189,10 @@ function timeDiff(
 		if (startRes || value > 0) {
 			startRes = true;
 			p += 1;
-			res += ` ${value} ${units[i]}${value != 1 ? 's' : ''}`;
-			diff -= value * toSeconds[units[i]];
+			if (value > 0) {
+				res += ` ${value} ${units[i]}${value != 1 ? 's' : ''}`;
+				diff -= value * toSeconds[units[i]];
+			}
 		}
 		if (startRes && precision == p) {
 			break;
