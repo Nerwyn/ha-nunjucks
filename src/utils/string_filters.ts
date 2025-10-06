@@ -1,7 +1,11 @@
 import slugifyLib from 'slugify';
 
 export function slugify(str: string, separator: string = '_') {
-	return slugifyLib(str, separator);
+	return slugifyLib(str, {
+		replacement: separator,
+		lower: true,
+		strict: true,
+	});
 }
 
 export function ordinal(num: number) {

@@ -1,6 +1,10 @@
 import slugifyLib from 'slugify';
 export function slugify(str, separator = '_') {
-    return slugifyLib(str, separator);
+    return slugifyLib(str, {
+        replacement: separator,
+        lower: true,
+        strict: true,
+    });
 }
 export function ordinal(num) {
     if (isNaN(num)) {
