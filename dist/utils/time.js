@@ -180,12 +180,10 @@ export function as_timedelta(value) {
             /^\d*\.?\d*$/.test(value)) {
             let daysStr, timeStr;
             if (value.includes(' ')) {
-                if (value.includes('days')) {
-                    [daysStr, timeStr] = value.split(' days ');
-                }
-                else {
-                    [daysStr, timeStr] = value.split(' ');
-                }
+                [daysStr, timeStr] = value
+                    .replace(/day(s?)/g, '')
+                    .replace(/\s+/g, ' ')
+                    .split(' ');
             }
             else {
                 daysStr = 0;

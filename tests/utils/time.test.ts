@@ -271,9 +271,9 @@ describe('strptime', () => {
 
 describe('relative_time', () => {
 	it('should only return the biggest unit', () => {
-		const res = renderTemplate(
+		let res = renderTemplate(
 			hass,
-			'{{ relative_time(as_datetime(1608336000)) }}',
+			'{{ (now() - as_timedelta("1001 days")) | as_datetime | relative_time }}',
 		) as string;
 		assert.match(res, /year/g);
 		assert.doesNotMatch(res, /month/g);
@@ -281,87 +281,133 @@ describe('relative_time', () => {
 		assert.doesNotMatch(res, /hour/g);
 		assert.doesNotMatch(res, /minute/g);
 		assert.doesNotMatch(res, /second/g);
+
+		res = renderTemplate(
+			hass,
+			'{{ (now() - as_timedelta("30 days")) | as_datetime | relative_time }}',
+		) as string;
+		assert.doesNotMatch(res, /year/g);
+		assert.match(res, /month/g);
+		assert.doesNotMatch(res, /day/g);
+		assert.doesNotMatch(res, /hour/g);
+		assert.doesNotMatch(res, /minute/g);
+		assert.doesNotMatch(res, /second/g);
+
+		res = renderTemplate(
+			hass,
+			'{{ (now() - as_timedelta("14 days")) | as_datetime | relative_time }}',
+		) as string;
+		assert.doesNotMatch(res, /year/g);
+		assert.doesNotMatch(res, /month/g);
+		assert.match(res, /day/g);
+		assert.doesNotMatch(res, /hour/g);
+		assert.doesNotMatch(res, /minute/g);
+		assert.doesNotMatch(res, /second/g);
+
+		res = renderTemplate(
+			hass,
+			'{{ (now() - as_timedelta("8:20:10")) | as_datetime | relative_time }}',
+		) as string;
+		assert.doesNotMatch(res, /year/g);
+		assert.doesNotMatch(res, /month/g);
+		assert.doesNotMatch(res, /day/g);
+		assert.match(res, /hour/g);
+		assert.doesNotMatch(res, /minute/g);
+		assert.doesNotMatch(res, /second/g);
 	});
 });
 
 describe('time_since', () => {
 	it('should return the correct units for each precision', () => {
-		const p0 = renderTemplate(
+		let res = renderTemplate(
 			hass,
-			'{{ time_since(as_datetime(1608336000), 0) }}',
+			'{{ (now() - as_timedelta("1001 days 8:20:10")) | as_datetime | time_since(0) }}',
 		) as string;
-		assert.match(p0, /year/g);
-		assert.match(p0, /month/g);
-		assert.match(p0, /day/g);
-		assert.match(p0, /hour/g);
-		assert.match(p0, /minute/g);
-		assert.match(p0, /second/g);
+		assert.match(res, /year/g);
+		assert.match(res, /month/g);
+		assert.match(res, /day/g);
+		assert.match(res, /hour/g);
+		assert.match(res, /minute/g);
+		assert.match(res, /second/g);
 
-		const p1 = renderTemplate(
+		res = renderTemplate(
 			hass,
-			'{{ time_since(as_datetime(1608336000), 1) }}',
+			'{{ (now() - as_timedelta("1001 days 8:20:10")) | as_datetime | time_since(1) }}',
 		) as string;
-		assert.match(p1, /year/g);
-		assert.doesNotMatch(p1, /month/g);
-		assert.doesNotMatch(p1, /day/g);
-		assert.doesNotMatch(p1, /hour/g);
-		assert.doesNotMatch(p1, /minute/g);
-		assert.doesNotMatch(p1, /second/g);
+		assert.match(res, /year/g);
+		assert.doesNotMatch(res, /month/g);
+		assert.doesNotMatch(res, /day/g);
+		assert.doesNotMatch(res, /hour/g);
+		assert.doesNotMatch(res, /minute/g);
+		assert.doesNotMatch(res, /second/g);
 
-		const p2 = renderTemplate(
+		res = renderTemplate(
 			hass,
-			'{{ time_since(as_datetime(1608336000), 2) }}',
+			'{{ (now() - as_timedelta("1001 days 8:20:10")) | as_datetime | time_since(2) }}',
 		) as string;
-		assert.match(p2, /year/g);
-		assert.match(p2, /month/g);
-		assert.doesNotMatch(p2, /day/g);
-		assert.doesNotMatch(p2, /hour/g);
-		assert.doesNotMatch(p2, /minute/g);
-		assert.doesNotMatch(p2, /second/g);
+		assert.match(res, /year/g);
+		assert.match(res, /month/g);
+		assert.doesNotMatch(res, /day/g);
+		assert.doesNotMatch(res, /hour/g);
+		assert.doesNotMatch(res, /minute/g);
+		assert.doesNotMatch(res, /second/g);
 
-		const p3 = renderTemplate(
+		res = renderTemplate(
 			hass,
-			'{{ time_since(as_datetime(1608336000), 3) }}',
+			'{{ (now() - as_timedelta("1001 days 8:20:10")) | as_datetime | time_since(3) }}',
 		) as string;
-		assert.match(p3, /year/g);
-		assert.match(p3, /month/g);
-		assert.match(p3, /day/g);
-		assert.doesNotMatch(p3, /hour/g);
-		assert.doesNotMatch(p3, /minute/g);
-		assert.doesNotMatch(p3, /second/g);
+		assert.match(res, /year/g);
+		assert.match(res, /month/g);
+		assert.match(res, /day/g);
+		assert.doesNotMatch(res, /hour/g);
+		assert.doesNotMatch(res, /minute/g);
+		assert.doesNotMatch(res, /second/g);
 
-		const p4 = renderTemplate(
+		res = renderTemplate(
 			hass,
-			'{{ time_since(as_datetime(1608336000), 4) }}',
+			'{{ (now() - as_timedelta("1001 days 8:20:10")) | as_datetime | time_since(4) }}',
 		) as string;
-		assert.match(p4, /year/g);
-		assert.match(p4, /month/g);
-		assert.match(p4, /day/g);
-		assert.match(p4, /hour/g);
-		assert.doesNotMatch(p4, /minute/g);
-		assert.doesNotMatch(p4, /second/g);
+		assert.match(res, /year/g);
+		assert.match(res, /month/g);
+		assert.match(res, /day/g);
+		assert.match(res, /hour/g);
+		assert.doesNotMatch(res, /minute/g);
+		assert.doesNotMatch(res, /second/g);
 
-		const p5 = renderTemplate(
+		res = renderTemplate(
 			hass,
-			'{{ time_since(as_datetime(1608336000), 5) }}',
+			'{{ (now() - as_timedelta("1001 days 8:20:10")) | as_datetime | time_since(5) }}',
 		) as string;
-		assert.match(p5, /year/g);
-		assert.match(p5, /month/g);
-		assert.match(p5, /day/g);
-		assert.match(p5, /hour/g);
-		assert.match(p5, /minute/g);
-		assert.doesNotMatch(p5, /second/g);
+		assert.match(res, /year/g);
+		assert.match(res, /month/g);
+		assert.match(res, /day/g);
+		assert.match(res, /hour/g);
+		assert.match(res, /minute/g);
+		assert.doesNotMatch(res, /second/g);
 
-		const p6 = renderTemplate(
+		res = renderTemplate(
 			hass,
-			'{{ time_since(as_datetime(1608336000), 6) }}',
+			'{{ (now() - as_timedelta("1001 days 8:20:10")) | as_datetime | time_since(6) }}',
 		) as string;
-		assert.match(p6, /year/g);
-		assert.match(p6, /month/g);
-		assert.match(p6, /day/g);
-		assert.match(p6, /hour/g);
-		assert.match(p6, /minute/g);
-		assert.match(p6, /second/g);
+		assert.match(res, /year/g);
+		assert.match(res, /month/g);
+		assert.match(res, /day/g);
+		assert.match(res, /hour/g);
+		assert.match(res, /minute/g);
+		assert.match(res, /second/g);
+	});
+
+	it('should skip units that are less than 1', () => {
+		const res = renderTemplate(
+			hass,
+			'{{ (now() - as_timedelta("3 days 0:20:00")) | as_datetime | time_since(0) }}',
+		) as string;
+		assert.doesNotMatch(res, /year/g);
+		assert.doesNotMatch(res, /month/g);
+		assert.match(res, /day/g);
+		assert.doesNotMatch(res, /hour/g);
+		assert.match(res, /minute/g);
+		assert.doesNotMatch(res, /second/g);
 	});
 
 	it('should return the input datetime if the given datetime is in the future', () => {
@@ -382,82 +428,82 @@ describe('time_since', () => {
 
 describe('time_until', () => {
 	it('should return the correct units for each precision', () => {
-		const p0 = renderTemplate(
+		let res = renderTemplate(
 			hass,
-			'{{ time_until(as_datetime(86400000000), 0) }}',
+			'{{ (now() + as_timedelta("1001 days 8:20:10")) | as_datetime | time_until(0) }}',
 		) as string;
-		assert.match(p0, /year/g);
-		assert.match(p0, /month/g);
-		assert.match(p0, /day/g);
-		assert.match(p0, /hour/g);
-		assert.match(p0, /minute/g);
-		assert.match(p0, /second/g);
+		assert.match(res, /year/g);
+		assert.match(res, /month/g);
+		assert.match(res, /day/g);
+		assert.match(res, /hour/g);
+		assert.match(res, /minute/g);
+		assert.match(res, /second/g);
 
-		const p1 = renderTemplate(
+		res = renderTemplate(
 			hass,
-			'{{ time_until(as_datetime(86400000000), 1) }}',
+			'{{ (now() + as_timedelta("1001 days 8:20:10")) | as_datetime | time_until(1) }}',
 		) as string;
-		assert.match(p1, /year/g);
-		assert.doesNotMatch(p1, /month/g);
-		assert.doesNotMatch(p1, /day/g);
-		assert.doesNotMatch(p1, /hour/g);
-		assert.doesNotMatch(p1, /minute/g);
-		assert.doesNotMatch(p1, /second/g);
+		assert.match(res, /year/g);
+		assert.doesNotMatch(res, /month/g);
+		assert.doesNotMatch(res, /day/g);
+		assert.doesNotMatch(res, /hour/g);
+		assert.doesNotMatch(res, /minute/g);
+		assert.doesNotMatch(res, /second/g);
 
-		const p2 = renderTemplate(
+		res = renderTemplate(
 			hass,
-			'{{ time_until(as_datetime(86400000000), 2) }}',
+			'{{ (now() + as_timedelta("1001 days 8:20:10")) | as_datetime | time_until(2) }}',
 		) as string;
-		assert.match(p2, /year/g);
-		assert.match(p2, /month/g);
-		assert.doesNotMatch(p2, /day/g);
-		assert.doesNotMatch(p2, /hour/g);
-		assert.doesNotMatch(p2, /minute/g);
-		assert.doesNotMatch(p2, /second/g);
+		assert.match(res, /year/g);
+		assert.match(res, /month/g);
+		assert.doesNotMatch(res, /day/g);
+		assert.doesNotMatch(res, /hour/g);
+		assert.doesNotMatch(res, /minute/g);
+		assert.doesNotMatch(res, /second/g);
 
-		const p3 = renderTemplate(
+		res = renderTemplate(
 			hass,
-			'{{ time_until(as_datetime(86400000000), 3) }}',
+			'{{ (now() + as_timedelta("1001 days 8:20:10")) | as_datetime | time_until(3) }}',
 		) as string;
-		assert.match(p3, /year/g);
-		assert.match(p3, /month/g);
-		assert.match(p3, /day/g);
-		assert.doesNotMatch(p3, /hour/g);
-		assert.doesNotMatch(p3, /minute/g);
-		assert.doesNotMatch(p3, /second/g);
+		assert.match(res, /year/g);
+		assert.match(res, /month/g);
+		assert.match(res, /day/g);
+		assert.doesNotMatch(res, /hour/g);
+		assert.doesNotMatch(res, /minute/g);
+		assert.doesNotMatch(res, /second/g);
 
-		const p4 = renderTemplate(
+		res = renderTemplate(
 			hass,
-			'{{ time_until(as_datetime(86400000000), 4) }}',
+			'{{ (now() + as_timedelta("1001 days 8:20:10")) | as_datetime | time_until(4) }}',
 		) as string;
-		assert.match(p4, /year/g);
-		assert.match(p4, /month/g);
-		assert.match(p4, /day/g);
-		assert.match(p4, /hour/g);
-		assert.doesNotMatch(p4, /minute/g);
-		assert.doesNotMatch(p4, /second/g);
+		assert.match(res, /year/g);
+		assert.match(res, /month/g);
+		assert.match(res, /day/g);
+		assert.match(res, /hour/g);
+		assert.doesNotMatch(res, /minute/g);
+		assert.doesNotMatch(res, /second/g);
 
-		const p5 = renderTemplate(
+		res = renderTemplate(
 			hass,
-			'{{ time_until(as_datetime(86400000000), 5) }}',
+			'{{ (now() + as_timedelta("1001 days 8:20:10")) | as_datetime | time_until(5) }}',
 		) as string;
-		assert.match(p5, /year/g);
-		assert.match(p5, /month/g);
-		assert.match(p5, /day/g);
-		assert.match(p5, /hour/g);
-		assert.match(p5, /minute/g);
-		assert.doesNotMatch(p5, /second/g);
+		assert.match(res, /year/g);
+		assert.match(res, /month/g);
+		assert.match(res, /day/g);
+		assert.match(res, /hour/g);
+		assert.match(res, /minute/g);
+		assert.doesNotMatch(res, /second/g);
 
-		const p6 = renderTemplate(
+		res = renderTemplate(
 			hass,
-			'{{ time_until(as_datetime(86400000000), 6) }}',
+			'{{ (now() + as_timedelta("1001 days 8:20:10")) | as_datetime | time_until(6) }}',
 		) as string;
-		assert.match(p6, /year/g);
-		assert.match(p6, /month/g);
-		assert.match(p6, /day/g);
-		assert.match(p6, /hour/g);
-		assert.match(p6, /minute/g);
-		assert.match(p6, /second/g);
+		assert.match(res, /year/g);
+		assert.match(res, /month/g);
+		assert.match(res, /day/g);
+		assert.match(res, /hour/g);
+		assert.match(res, /minute/g);
+		assert.match(res, /second/g);
 	});
 
 	it('should return the input datetime if the given datetime is in the past', () => {
