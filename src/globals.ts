@@ -9,16 +9,24 @@ import {
 	device_attr,
 	device_entities,
 	device_id,
+	device_name,
 	is_device_attr,
 } from './utils/devices';
 import { closest, distance } from './utils/distance';
 import { is_hidden_entity } from './utils/entities';
-import { floor_areas, floor_id, floor_name, floors } from './utils/floors';
+import {
+	floor_areas,
+	floor_entities,
+	floor_id,
+	floor_name,
+	floors,
+} from './utils/floors';
 import { expand } from './utils/groups';
 import { iif } from './utils/iif';
 import { integration_entities } from './utils/integrations';
 import {
 	label_areas,
+	label_description,
 	label_devices,
 	label_entities,
 	label_id,
@@ -66,12 +74,14 @@ import {
 	state_attr,
 	states,
 } from './utils/states';
+import { slugify } from './utils/string_filters';
 import {
 	as_datetime,
 	as_local,
 	as_timedelta,
 	as_timestamp,
 	now,
+	relative_time,
 	strptime,
 	time_since,
 	time_until,
@@ -134,12 +144,14 @@ const HASS_GLOBALS: Record<string, CallableFunction> = {
 	device_attr,
 	is_device_attr,
 	device_id,
+	device_name,
 
 	// Floors
 	floors,
 	floor_id,
 	floor_name,
 	floor_areas,
+	floor_entities,
 
 	// Areas
 	areas,
@@ -169,6 +181,7 @@ const GLOBALS: Record<string, CallableFunction> = {
 	// Labels
 	label_id,
 	label_name,
+	label_description,
 
 	// Time
 	now,
@@ -178,6 +191,7 @@ const GLOBALS: Record<string, CallableFunction> = {
 	as_timestamp,
 	as_local,
 	strptime,
+	relative_time,
 	time_since,
 	time_until,
 	as_timedelta,
@@ -209,13 +223,16 @@ const GLOBALS: Record<string, CallableFunction> = {
 	// Type Conversions
 	set,
 	list,
+	str,
 
 	// Iterating Multiple Objects
 	zip,
 
+	// String fitlers
+	slugify,
+
 	// Miscellaneous
 	match_media,
-	str,
 };
 
 const CONST_GLOBALS: Record<string, number> = {

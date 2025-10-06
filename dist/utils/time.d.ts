@@ -6,6 +6,7 @@ export declare function as_datetime(value: number | string | datetime | date, fa
 export declare function as_timestamp(value: number | string | datetime | date, fallback?: string): string | number;
 export declare function as_local(value: datetime): datetime;
 export declare function strptime(value: string, format: string, fallback?: datetime | string | undefined | Record<string, datetime | string | boolean>, utc?: boolean): string | datetime | Record<string, string | boolean | datetime>;
+export declare function relative_time(input: datetime): string | datetime;
 export declare function time_since(input: datetime, precision?: number): string | datetime;
 export declare function time_until(input: datetime, precision?: number): string | datetime;
 export declare function as_timedelta(value: string): timedelta | null;

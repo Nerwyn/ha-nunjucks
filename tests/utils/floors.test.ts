@@ -49,6 +49,20 @@ describe('floor_id', () => {
 			'first_floor',
 		);
 	});
+
+	it('should return a floor ID if given a floor name', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ floor_id("First Floor") }}'),
+			'first_floor',
+		);
+	});
+
+	it('should return a floor ID if given a floor alias', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ floor_id("Ground Floor") }}'),
+			'first_floor',
+		);
+	});
 });
 
 describe('floor_name', () => {
@@ -110,6 +124,29 @@ describe('floor_areas', () => {
 		assert.equal(
 			renderTemplate(hass, '{{ floor_areas("First Floor") }}'),
 			'front_yard,kitchen,lounge',
+		);
+	});
+
+	it('should return a stringified array of area IDs associated with a floor alias', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ floor_areas("Ground Floor") }}'),
+			'front_yard,kitchen,lounge',
+		);
+	});
+});
+
+describe('floor_entities', () => {
+	it('should return a stringified array of entity IDs associated with a floor ID', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ floor_entities("first_floor") }}'),
+			'light.driveway_lamps,light.driveway_light_1,light.driveway_light_2,input_number.volume',
+		);
+	});
+
+	it('should return a stringified array of entity IDs associated with a floor name', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ floor_entities("First Floor") }}'),
+			'light.driveway_lamps,light.driveway_light_1,light.driveway_light_2,input_number.volume',
 		);
 	});
 });

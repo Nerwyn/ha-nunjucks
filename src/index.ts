@@ -43,6 +43,10 @@ if (!window.haNunjucks) {
 			ha.hass.language,
 			{ dateStyle: 'full', timeStyle: 'long' },
 		);
+		window.haNunjucks.ordinalFormat = new Intl.PluralRules(
+			'en-US', // ha.hass.language, // Use english for proper numeric suffixes
+			{ type: 'ordinal' },
+		);
 
 		// Label registry and states object
 		window.haNunjucks.hass = ha.hass;

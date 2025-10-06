@@ -269,6 +269,17 @@ describe('strptime', () => {
 	});
 });
 
+describe('relative_time', () => {
+	it('should only return the biggest unit', () => {
+		const res = renderTemplate(
+			hass,
+			'{{ relative_time(as_datetime(1608336000)) }}',
+		) as string;
+		assert.match(res, /year/g);
+		assert.doesNotMatch(res, /month/g);
+	});
+});
+
 describe('time_since', () => {
 	it('should return the correct units for each precision', () => {
 		const p0 = renderTemplate(

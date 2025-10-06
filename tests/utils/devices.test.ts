@@ -81,3 +81,39 @@ describe('device_id', () => {
 		);
 	});
 });
+
+describe('device_name', () => {
+	it('should return the device name as defined by the user given an entity ID', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ device_name("light.driveway_light_1") }}'),
+			'Driveway Lamp 1',
+		);
+	});
+
+	it('should return the original device name if no user defined name exists given an entity ID', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ device_name("light.driveway_light_2") }}'),
+			'Driveway Light 2',
+		);
+	});
+
+	it('should return the device name as defined by the user given an device ID', () => {
+		assert.equal(
+			renderTemplate(
+				hass,
+				'{{ device_name("1c81fa4a8d5d3bbc8a9fcf3b9b88b178") }}',
+			),
+			'Driveway Lamp 1',
+		);
+	});
+
+	it('should return the original device name if no user defined name exists given an device ID', () => {
+		assert.equal(
+			renderTemplate(
+				hass,
+				'{{ device_name("e4831420557f6df04603fb0850e7850b") }}',
+			),
+			'Driveway Light 2',
+		);
+	});
+});

@@ -41,6 +41,10 @@ export function label_name(lookup_value: string) {
 	return window.haNunjucks.labelRegistry[lookup_value]?.name;
 }
 
+export function label_description(lookup_value: string) {
+	return window.haNunjucks.labelRegistry[lookup_value]?.description;
+}
+
 export function label_areas(hass: HomeAssistant, label_name_or_id: string) {
 	try {
 		const areaIds = [];

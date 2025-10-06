@@ -53,6 +53,15 @@ describe('label_name', () => {
 	});
 });
 
+describe('label_description', () => {
+	it('should return a label description for a given label ID', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ label_description("outside") }}'),
+			'There be bugs here',
+		);
+	});
+});
+
 describe('label_areas', () => {
 	it('should return a list of area IDs for a given label ID', () => {
 		assert.equal(

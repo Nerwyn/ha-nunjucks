@@ -32,3 +32,10 @@ export function to_json(
 export function from_json(value: string) {
 	return JSON.parse(value);
 }
+
+export function is_defined(value: any) {
+	if (value == undefined) {
+		throw Error('UndefinedError: input is undefined');
+	}
+	return value;
+}

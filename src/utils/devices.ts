@@ -73,3 +73,19 @@ export function device_id(hass: HomeAssistant, entity_id: string) {
 		return undefined;
 	}
 }
+
+export function device_name(hass: HomeAssistant, lookup_value: string) {
+	try {
+		if (hass.entities[lookup_value]) {
+			lookup_value = hass.entities[lookup_value].device_id as string;
+		}
+
+		const device = hass.devices[lookup_value];
+		if (device) {
+			return device.name_by_user ?? device.name;
+		}
+		return undefined;
+	} catch {
+		return undefined;
+	}
+}

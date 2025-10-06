@@ -21,3 +21,9 @@ export function to_json(obj, ensure_ascii = false, pretty_print = false, sort_ke
 export function from_json(value) {
     return JSON.parse(value);
 }
+export function is_defined(value) {
+    if (value == undefined) {
+        throw Error('UndefinedError: input is undefined');
+    }
+    return value;
+}

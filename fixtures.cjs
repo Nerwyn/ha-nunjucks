@@ -1,4 +1,4 @@
-const cleanup = require('jsdom-global')();
+require('global-jsdom/register');
 
 exports.mochaGlobalSetup = async () => {
 	const ha = document.createElement('home-assistant');
@@ -40,7 +40,7 @@ exports.mochaGlobalSetup = async () => {
 							{
 								color: 'green',
 								created_at: 0,
-								description: null,
+								description: 'There be bugs here',
 								icon: 'mdi:weather-sunny',
 								label_id: 'outside',
 								name: 'Outside',
@@ -55,8 +55,4 @@ exports.mochaGlobalSetup = async () => {
 		states: {},
 	};
 	document.body.appendChild(ha);
-};
-
-exports.mochaGlobalTeardown = () => {
-	cleanup();
 };

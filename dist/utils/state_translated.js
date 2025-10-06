@@ -26,9 +26,15 @@ export function attr_value_translated(hass, entity_id, attr_name, attr_value) {
             undefined);
     }
 }
-export function number_translated(value) {
+export function number_translated(value, precision) {
     if (isNaN(value)) {
         return value;
+    }
+    if (precision) {
+        return value.toLocaleString(window.haNunjucks.hass.language, {
+            minimumFractionDigits: precision,
+            maximumFractionDigits: precision,
+        });
     }
     return window.haNunjucks.numberFormat.format(value);
 }

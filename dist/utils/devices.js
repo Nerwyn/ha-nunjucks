@@ -55,3 +55,18 @@ export function device_id(hass, entity_id) {
         return undefined;
     }
 }
+export function device_name(hass, lookup_value) {
+    try {
+        if (hass.entities[lookup_value]) {
+            lookup_value = hass.entities[lookup_value].device_id;
+        }
+        const device = hass.devices[lookup_value];
+        if (device) {
+            return device.name_by_user ?? device.name;
+        }
+        return undefined;
+    }
+    catch {
+        return undefined;
+    }
+}

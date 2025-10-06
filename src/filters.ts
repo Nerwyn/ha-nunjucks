@@ -1,13 +1,24 @@
 import { area_devices, area_entities, area_id, area_name } from './utils/areas';
 import { contains } from './utils/contains';
-import { device_attr, device_entities, device_id } from './utils/devices';
+import {
+	device_attr,
+	device_entities,
+	device_id,
+	device_name,
+} from './utils/devices';
 import { closest } from './utils/distance';
-import { floor_areas, floor_id, floor_name } from './utils/floors';
+import {
+	floor_areas,
+	floor_entities,
+	floor_id,
+	floor_name,
+} from './utils/floors';
 import { expand } from './utils/groups';
 import { iif } from './utils/iif';
-import { from_json, to_json } from './utils/json';
+import { from_json, is_defined, to_json } from './utils/json';
 import {
 	label_areas,
+	label_description,
 	label_devices,
 	label_entities,
 	label_id,
@@ -56,9 +67,17 @@ import {
 } from './utils/state_translated';
 import { has_value, state_attr, states } from './utils/states';
 import {
+	base64_decode,
+	base64_encode,
+	ordinal,
+	slugify,
+} from './utils/string_filters';
+import {
 	as_datetime,
 	as_local,
+	as_timedelta,
 	as_timestamp,
+	relative_time,
 	time_since,
 	time_until,
 	timestamp_custom,
@@ -103,11 +122,13 @@ const HASS_FILTERS: Record<string, CallableFunction> = {
 	device_entities,
 	device_attr,
 	device_id,
+	device_name,
 
 	// Floors
 	floor_id,
 	floor_name,
 	floor_areas,
+	floor_entities,
 
 	// Areas
 	area_id,
@@ -132,12 +153,15 @@ const FILTERS: Record<string, CallableFunction> = {
 	// Labels
 	label_id,
 	label_name,
+	label_description,
 
 	// Time
 	today_at,
+	as_timedelta,
 	as_datetime,
 	as_timestamp,
 	as_local,
+	relative_time,
 	time_since,
 	time_until,
 	timestamp_local,
@@ -150,6 +174,9 @@ const FILTERS: Record<string, CallableFunction> = {
 	// To/From JSON
 	to_json,
 	from_json,
+
+	// Is Defined
+	is_defined,
 
 	// Distance
 	closest,
@@ -185,11 +212,18 @@ const FILTERS: Record<string, CallableFunction> = {
 	add,
 	number_translated,
 
+	// Type conversions
+	str,
+
+	// String filters
+	// urlencode filter is built into nunjucks
+	slugify,
+	ordinal,
+	base64_encode,
+	base64_decode,
+
 	// Regular Expressions
 	regex_replace,
 	regex_findall,
 	regex_findall_index,
-
-	// Miscellaneous
-	str,
 };

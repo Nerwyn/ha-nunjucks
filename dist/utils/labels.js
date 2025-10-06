@@ -32,6 +32,9 @@ export function label_id(lookup_value) {
 export function label_name(lookup_value) {
     return window.haNunjucks.labelRegistry[lookup_value]?.name;
 }
+export function label_description(lookup_value) {
+    return window.haNunjucks.labelRegistry[lookup_value]?.description;
+}
 export function label_areas(hass, label_name_or_id) {
     try {
         const areaIds = [];

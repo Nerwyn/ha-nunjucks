@@ -20,7 +20,8 @@ export function area_id(hass, lookup_value) {
                 return hass.devices[lookup_value].area_id;
             }
             for (const areaId in hass.areas) {
-                if (hass.areas[areaId].name == lookup_value) {
+                if (hass.areas[areaId].name == lookup_value ||
+                    hass.areas[areaId].aliases?.includes(lookup_value)) {
                     return areaId;
                 }
             }
@@ -57,12 +58,15 @@ export function area_entities(hass, area_name_or_id) {
     try {
         const entityIds = [];
         if (area_name_or_id) {
+            let areaId = area_name_or_id;
+            if (!hass.areas[area_name_or_id]) {
+                areaId = area_id(hass, area_name_or_id) ?? area_name_or_id;
+            }
             const deviceIds = area_devices(hass, area_name_or_id);
-            for (const deviceId of deviceIds) {
-                for (const entityId in hass.entities) {
-                    if (hass.entities[entityId].device_id == deviceId) {
-                        entityIds.push(entityId);
-                    }
+            for (const entityId in hass.entities) {
+                if (deviceIds.includes(hass.entities[entityId].device_id) ||
+                    hass.entities[entityId].area_id == areaId) {
+                    entityIds.push(entityId);
                 }
             }
             entityIds.sort();
@@ -79,7 +83,8 @@ export function area_devices(hass, area_name_or_id) {
         if (area_name_or_id) {
             if (!(area_name_or_id in hass.areas)) {
                 for (const areaId in hass.areas) {
-                    if (hass.areas[areaId].name == area_name_or_id) {
+                    if (hass.areas[areaId].name == area_name_or_id ||
+                        hass.areas[areaId].aliases?.includes(area_name_or_id)) {
                         area_name_or_id = areaId;
                         break;
                     }

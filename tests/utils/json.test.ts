@@ -52,3 +52,26 @@ describe('from_json', () => {
 		);
 	});
 });
+
+describe('is_defined', () => {
+	it('should throw for undefined input', () => {
+		assert.throws(() => renderTemplate(hass, '{{ foo | is_defined }}'));
+		assert.throws(() =>
+			renderTemplate(
+				hass,
+				'{{ (\'{"foo":"bar"}\' | from_json)["baz"] | is_defined }}',
+			),
+		);
+	});
+
+	it('should return true for other values', () => {
+		assert.equal(renderTemplate(hass, '{{ false | is_defined }}'), false);
+		assert.equal(
+			renderTemplate(
+				hass,
+				'{{ (\'{"foo":"bar"}\' | from_json)["foo"] | is_defined }}',
+			),
+			'bar',
+		);
+	});
+});

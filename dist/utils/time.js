@@ -119,7 +119,7 @@ export function strptime(value, format, fallback = undefined, utc = false) {
         throw e;
     }
 }
-function timeDiff(input, precision = 1, until = false) {
+function timeDiff(input, precision = 1, until = false, biggestUnitOnly = false) {
     if (!(input instanceof datetime)) {
         return input;
     }
@@ -146,7 +146,7 @@ function timeDiff(input, precision = 1, until = false) {
     let startRes = false;
     for (let i = 0; i < precision; i++) {
         let value = diff / toSeconds[units[i]];
-        if (i == precision - 1) {
+        if (i == precision - 1 || biggestUnitOnly) {
             value = Math.round(value);
         }
         else {
@@ -156,9 +156,15 @@ function timeDiff(input, precision = 1, until = false) {
             startRes = true;
             res += ` ${value} ${units[i]}${value != 1 ? 's' : ''}`;
             diff -= value * toSeconds[units[i]];
+            if (biggestUnitOnly) {
+                break;
+            }
         }
     }
     return res.trim();
+}
+export function relative_time(input) {
+    return timeDiff(input, 1, false, true);
 }
 export function time_since(input, precision = 1) {
     return timeDiff(input, precision);
