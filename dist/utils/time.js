@@ -155,8 +155,8 @@ function timeDiff(input, precision = 1, until = false) {
         }
         if (startRes || value > 0) {
             startRes = true;
-            p += 1;
             if (value > 0) {
+                p += 1;
                 res += ` ${value} ${units[i]}${value != 1 ? 's' : ''}`;
                 diff -= value * toSeconds[units[i]];
             }
