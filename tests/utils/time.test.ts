@@ -277,6 +277,10 @@ describe('relative_time', () => {
 		) as string;
 		assert.match(res, /year/g);
 		assert.doesNotMatch(res, /month/g);
+		assert.doesNotMatch(res, /day/g);
+		assert.doesNotMatch(res, /hour/g);
+		assert.doesNotMatch(res, /minute/g);
+		assert.doesNotMatch(res, /second/g);
 	});
 });
 
