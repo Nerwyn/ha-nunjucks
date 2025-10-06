@@ -144,7 +144,7 @@ function timeDiff(input, precision = 1, until = false) {
     const units = Object.keys(toSeconds);
     let res = '';
     let startRes = false;
-    for (let i = 0; i < precision; i++) {
+    for (let i = 0; i < units.length; i++) {
         let value = diff / toSeconds[units[i]];
         if (i == precision - 1) {
             value = Math.round(value);
@@ -156,6 +156,9 @@ function timeDiff(input, precision = 1, until = false) {
             startRes = true;
             res += ` ${value} ${units[i]}${value != 1 ? 's' : ''}`;
             diff -= value * toSeconds[units[i]];
+        }
+        if (startRes && precision == i + 1) {
+            break;
         }
     }
     return res.trim();
