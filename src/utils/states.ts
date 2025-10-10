@@ -27,7 +27,7 @@ export function states(
 		}
 		if (rounded && !isNaN(stateObj?.state as unknown as number)) {
 			const precision = hass.entities[entity_id]?.display_precision ?? 0;
-			state = Number(state).toPrecision(precision);
+			state = Number(state).toFixed(precision);
 		}
 		if (with_unit && stateObj?.attributes?.unit_of_measurement) {
 			state = `${state} ${stateObj?.attributes?.unit_of_measurement}`;
