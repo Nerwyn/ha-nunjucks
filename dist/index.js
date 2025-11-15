@@ -1,10 +1,11 @@
 import nunjucks from 'nunjucks';
-import { version } from '../package.json';
+import packageInfo from '../package.json';
 import { addFilters } from './filters';
 import { addGlobals } from './globals';
 import { addTests } from './tests';
 import { fetchLabelRegistry } from './utils/labels';
 import { buildStatesObject } from './utils/states';
+export const version = packageInfo.version;
 if (!window.haNunjucks) {
     window.haNunjucks ||= {};
     window.haNunjucks[version] = {

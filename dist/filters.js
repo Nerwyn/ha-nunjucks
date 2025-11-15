@@ -1,4 +1,4 @@
-import { version } from '../package.json';
+import { version } from '.';
 import { area_devices, area_entities, area_id, area_name } from './utils/areas';
 import { contains } from './utils/contains';
 import { device_attr, device_entities, device_id, device_name, } from './utils/devices';

@@ -1,6 +1,5 @@
-import { version } from '../../package.json';
-
 import { date, datetime, time } from 'ts-py-datetime';
+import { version } from '..';
 import { HomeAssistant } from '../models/interfaces/hass';
 
 export function state_translated(
@@ -92,4 +91,3 @@ export function datetime_translated(value: datetime) {
 		return value;
 	}
 }
-

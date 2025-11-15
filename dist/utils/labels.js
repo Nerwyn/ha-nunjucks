@@ -1,4 +1,4 @@
-import { version } from '../../package.json';
+import { version } from '..';
 export async function fetchLabelRegistry() {
     const labels = await window.haNunjucks[version].hass.connection.sendMessagePromise({
         type: 'config/label_registry/list',

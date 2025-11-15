@@ -1,4 +1,4 @@
-import { version } from '../package.json';
+import { version } from '.';
 
 import {
 	area_devices,
@@ -243,4 +243,3 @@ const CONST_GLOBALS: Record<string, number> = {
 	tau,
 	inf,
 };
-

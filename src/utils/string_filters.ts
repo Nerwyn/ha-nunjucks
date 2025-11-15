@@ -1,6 +1,5 @@
-import { version } from '../../package.json';
-
 import slugifyLib from 'slugify';
+import { version } from '..';
 
 export function slugify(str: string, separator: string = '_') {
 	return slugifyLib(str, {
@@ -33,4 +32,3 @@ export function base64_encode(value: string) {
 export function base64_decode(value: string) {
 	return atob(value);
 }
-

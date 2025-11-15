@@ -1,4 +1,4 @@
-import { version } from '../package.json';
+import { version } from '.';
 
 import { area_devices, area_entities, area_id, area_name } from './utils/areas';
 import { contains } from './utils/contains';
@@ -229,4 +229,3 @@ const FILTERS: Record<string, CallableFunction> = {
 	regex_findall,
 	regex_findall_index,
 };
-

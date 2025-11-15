@@ -1,4 +1,4 @@
-import { version } from '../../package.json';
+import { version } from '..';
 export function buildStatesObject() {
     for (const entityId in window.haNunjucks[version].hass.states) {
         const [domain, id] = entityId.split('.');

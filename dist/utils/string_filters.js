@@ -1,5 +1,5 @@
-import { version } from '../../package.json';
 import slugifyLib from 'slugify';
+import { version } from '..';
 export function slugify(str, separator = '_') {
     return slugifyLib(str, {
         replacement: separator,

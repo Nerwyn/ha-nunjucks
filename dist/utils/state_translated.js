@@ -1,4 +1,4 @@
-import { version } from '../../package.json';
+import { version } from '..';
 export function state_translated(hass, entity_id, state) {
     try {
         return hass.formatEntityState(hass.states[entity_id], state);

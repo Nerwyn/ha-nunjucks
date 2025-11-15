@@ -1,4 +1,4 @@
-import { version } from '../../package.json';
+import { version } from '..';
 
 import { HomeAssistant } from '../models/interfaces/hass';
 import { LabelRegistryEntry } from '../models/interfaces/registries';

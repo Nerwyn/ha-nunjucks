@@ -1,5 +1,5 @@
 import nunjucks from 'nunjucks';
-import { version } from '../package.json';
+import packageInfo from '../package.json';
 import { HassElement, HomeAssistant } from './models/interfaces/hass';
 
 import { addFilters } from './filters';
@@ -8,6 +8,8 @@ import { IHaNunjucks } from './models/types';
 import { addTests } from './tests';
 import { fetchLabelRegistry } from './utils/labels';
 import { buildStatesObject } from './utils/states';
+
+export const version = packageInfo.version;
 
 if (!window.haNunjucks) {
 	window.haNunjucks ||= {};

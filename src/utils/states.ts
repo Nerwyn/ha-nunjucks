@@ -1,5 +1,4 @@
-import { version } from '../../package.json';
-
+import { version } from '..';
 import { HomeAssistant } from '../models/interfaces/hass';
 
 export function buildStatesObject() {
@@ -93,4 +92,3 @@ export function has_value(hass: HomeAssistant, entity_id: string) {
 		return false;
 	}
 }
-

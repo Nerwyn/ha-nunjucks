@@ -1,4 +1,4 @@
-import { version } from '../package.json';
+import { version } from '.';
 import { area_devices, area_entities, area_id, area_name, areas, } from './utils/areas';
 import { device_attr, device_entities, device_id, device_name, is_device_attr, } from './utils/devices';
 import { closest, distance } from './utils/distance';
