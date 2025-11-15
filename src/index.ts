@@ -11,8 +11,8 @@ import { buildStatesObject } from './utils/states';
 
 export const version = packageInfo.version;
 
-if (!window.haNunjucks) {
-	window.haNunjucks ||= {};
+window.haNunjucks ||= {};
+if (!window.haNunjucks[version]) {
 	window.haNunjucks[version] = {
 		states: {},
 		labelRegistry: {},
