@@ -5,18 +5,23 @@ import { LabelRegistryEntry } from '../interfaces/registries';
 
 export {};
 
+export interface IHaNunjucks {
+	env: Environment;
+	hass: HomeAssistant;
+	states: Record<string, Record<string, HassEntity>>;
+	labelRegistry: Record<string, LabelRegistryEntry>;
+	numberFormat: Intl.NumberFormat;
+	dateFormat: Intl.DateTimeFormat;
+	timeFormat: Intl.DateTimeFormat;
+	datetimeFormat: Intl.DateTimeFormat;
+	ordinalFormat: Intl.PluralRules;
+}
+
 declare global {
 	interface Window {
 		haNunjucks: {
-			env: Environment;
-			hass: HomeAssistant;
-			states: Record<string, Record<string, HassEntity>>;
-			labelRegistry: Record<string, LabelRegistryEntry>;
-			numberFormat: Intl.NumberFormat;
-			dateFormat: Intl.DateTimeFormat;
-			timeFormat: Intl.DateTimeFormat;
-			datetimeFormat: Intl.DateTimeFormat;
-			ordinalFormat: Intl.PluralRules;
+			[key: string]: IHaNunjucks;
 		};
 	}
 }
+

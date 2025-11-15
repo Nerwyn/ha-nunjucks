@@ -1,11 +1,13 @@
+import { version } from '../../package.json';
+
 import { HomeAssistant } from '../models/interfaces/hass';
 
 export function buildStatesObject() {
-	for (const entityId in window.haNunjucks.hass.states) {
+	for (const entityId in window.haNunjucks[version].hass.states) {
 		const [domain, id] = entityId.split('.');
-		window.haNunjucks.states[domain] ??= {};
-		window.haNunjucks.states[domain][id] =
-			window.haNunjucks.hass.states[entityId];
+		window.haNunjucks[version].states[domain] ??= {};
+		window.haNunjucks[version].states[domain][id] =
+			window.haNunjucks[version].hass.states[entityId];
 	}
 }
 
@@ -91,3 +93,4 @@ export function has_value(hass: HomeAssistant, entity_id: string) {
 		return false;
 	}
 }
+

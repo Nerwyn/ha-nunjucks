@@ -1,3 +1,5 @@
+import { version } from '../package.json';
+
 import {
 	area_devices,
 	area_entities,
@@ -103,7 +105,7 @@ export function addGlobals(env: Environment) {
 
 	for (const func in HASS_GLOBALS) {
 		env.addGlobal(func, function (...args: string[]) {
-			return HASS_GLOBALS[func](window.haNunjucks.hass, ...args);
+			return HASS_GLOBALS[func](window.haNunjucks[version].hass, ...args);
 		});
 	}
 
@@ -241,3 +243,4 @@ const CONST_GLOBALS: Record<string, number> = {
 	tau,
 	inf,
 };
+

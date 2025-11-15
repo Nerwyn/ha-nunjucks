@@ -1,3 +1,5 @@
+import { version } from '../../package.json';
+
 import slugifyLib from 'slugify';
 
 export function slugify(str: string, separator: string = '_') {
@@ -20,7 +22,7 @@ export function ordinal(num: number) {
 		other: 'th',
 	};
 	const suffix =
-		suffixes[window.haNunjucks.ordinalFormat.select(num)] || 'th';
+		suffixes[window.haNunjucks[version].ordinalFormat.select(num)] || 'th';
 	return `${num}${suffix}`;
 }
 
@@ -31,3 +33,4 @@ export function base64_encode(value: string) {
 export function base64_decode(value: string) {
 	return atob(value);
 }
+

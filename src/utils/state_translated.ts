@@ -1,3 +1,5 @@
+import { version } from '../../package.json';
+
 import { date, datetime, time } from 'ts-py-datetime';
 import { HomeAssistant } from '../models/interfaces/hass';
 
@@ -59,17 +61,17 @@ export function number_translated(value: number, precision?: number) {
 		return value;
 	}
 	if (precision) {
-		return value.toLocaleString(window.haNunjucks.hass.language, {
+		return value.toLocaleString(window.haNunjucks[version].hass.language, {
 			minimumFractionDigits: precision,
 			maximumFractionDigits: precision,
 		});
 	}
-	return window.haNunjucks.numberFormat.format(value);
+	return window.haNunjucks[version].numberFormat.format(value);
 }
 
 export function date_translated(value: date | datetime) {
 	try {
-		return window.haNunjucks.dateFormat.format(value.jsDate);
+		return window.haNunjucks[version].dateFormat.format(value.jsDate);
 	} catch {
 		return value;
 	}
@@ -77,7 +79,7 @@ export function date_translated(value: date | datetime) {
 
 export function time_translated(value: time | datetime) {
 	try {
-		return window.haNunjucks.timeFormat.format(value.jsDate);
+		return window.haNunjucks[version].timeFormat.format(value.jsDate);
 	} catch {
 		return value;
 	}
@@ -85,8 +87,9 @@ export function time_translated(value: time | datetime) {
 
 export function datetime_translated(value: datetime) {
 	try {
-		return window.haNunjucks.datetimeFormat.format(value.jsDate);
+		return window.haNunjucks[version].datetimeFormat.format(value.jsDate);
 	} catch {
 		return value;
 	}
 }
+

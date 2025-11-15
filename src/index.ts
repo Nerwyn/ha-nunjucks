@@ -1,17 +1,20 @@
 import nunjucks from 'nunjucks';
+import { version } from '../package.json';
 import { HassElement, HomeAssistant } from './models/interfaces/hass';
 
 import { addFilters } from './filters';
 import { addGlobals } from './globals';
+import { IHaNunjucks } from './models/types';
 import { addTests } from './tests';
 import { fetchLabelRegistry } from './utils/labels';
 import { buildStatesObject } from './utils/states';
 
 if (!window.haNunjucks) {
-	window.haNunjucks = {
+	window.haNunjucks ||= {};
+	window.haNunjucks[version] = {
 		states: {},
 		labelRegistry: {},
-	} as typeof window.haNunjucks;
+	} as IHaNunjucks;
 
 	// Async setup label registry and states object on import
 	const registrySetup = async () => {
@@ -28,28 +31,28 @@ if (!window.haNunjucks) {
 		}
 
 		// Number and datetime translators
-		window.haNunjucks.numberFormat = new Intl.NumberFormat(
+		window.haNunjucks[version].numberFormat = new Intl.NumberFormat(
 			ha.hass.language,
 		);
-		window.haNunjucks.dateFormat = new Intl.DateTimeFormat(
+		window.haNunjucks[version].dateFormat = new Intl.DateTimeFormat(
 			ha.hass.language,
 			{ dateStyle: 'full' },
 		);
-		window.haNunjucks.timeFormat = new Intl.DateTimeFormat(
+		window.haNunjucks[version].timeFormat = new Intl.DateTimeFormat(
 			ha.hass.language,
 			{ timeStyle: 'long' },
 		);
-		window.haNunjucks.datetimeFormat = new Intl.DateTimeFormat(
+		window.haNunjucks[version].datetimeFormat = new Intl.DateTimeFormat(
 			ha.hass.language,
 			{ dateStyle: 'full', timeStyle: 'long' },
 		);
-		window.haNunjucks.ordinalFormat = new Intl.PluralRules(
+		window.haNunjucks[version].ordinalFormat = new Intl.PluralRules(
 			'en-US', // ha.hass.language, // Use english for proper numeric suffixes
 			{ type: 'ordinal' },
 		);
 
 		// Label registry and states object
-		window.haNunjucks.hass = ha.hass;
+		window.haNunjucks[version].hass = ha.hass;
 		fetchLabelRegistry();
 		buildStatesObject();
 	};
@@ -57,8 +60,8 @@ if (!window.haNunjucks) {
 
 	// Initialize global ha-nunjucks environment
 	nunjucks.installJinjaCompat();
-	window.haNunjucks.env = addTests(
-		addFilters(addGlobals(new nunjucks.Environment())),
+	window.haNunjucks[version].env = addTests(
+		addFilters(addGlobals(nunjucks.configure({}))),
 	);
 }
 
@@ -80,12 +83,12 @@ export function renderTemplate(
 		return str;
 	}
 
-	window.haNunjucks.hass = hass;
+	window.haNunjucks[version].hass = hass;
 	buildStatesObject();
-	str = window.haNunjucks.env
+	str = window.haNunjucks[version].env
 		.renderString(structuredClone(str), {
 			hass,
-			_states: window.haNunjucks.states,
+			_states: window.haNunjucks[version].states,
 			...context,
 		})
 		.trim();
@@ -112,3 +115,4 @@ const hasTemplateRegex = /{{.*?}}|{%.*?%}/;
 export function hasTemplate(str: any) {
 	return hasTemplateRegex.test(str);
 }
+
