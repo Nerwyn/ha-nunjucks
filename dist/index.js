@@ -37,7 +37,7 @@ if (!window.haNunjucks) {
     registrySetup();
     // Initialize global ha-nunjucks environment
     nunjucks.installJinjaCompat();
-    window.haNunjucks[version].env = addTests(addFilters(addGlobals(nunjucks.configure({}))));
+    window.haNunjucks[version].env = addTests(addFilters(addGlobals(nunjucks.configure(`${window.location.origin}/local`))));
 }
 /**
  * Render a Home Assistant template string using nunjucks

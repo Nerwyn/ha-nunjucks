@@ -1,15 +1,14 @@
-import packageInfo from '../../package.json';
+import { version } from '../../package.json';
 
 import { HomeAssistant } from '../models/interfaces/hass';
 import { LabelRegistryEntry } from '../models/interfaces/registries';
 
-const version = packageInfo.version
-
 export async function fetchLabelRegistry() {
-	const labels: LabelRegistryEntry[] =
-		await window.haNunjucks[version].hass.connection.sendMessagePromise({
-			type: 'config/label_registry/list',
-		});
+	const labels: LabelRegistryEntry[] = await window.haNunjucks[
+		version
+	].hass.connection.sendMessagePromise({
+		type: 'config/label_registry/list',
+	});
 	labels.sort((ent1, ent2) => ent1.name.localeCompare(ent2.name));
 	for (const label of labels) {
 		window.haNunjucks[version].labelRegistry[label.label_id] = label;

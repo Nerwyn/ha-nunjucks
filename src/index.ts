@@ -61,7 +61,9 @@ if (!window.haNunjucks) {
 	// Initialize global ha-nunjucks environment
 	nunjucks.installJinjaCompat();
 	window.haNunjucks[version].env = addTests(
-		addFilters(addGlobals(nunjucks.configure({}))),
+		addFilters(
+			addGlobals(nunjucks.configure(`${window.location.origin}/local`)),
+		),
 	);
 }
 
@@ -115,4 +117,3 @@ const hasTemplateRegex = /{{.*?}}|{%.*?%}/;
 export function hasTemplate(str: any) {
 	return hasTemplateRegex.test(str);
 }
-
