@@ -1,11 +1,13 @@
 import nunjucks from 'nunjucks';
+import { version } from '../package.json';
 import { addFilters } from './filters';
 import { addGlobals } from './globals';
 import { addTests } from './tests';
 import { fetchLabelRegistry } from './utils/labels';
 import { buildStatesObject } from './utils/states';
 if (!window.haNunjucks) {
-    window.haNunjucks = {
+    window.haNunjucks ||= {};
+    window.haNunjucks[version] = {
         states: {},
         labelRegistry: {},
     };
@@ -21,21 +23,21 @@ if (!window.haNunjucks) {
             return;
         }
         // Number and datetime translators
-        window.haNunjucks.numberFormat = new Intl.NumberFormat(ha.hass.language);
-        window.haNunjucks.dateFormat = new Intl.DateTimeFormat(ha.hass.language, { dateStyle: 'full' });
-        window.haNunjucks.timeFormat = new Intl.DateTimeFormat(ha.hass.language, { timeStyle: 'long' });
-        window.haNunjucks.datetimeFormat = new Intl.DateTimeFormat(ha.hass.language, { dateStyle: 'full', timeStyle: 'long' });
-        window.haNunjucks.ordinalFormat = new Intl.PluralRules('en-US', // ha.hass.language, // Use english for proper numeric suffixes
+        window.haNunjucks[version].numberFormat = new Intl.NumberFormat(ha.hass.language);
+        window.haNunjucks[version].dateFormat = new Intl.DateTimeFormat(ha.hass.language, { dateStyle: 'full' });
+        window.haNunjucks[version].timeFormat = new Intl.DateTimeFormat(ha.hass.language, { timeStyle: 'long' });
+        window.haNunjucks[version].datetimeFormat = new Intl.DateTimeFormat(ha.hass.language, { dateStyle: 'full', timeStyle: 'long' });
+        window.haNunjucks[version].ordinalFormat = new Intl.PluralRules('en-US', // ha.hass.language, // Use english for proper numeric suffixes
         { type: 'ordinal' });
         // Label registry and states object
-        window.haNunjucks.hass = ha.hass;
+        window.haNunjucks[version].hass = ha.hass;
         fetchLabelRegistry();
         buildStatesObject();
     };
     registrySetup();
     // Initialize global ha-nunjucks environment
     nunjucks.installJinjaCompat();
-    window.haNunjucks.env = addTests(addFilters(addGlobals(new nunjucks.Environment())));
+    window.haNunjucks[version].env = addTests(addFilters(addGlobals(nunjucks.configure({}))));
 }
 /**
  * Render a Home Assistant template string using nunjucks
@@ -49,12 +51,12 @@ export function renderTemplate(hass, str, context, validate = true) {
     if (validate && !hasTemplate(str)) {
         return str;
     }
-    window.haNunjucks.hass = hass;
+    window.haNunjucks[version].hass = hass;
     buildStatesObject();
-    str = window.haNunjucks.env
+    str = window.haNunjucks[version].env
         .renderString(structuredClone(str), {
         hass,
-        _states: window.haNunjucks.states,
+        _states: window.haNunjucks[version].states,
         ...context,
     })
         .trim();

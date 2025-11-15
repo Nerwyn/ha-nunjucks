@@ -11,7 +11,8 @@
 		"test": "ts-mocha tests/**/*.test.ts --require fixtures.cjs",
 		"build": "tsc",
 		"prelint": "tsc --noemit",
-		"lint": "eslint --config ./.eslintrc.config.cjs"
+		"lint": "eslint --config ./.eslintrc.config.cjs",
+		"setup": "git config --add core.hooksPath githooks && chmod +x githooks/pre-commit && npm i"
 	},
 	"lint-staged": {
 		"*": "prettier -w"
