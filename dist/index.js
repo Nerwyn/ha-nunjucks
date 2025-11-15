@@ -12,17 +12,13 @@ if (!window.haNunjucks[version]) {
         states: {},
         labelRegistry: {},
     };
-    // Async setup label registry and states object on import
-    const registrySetup = async () => {
+    // Setup on first import
+    handleWhenReady(() => {
         const ha = document.querySelector('home-assistant');
-        if (!ha ||
-            !ha.hass ||
-            !ha.hass.connected ||
-            !ha.hass.connection ||
-            !ha.hass.connection.connected) {
-            setTimeout(registrySetup, 10);
-            return;
-        }
+        // Label registry and states object
+        window.haNunjucks[version].hass = ha.hass;
+        fetchLabelRegistry();
+        buildStatesObject();
         // Number and datetime translators
         window.haNunjucks[version].numberFormat = new Intl.NumberFormat(ha.hass.language);
         window.haNunjucks[version].dateFormat = new Intl.DateTimeFormat(ha.hass.language, { dateStyle: 'full' });
@@ -30,12 +26,10 @@ if (!window.haNunjucks[version]) {
         window.haNunjucks[version].datetimeFormat = new Intl.DateTimeFormat(ha.hass.language, { dateStyle: 'full', timeStyle: 'long' });
         window.haNunjucks[version].ordinalFormat = new Intl.PluralRules('en-US', // ha.hass.language, // Use english for proper numeric suffixes
         { type: 'ordinal' });
-        // Label registry and states object
-        window.haNunjucks[version].hass = ha.hass;
-        fetchLabelRegistry();
-        buildStatesObject();
-    };
-    registrySetup();
+    }, () => {
+        const ha = document.querySelector('home-assistant');
+        return ha?.hass?.connected && ha?.hass?.connection?.connected;
+    }, 10000, 1, 'ha-nunjucks failed to initialize - Home Assistant connection timeout');
     // Initialize global ha-nunjucks environment
     nunjucks.installJinjaCompat();
     window.haNunjucks[version].env = addTests(addFilters(addGlobals(nunjucks.configure(`${window.location.origin}/local`))));
@@ -78,4 +72,25 @@ const hasTemplateRegex = /{{.*?}}|{%.*?%}/;
  */
 export function hasTemplate(str) {
     return hasTemplateRegex.test(str);
+}
+/**
+ * Call a handler function when a ready function returns true.
+ * If the ready function returns false, this method recursively recalls itself on a timeout.
+ * The function continues to recall itself with an exponentially increasing timeout until
+ * the ready function returns true or the timeout is exceeded.
+ * @param {() => void | Promise<void>} handler The function to call when ready
+ * @param {() => boolean | Promise<boolean>} handleReady The function to check and return true when ready
+ * @param {number} timeout The max time to wait in milliseconds, defaults to 20000
+ * @param {number} delay The initial delay in milliseconds, defaults to 10
+ */
+async function handleWhenReady(handler, handleReady, timeout = 20000, delay = 10, errorMessage = `handleWhenReady ${timeout}ms timeout exceeded`) {
+    if (delay > timeout) {
+        console.error(errorMessage);
+        return;
+    }
+    if (!(await handleReady())) {
+        setTimeout(async () => await handleWhenReady(handler, handleReady, timeout, delay * 2), delay);
+        return;
+    }
+    await handler();
 }
