@@ -90,6 +90,10 @@ When the return type is expected to be a number, end users should cast these val
 
 `renderTemplate` will return an empty string for strings that may have been cast from nullish non-numerical values, such as `undefined`, `null`, and `None` (case sensitive).
 
+### Global Environment
+
+ha-nunjucks creates one global object on the browser window, which contains an nunjucks environment used by all custom element instances that use ha-nunjucks. This prevents redundant re-initializing of ha-nunjucks across many custom elements and a significant initial page load speedup. If multiple different custom elements use ha-nunjucks, they will all use the same shared nunjucks environment which is initialized the first time one of them is loaded. ha-nunjucks will also check the version that is loaded, and overwrite it if one custom element has a new version than the currently loaded version.
+
 ## Available Extensions
 
 The vast majority of the [Home Assistant template extensions](https://www.home-assistant.io/docs/configuration/templating/#home-assistant-template-extensions) have been implemented into this package. If there are functions that you use that are not currently supported or don't behave exactly like their jinja2 versions, please make a feature request or try adding it to the project yourself and create a pull request.

@@ -8,7 +8,7 @@
 	],
 	"type": "module",
 	"scripts": {
-		"test": "ts-mocha tests/**/*.test.ts --require fixtures.cjs",
+		"test": "ts-mocha tests/**/*.test.ts --require tests/fixtures.cjs",
 		"build": "tsc",
 		"prelint": "tsc --noemit",
 		"lint": "eslint --config ./.eslintrc.config.cjs",

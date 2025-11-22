@@ -1,4 +1,5 @@
 require('global-jsdom/register');
+require('../dist/index.js');
 
 exports.mochaGlobalSetup = async () => {
 	const ha = document.createElement('home-assistant');
