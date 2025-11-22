@@ -1,10 +1,9 @@
-import { version } from '..';
 export function buildStatesObject() {
-    for (const entityId in window.haNunjucks[version].hass.states) {
+    for (const entityId in window.haNunjucks.hass.states) {
         const [domain, id] = entityId.split('.');
-        window.haNunjucks[version].states[domain] ??= {};
-        window.haNunjucks[version].states[domain][id] =
-            window.haNunjucks[version].hass.states[entityId];
+        window.haNunjucks.states[domain] ??= {};
+        window.haNunjucks.states[domain][id] =
+            window.haNunjucks.hass.states[entityId];
     }
 }
 export function states(hass, entity_id, rounded, with_unit) {

@@ -4,16 +4,18 @@ import { HassElement, HomeAssistant } from './models/interfaces/hass';
 
 import { addFilters } from './filters';
 import { addGlobals } from './globals';
+import { compareVersions, handleWhenReady } from './helpers';
 import { IHaNunjucks } from './models/types';
 import { addTests } from './tests';
 import { fetchLabelRegistry } from './utils/labels';
 import { buildStatesObject } from './utils/states';
 
-export const version = packageInfo.version;
+const version = packageInfo.version;
 
-window.haNunjucks ||= {};
-if (!window.haNunjucks[version]) {
-	window.haNunjucks[version] = {
+window.haNunjucks ||= {} as IHaNunjucks;
+if (compareVersions(version, window.haNunjucks.version || '0.0.0') > 0) {
+	window.haNunjucks = {
+		version,
 		states: {},
 		labelRegistry: {},
 	} as IHaNunjucks;
@@ -24,27 +26,27 @@ if (!window.haNunjucks[version]) {
 			const ha = document.querySelector('home-assistant') as HassElement;
 
 			// Label registry and states object
-			window.haNunjucks[version].hass = ha.hass;
+			window.haNunjucks.hass = ha.hass;
 			fetchLabelRegistry();
 			buildStatesObject();
 
 			// Number and datetime translators
-			window.haNunjucks[version].numberFormat = new Intl.NumberFormat(
+			window.haNunjucks.numberFormat = new Intl.NumberFormat(
 				ha.hass.language,
 			);
-			window.haNunjucks[version].dateFormat = new Intl.DateTimeFormat(
+			window.haNunjucks.dateFormat = new Intl.DateTimeFormat(
 				ha.hass.language,
 				{ dateStyle: 'full' },
 			);
-			window.haNunjucks[version].timeFormat = new Intl.DateTimeFormat(
+			window.haNunjucks.timeFormat = new Intl.DateTimeFormat(
 				ha.hass.language,
 				{ timeStyle: 'long' },
 			);
-			window.haNunjucks[version].datetimeFormat = new Intl.DateTimeFormat(
+			window.haNunjucks.datetimeFormat = new Intl.DateTimeFormat(
 				ha.hass.language,
 				{ dateStyle: 'full', timeStyle: 'long' },
 			);
-			window.haNunjucks[version].ordinalFormat = new Intl.PluralRules(
+			window.haNunjucks.ordinalFormat = new Intl.PluralRules(
 				'en-US', // ha.hass.language, // Use english for proper numeric suffixes
 				{ type: 'ordinal' },
 			);
@@ -60,7 +62,7 @@ if (!window.haNunjucks[version]) {
 
 	// Initialize global ha-nunjucks environment
 	nunjucks.installJinjaCompat();
-	window.haNunjucks[version].env = addTests(
+	window.haNunjucks.env = addTests(
 		addFilters(
 			addGlobals(nunjucks.configure(`${window.location.origin}/local`)),
 		),
@@ -85,12 +87,12 @@ export function renderTemplate(
 		return str;
 	}
 
-	window.haNunjucks[version].hass = hass;
+	window.haNunjucks.hass = hass;
 	buildStatesObject();
-	str = window.haNunjucks[version].env
+	str = window.haNunjucks.env
 		.renderString(structuredClone(str), {
 			hass,
-			_states: window.haNunjucks[version].states,
+			_states: window.haNunjucks.states,
 			...context,
 		})
 		.trim();
@@ -116,38 +118,4 @@ const hasTemplateRegex = /{{.*?}}|{%.*?%}/;
  */
 export function hasTemplate(str: any) {
 	return hasTemplateRegex.test(str);
-}
-
-/**
- * Call a handler function when a ready function returns true.
- * If the ready function returns false, this method recursively recalls itself on a timeout.
- * The function continues to recall itself with an exponentially increasing timeout until
- * the ready function returns true or the timeout is exceeded.
- * @param {() => void | Promise<void>} handler The function to call when ready
- * @param {() => boolean | Promise<boolean>} handleReady The function to check and return true when ready
- * @param {number} timeout The max time to wait in milliseconds, defaults to 20000
- * @param {number} delay The initial delay in milliseconds, defaults to 10
- */
-async function handleWhenReady(
-	handler: () => void | Promise<void>,
-	handleReady: () => boolean | Promise<boolean>,
-	timeout: number = 20000,
-	delay: number = 10,
-	errorMessage: string = `handleWhenReady ${timeout}ms timeout exceeded`,
-) {
-	if (delay > timeout) {
-		console.error(errorMessage);
-		return;
-	}
-
-	if (!(await handleReady())) {
-		setTimeout(
-			async () =>
-				await handleWhenReady(handler, handleReady, timeout, delay * 2),
-			delay,
-		);
-		return;
-	}
-
-	await handler();
 }

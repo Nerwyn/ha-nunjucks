@@ -1,5 +1,4 @@
 import slugifyLib from 'slugify';
-import { version } from '..';
 export function slugify(str, separator = '_') {
     return slugifyLib(str, {
         replacement: separator,
@@ -17,7 +16,7 @@ export function ordinal(num) {
         few: 'rd',
         other: 'th',
     };
-    const suffix = suffixes[window.haNunjucks[version].ordinalFormat.select(num)] || 'th';
+    const suffix = suffixes[window.haNunjucks.ordinalFormat.select(num)] || 'th';
     return `${num}${suffix}`;
 }
 export function base64_encode(value) {

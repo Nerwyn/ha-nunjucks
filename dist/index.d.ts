@@ -1,5 +1,4 @@
 import { HomeAssistant } from './models/interfaces/hass';
-export declare const version: string;
 /**
  * Render a Home Assistant template string using nunjucks
  * @param {HomeAssistant} hass The Home Assistant object

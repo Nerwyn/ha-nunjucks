@@ -1,5 +1,3 @@
-import { version } from '.';
-
 import {
 	area_devices,
 	area_entities,
@@ -105,7 +103,7 @@ export function addGlobals(env: Environment) {
 
 	for (const func in HASS_GLOBALS) {
 		env.addGlobal(func, function (...args: string[]) {
-			return HASS_GLOBALS[func](window.haNunjucks[version].hass, ...args);
+			return HASS_GLOBALS[func](window.haNunjucks.hass, ...args);
 		});
 	}
 

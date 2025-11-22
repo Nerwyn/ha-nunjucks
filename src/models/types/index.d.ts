@@ -6,6 +6,7 @@ import { LabelRegistryEntry } from '../interfaces/registries';
 export {};
 
 export interface IHaNunjucks {
+	version: string;
 	env: Environment;
 	hass: HomeAssistant;
 	states: Record<string, Record<string, HassEntity>>;
@@ -19,9 +20,6 @@ export interface IHaNunjucks {
 
 declare global {
 	interface Window {
-		haNunjucks: {
-			[key: string]: IHaNunjucks;
-		};
+		haNunjucks: IHaNunjucks;
 	}
 }
-
