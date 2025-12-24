@@ -1,6 +1,7 @@
 import 'global-jsdom/register';
 import { fetchConfigEntries } from '../src/utils/config_entry';
 import { fetchEntityRegistry } from '../src/utils/entities';
+import { fetchRepairsIssues } from '../src/utils/issues';
 import { fetchLabelRegistry } from '../src/utils/labels';
 
 export async function mochaGlobalSetup() {
@@ -11,6 +12,29 @@ export async function mochaGlobalSetup() {
 			connected: true,
 			sendMessagePromise: (request) => {
 				switch (request.type) {
+					case 'repairs/list_issues':
+						return {
+							issues: [
+								{
+									breaks_in_ha_version: '2024.12.0',
+									created: '2024-12-05T01:42:25.001221+00:00',
+									dismissed_version: '2024.12.0',
+									ignored: true,
+									domain: 'mass',
+									is_fixable: false,
+									issue_domain: 'mass',
+									issue_id: 'move_integration_to_ha_coremass',
+									learn_more_url:
+										'https://music-assistant.io/integration/installation/#migrating-from-the-hacs-integration-to-the-ha-integration',
+									severity: 'warning',
+									translation_key: 'move_integration_to_ha_core',
+									translation_placeholders: {
+										domain: 'mass',
+										integration_title: 'mass',
+									},
+								},
+							],
+						};
 					case 'config/entity_registry/list':
 						return [
 							{
@@ -193,4 +217,5 @@ export async function mochaGlobalSetup() {
 	await fetchLabelRegistry(ha.hass);
 	await fetchEntityRegistry(ha.hass);
 	await fetchConfigEntries(ha.hass);
+	await fetchRepairsIssues(ha.hass);
 }

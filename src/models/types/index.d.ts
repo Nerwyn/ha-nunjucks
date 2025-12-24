@@ -19,7 +19,7 @@ export interface IHaNunjucks {
 	labelRegistry: LabelRegistryEntry[];
 	entityRegistry: EntityRegistryEntry[];
 	configEntries: ConfigEntry[];
-	repairIssues: RepairsIssue[];
+	repairsIssues: Record<string, RepairsIssue>;
 
 	numberFormat: Intl.NumberFormat;
 	dateFormat: Intl.DateTimeFormat;

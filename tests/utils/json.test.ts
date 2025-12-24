@@ -27,15 +27,11 @@ describe('to_json', () => {
 		);
 	});
 
-	it("should turn an object into a string and sort it's keys if enabled", () => {
+	it('should turn an object into a string and sort its keys if enabled', () => {
 		assert.equal(
-			renderTemplate(
-				hass,
-				'{{ testObj | to_json(sort_keys=true) | safe }}',
-				{
-					testObj: { foo: 'bar', baz: 'bah' },
-				},
-			),
+			renderTemplate(hass, '{{ testObj | to_json(sort_keys=true) | safe }}', {
+				testObj: { foo: 'bar', baz: 'bah' },
+			}),
 			'{"baz":"bah","foo":"bar"}',
 		);
 	});
@@ -44,10 +40,7 @@ describe('to_json', () => {
 describe('from_json', () => {
 	it('should parse a string as a JSON', () => {
 		assert.equal(
-			renderTemplate(
-				hass,
-				'{{ (\'{"foo":"bar"}\' | from_json)["foo"] }}',
-			),
+			renderTemplate(hass, '{{ (\'{"foo":"bar"}\' | from_json)["foo"] }}'),
 			'bar',
 		);
 	});

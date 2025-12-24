@@ -1,2 +1,5 @@
 import { HomeAssistant } from '../models/interfaces/hass';
-export declare function fetchRepairIssues(hass: HomeAssistant): Promise<void>;
+import { RepairsIssue } from '../models/interfaces/registries';
+export declare function fetchRepairsIssues(hass: HomeAssistant): Promise<void>;
+export declare function issues(): Record<string, RepairsIssue>;
+export declare function issue(domain: string, issue_id: string): RepairsIssue;

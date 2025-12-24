@@ -223,6 +223,15 @@ Functions used to determine an entity's state or an attribute.
 | label_devices     | function, filter | label_name_or_id        | Returns the list of device IDs tied to a given label ID or name.                           |
 | label_entities    | function, filter | label_name_or_id        | Returns the list of entity IDs tied to a given label ID or name.                           |
 
+### [Issues](https://www.home-assistant.io/docs/configuration/templating/#issues)
+
+**NOTE**: Issues are not available in the `hass` object and must be retrieved asynchronously from the Home Assistant backend the first time `ha-nunjucks` is imported. Since this package is otherwise synchronous, this can cause a race condition where no issues are found the first time `renderTemplate` is run. This generally resolves itself once the template re-renders.
+
+| Name   | Type     | Arguments        | Description                                                                            |
+| ------ | -------- | ---------------- | -------------------------------------------------------------------------------------- |
+| issues | function |                  | Returns all open issues as a mapping of `domain,issue_id` strings to the issue object. |
+| issue  | function | domain, issue_id | Returns an issue object.                                                               |
+
 ### [Immediate If](https://www.home-assistant.io/docs/configuration/templating/#immediate-if-iif)
 
 A shorthand for an if else statement.

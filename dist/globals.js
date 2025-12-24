@@ -7,6 +7,7 @@ import { floor_areas, floor_entities, floor_id, floor_name, floors, } from './ut
 import { expand } from './utils/groups';
 import { iif } from './utils/iif';
 import { integration_entities } from './utils/integrations';
+import { issue, issues } from './utils/issues';
 import { label_areas, label_description, label_devices, label_entities, label_id, label_name, labels, } from './utils/labels';
 import { match_media, str } from './utils/miscellaneous';
 import { acos, asin, atan, atan2, average, bool, clamp, cos, e, float, inf, int, is_number, log, max, median, min, mod, pi, remap, sin, sqrt, statistical_mode, tan, tau, wrap, } from './utils/numeric';
@@ -92,6 +93,9 @@ const GLOBALS = {
     label_id,
     label_name,
     label_description,
+    // Issues
+    issues,
+    issue,
     // Time
     now,
     utcnow,

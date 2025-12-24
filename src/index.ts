@@ -9,6 +9,7 @@ import { IHaNunjucks } from './models/types';
 import { addTests } from './tests';
 import { fetchConfigEntries } from './utils/config_entry';
 import { fetchEntityRegistry } from './utils/entities';
+import { fetchRepairsIssues } from './utils/issues';
 import { fetchLabelRegistry } from './utils/labels';
 import { buildStatesObject } from './utils/states';
 
@@ -22,6 +23,7 @@ if (compareVersions(version, window.haNunjucks.version || '0.0.0') > 0) {
 		labelRegistry: {},
 		entityRegistry: {},
 		configEntries: {},
+		repairsIssues: {},
 	} as IHaNunjucks;
 
 	// Setup on first import
@@ -34,6 +36,7 @@ if (compareVersions(version, window.haNunjucks.version || '0.0.0') > 0) {
 			fetchLabelRegistry(ha.hass);
 			fetchEntityRegistry(ha.hass);
 			fetchConfigEntries(ha.hass);
+			fetchRepairsIssues(ha.hass);
 			buildStatesObject();
 
 			// Number and datetime translators

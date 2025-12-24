@@ -25,6 +25,7 @@ import {
 import { expand } from './utils/groups';
 import { iif } from './utils/iif';
 import { integration_entities } from './utils/integrations';
+import { issue, issues } from './utils/issues';
 import {
 	label_areas,
 	label_description,
@@ -191,6 +192,10 @@ const GLOBALS: Record<string, CallableFunction> = {
 	label_id,
 	label_name,
 	label_description,
+
+	// Issues
+	issues,
+	issue,
 
 	// Time
 	now,
