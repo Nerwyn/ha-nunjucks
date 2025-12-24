@@ -78,6 +78,7 @@ import {
 	ordinal,
 	slugify,
 } from './utils/string_filters';
+import { pack, unpack } from './utils/struct';
 import {
 	as_datetime,
 	as_local,
@@ -228,6 +229,10 @@ const FILTERS: Record<string, CallableFunction> = {
 
 	// Type conversions
 	str,
+
+	// Functions and Filters to Process Raw Data
+	pack,
+	unpack,
 
 	// String filters
 	// urlencode filter is built into nunjucks

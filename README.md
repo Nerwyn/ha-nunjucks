@@ -367,6 +367,13 @@ In addition to these functions, you have access to [a datetime library](https://
 | ---- | -------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | zip  | function | args      | Use to iterate over multiple collections in one operation. If given one array will perform the opposite action and unzip the list. |
 
+### [Function and Filters to Process Raw Data](https://www.home-assistant.io/docs/configuration/templating/#functions-and-filters-to-process-raw-data)
+
+| Name   | Type             | Arguments                               | Description                                                                                                                                                   |
+| ------ | ---------------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| pack   | function, filter | data, format_string                     | Convert a native type to a bytes type object.                                                                                                                 |
+| unpack | function, filter | data, format_string, offset (default 0) | Convert a byte types object into a native object. The `offset` parameter defines the offset position in bytes from the start of the input bytes based buffer. |
+
 ### [String filters](https://www.home-assistant.io/docs/configuration/templating/#string-filters)
 
 | Name          | Type   | Arguments                     | Description                                                                                              |

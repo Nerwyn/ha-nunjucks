@@ -15,6 +15,7 @@ import { acos, asin, atan, atan2, average, bool, clamp, cos, e, float, inf, int,
 import { attr_name_translated, attr_value_translated, date_translated, datetime_translated, number_translated, state_translated, time_translated, } from './utils/state_translated';
 import { has_value, is_state, is_state_attr, state_attr, states, } from './utils/states';
 import { slugify } from './utils/string_filters';
+import { pack, unpack } from './utils/struct';
 import { as_datetime, as_local, as_timedelta, as_timestamp, now, relative_time, strptime, time_since, time_until, today_at, utcnow, } from './utils/time';
 import { list, set } from './utils/type_conversions';
 import { zip } from './utils/zip';
@@ -142,6 +143,9 @@ const GLOBALS = {
     str,
     // Iterating Multiple Objects
     zip,
+    // Functions and Filters to Process Raw Data
+    pack,
+    unpack,
     // String filters
     slugify,
     // Hashing

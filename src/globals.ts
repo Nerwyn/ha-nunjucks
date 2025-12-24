@@ -82,6 +82,7 @@ import {
 	states,
 } from './utils/states';
 import { slugify } from './utils/string_filters';
+import { pack, unpack } from './utils/struct';
 import {
 	as_datetime,
 	as_local,
@@ -246,6 +247,10 @@ const GLOBALS: Record<string, CallableFunction> = {
 
 	// Iterating Multiple Objects
 	zip,
+
+	// Functions and Filters to Process Raw Data
+	pack,
+	unpack,
 
 	// String filters
 	slugify,
