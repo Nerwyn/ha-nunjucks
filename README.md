@@ -412,6 +412,42 @@ In addition to these functions, you have access to [a datetime library](https://
 | ------- | ---------------- | ----------------------- | ------------------------------------------------------------- |
 | shuffle | function, filter | values, seed (optional) | Shuffle an array, either using a random seed or providing one |
 
+### [Flatten a List of Lists](https://www.home-assistant.io/docs/configuration/templating/#flatten-a-list-of-lists)
+
+| Name    | Type             | Arguments                 | Description                                                                                          |
+| ------- | ---------------- | ------------------------- | ---------------------------------------------------------------------------------------------------- |
+| flatten | function, filter | values, levels (optional) | Flatten a list of lists. The depth of the flattening can be controlled using the `levels` parameter. |
+
+### [Find Common Elements Between Lists](https://www.home-assistant.io/docs/configuration/templating/#find-common-elements-between-lists)
+
+| Name      | Type             | Arguments    | Description                              |
+| --------- | ---------------- | ------------ | ---------------------------------------- |
+| intersect | function, filter | list1, list2 | Finds comment elements between two lists |
+
+### [Find Elements In First List Not In Second List](https://www.home-assistant.io/docs/configuration/templating/#find-elements-in-first-list-not-in-second-list)
+
+| Name       | Type             | Arguments    | Description                                                            |
+| ---------- | ---------------- | ------------ | ---------------------------------------------------------------------- |
+| difference | function, filter | list1, list2 | Finds elements that are in the first list but not in the secondc list. |
+
+### [Find Elements That Are In Either List But Not In Both](https://www.home-assistant.io/docs/configuration/templating/#find-elements-that-are-in-either-list-but-not-in-both)
+
+| Name                 | Type             | Arguments    | Description                                                           |
+| -------------------- | ---------------- | ------------ | --------------------------------------------------------------------- |
+| symmetric_difference | function, filter | list1, list2 | Finds elements that are in either of the input lists but not in both. |
+
+### [Combine All Unique Elements From Two Lists](https://www.home-assistant.io/docs/configuration/templating/#combine-all-unique-elements-from-two-lists)
+
+| Name  | Type             | Arguments    | Description                                 |
+| ----- | ---------------- | ------------ | ------------------------------------------- |
+| union | function, filter | list1, list2 | Combine all unique elements from two lists. |
+
+### [Combining Dictionaries](https://www.home-assistant.io/docs/configuration/templating/#combining-dictionaries)
+
+| Name    | Type             | Arguments | Description                 |
+| ------- | ---------------- | --------- | --------------------------- |
+| combine | function, filter | ...dicts  | Merge multiple dictionaries |
+
 ### Miscellaneous
 
 Functions that are not from the Home Assistant templating documentation.

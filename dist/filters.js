@@ -2,6 +2,7 @@ import { area_devices, area_entities, area_id, area_name } from './utils/areas';
 import { config_entry_attr, config_entry_id } from './utils/config_entry';
 import { contains } from './utils/contains';
 import { device_attr, device_entities, device_id, device_name, } from './utils/devices';
+import { combine } from './utils/dictionaries';
 import { closest } from './utils/distance';
 import { floor_areas, floor_entities, floor_id, floor_name, } from './utils/floors';
 import { expand } from './utils/groups';
@@ -9,10 +10,10 @@ import { md5, sha1, sha256, sha512 } from './utils/hashing';
 import { iif } from './utils/iif';
 import { from_json, is_defined, to_json } from './utils/json';
 import { label_areas, label_description, label_devices, label_entities, label_id, label_name, labels, } from './utils/labels';
+import { difference, flatten, intersect, shuffle, symmetric_difference, union, } from './utils/lists';
 import { str } from './utils/miscellaneous';
 import { acos, add, asin, atan, atan2, average, bitwise_and, bitwise_not, bitwise_or, bitwise_xor, bool, clamp, cos, is_number, log, max, median, min, mod, multiply, ord, remap, sin, sqrt, statistical_mode, tan, wrap, } from './utils/numeric';
 import { regex_findall, regex_findall_index, regex_replace, } from './utils/regexp';
-import { shuffle } from './utils/shuffling';
 import { attr_name_translated, attr_value_translated, date_translated, datetime_translated, number_translated, state_translated, time_translated, } from './utils/state_translated';
 import { has_value, state_attr, states } from './utils/states';
 import { base64_decode, base64_encode, ordinal, slugify, } from './utils/string_filters';
@@ -146,8 +147,15 @@ const FILTERS = {
     sha1,
     sha256,
     sha512,
-    // Shuffling
+    // Lists
     shuffle,
+    flatten,
+    intersect,
+    difference,
+    symmetric_difference,
+    union,
+    // Dictionaries
+    combine,
     // Regular Expressions
     regex_replace,
     regex_findall,

@@ -13,6 +13,7 @@ import {
 	device_name,
 	is_device_attr,
 } from './utils/devices';
+import { combine } from './utils/dictionaries';
 import { closest, distance } from './utils/distance';
 import { is_hidden_entity } from './utils/entities';
 import {
@@ -36,6 +37,14 @@ import {
 	label_name,
 	labels,
 } from './utils/labels';
+import {
+	difference,
+	flatten,
+	intersect,
+	shuffle,
+	symmetric_difference,
+	union,
+} from './utils/lists';
 import { match_media, str } from './utils/miscellaneous';
 import {
 	acos,
@@ -65,7 +74,6 @@ import {
 	tau,
 	wrap,
 } from './utils/numeric';
-import { shuffle } from './utils/shuffling';
 import {
 	attr_name_translated,
 	attr_value_translated,
@@ -262,8 +270,16 @@ const GLOBALS: Record<string, CallableFunction> = {
 	sha256,
 	sha512,
 
-	// Shuffling
+	// Lists
 	shuffle,
+	flatten,
+	intersect,
+	difference,
+	symmetric_difference,
+	union,
+
+	// Dictionaries
+	combine,
 
 	// Miscellaneous
 	match_media,

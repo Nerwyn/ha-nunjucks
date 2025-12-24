@@ -7,6 +7,7 @@ import {
 	device_id,
 	device_name,
 } from './utils/devices';
+import { combine } from './utils/dictionaries';
 import { closest } from './utils/distance';
 import {
 	floor_areas,
@@ -27,6 +28,14 @@ import {
 	label_name,
 	labels,
 } from './utils/labels';
+import {
+	difference,
+	flatten,
+	intersect,
+	shuffle,
+	symmetric_difference,
+	union,
+} from './utils/lists';
 import { str } from './utils/miscellaneous';
 import {
 	acos,
@@ -62,7 +71,6 @@ import {
 	regex_findall_index,
 	regex_replace,
 } from './utils/regexp';
-import { shuffle } from './utils/shuffling';
 import {
 	attr_name_translated,
 	attr_value_translated,
@@ -248,8 +256,16 @@ const FILTERS: Record<string, CallableFunction> = {
 	sha256,
 	sha512,
 
-	// Shuffling
+	// Lists
 	shuffle,
+	flatten,
+	intersect,
+	difference,
+	symmetric_difference,
+	union,
+
+	// Dictionaries
+	combine,
 
 	// Regular Expressions
 	regex_replace,
