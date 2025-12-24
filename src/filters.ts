@@ -101,6 +101,7 @@ import {
 	timestamp_utc,
 	today_at,
 } from './utils/time';
+import { pytypeof } from './utils/type_checking';
 
 import { Environment } from 'nunjucks';
 
@@ -116,6 +117,8 @@ export function addFilters(env: Environment) {
 			return HASS_FILTERS[func](window.haNunjucks.hass, ...args);
 		});
 	}
+
+	env.addFilter('typeof', pytypeof);
 
 	return env;
 }

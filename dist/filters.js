@@ -19,6 +19,7 @@ import { has_value, state_attr, states } from './utils/states';
 import { base64_decode, base64_encode, ordinal, slugify, } from './utils/string_filters';
 import { pack, unpack } from './utils/struct';
 import { as_datetime, as_local, as_timedelta, as_timestamp, relative_time, time_since, time_until, timestamp_custom, timestamp_local, timestamp_utc, today_at, } from './utils/time';
+import { pytypeof } from './utils/type_checking';
 export function addFilters(env) {
     for (const func in FILTERS) {
         env.addFilter(func, function (...args) {
@@ -30,6 +31,7 @@ export function addFilters(env) {
             return HASS_FILTERS[func](window.haNunjucks.hass, ...args);
         });
     }
+    env.addFilter('typeof', pytypeof);
     return env;
 }
 const HASS_FILTERS = {

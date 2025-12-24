@@ -448,6 +448,12 @@ In addition to these functions, you have access to [a datetime library](https://
 | ------- | ---------------- | --------- | ---------------------------- |
 | combine | function, filter | ...dicts  | Merge multiple dictionaries. |
 
+### [Determining Types](https://www.home-assistant.io/docs/configuration/templating/#determining-types)
+
+| Name   | Type             | Arguments | Description                                   |
+| ------ | ---------------- | --------- | --------------------------------------------- |
+| typeof | function, filter | value     | Returns the closest Python type of the input. |
+
 ### Miscellaneous
 
 Functions that are not from the Home Assistant templating documentation.

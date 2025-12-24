@@ -22,3 +22,23 @@ export function string_like(value: object) {
 		value instanceof ArrayBuffer
 	);
 }
+
+export function pytypeof(value: any) {
+	switch (typeof value) {
+		case 'string':
+			return 'str';
+		case 'bigint':
+		case 'number':
+			return Number.isInteger(value) ? 'int' : 'float';
+		case 'boolean':
+			return 'bool';
+		case 'function':
+			return 'function';
+		case 'object':
+			return Array.isArray(value) ? 'list' : 'dict';
+		case 'symbol':
+		case 'undefined':
+		default:
+			return 'NoneType';
+	}
+}

@@ -105,6 +105,7 @@ import {
 	today_at,
 	utcnow,
 } from './utils/time';
+import { pytypeof } from './utils/type_checking';
 import { list, set } from './utils/type_conversions';
 import { zip } from './utils/zip';
 
@@ -133,6 +134,8 @@ export function addGlobals(env: Environment) {
 	env.addGlobal('time', time);
 	env.addGlobal('datetime', datetime);
 	env.addGlobal('timedelta', timedelta);
+
+	env.addGlobal('typeof', pytypeof);
 
 	return env;
 }

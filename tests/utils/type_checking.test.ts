@@ -17,10 +17,7 @@ describe('set', () => {
 		assert(renderTemplate(hass, '{{ set("foo", "bar", "foo") is set }}'));
 		assert(renderTemplate(hass, '{{ ["foo", "bar"] is not set }}'));
 		assert(
-			renderTemplate(
-				hass,
-				'{{ list(set("foo", "bar", "foo")) is not set }}',
-			),
+			renderTemplate(hass, '{{ list(set("foo", "bar", "foo")) is not set }}'),
 		);
 	});
 });
@@ -36,5 +33,17 @@ describe('string_like', () => {
 	it('should return if the input is a string', () => {
 		assert(renderTemplate(hass, '{{ "foobar" is string_like }}'));
 		assert(renderTemplate(hass, '{{ 1234 is not string_like }}'));
+	});
+});
+
+describe('typeof', () => {
+	it('should return the python type of the input', () => {
+		assert.equal(renderTemplate(hass, '{{ typeof(42) }}'), 'int');
+		assert.equal(renderTemplate(hass, '{{ 4.2 | typeof }}'), 'float');
+		assert.equal(renderTemplate(hass, '{{ typeof("foo") }}'), 'str');
+		assert.equal(renderTemplate(hass, '{{ True | typeof }}'), 'bool');
+		assert.equal(renderTemplate(hass, '{{ [1,2,"foo"] | typeof }}'), 'list');
+		assert.equal(renderTemplate(hass, '{{ typeof({"foo": "bar"}) }}'), 'dict');
+		assert.equal(renderTemplate(hass, '{{ typeof() }}'), 'NoneType');
 	});
 });

@@ -19,6 +19,7 @@ import { has_value, is_state, is_state_attr, state_attr, states, } from './utils
 import { slugify } from './utils/string_filters';
 import { pack, unpack } from './utils/struct';
 import { as_datetime, as_local, as_timedelta, as_timestamp, now, relative_time, strptime, time_since, time_until, today_at, utcnow, } from './utils/time';
+import { pytypeof } from './utils/type_checking';
 import { list, set } from './utils/type_conversions';
 import { zip } from './utils/zip';
 import dt, { date, datetime, time, timedelta } from 'ts-py-datetime';
@@ -41,6 +42,7 @@ export function addGlobals(env) {
     env.addGlobal('time', time);
     env.addGlobal('datetime', datetime);
     env.addGlobal('timedelta', timedelta);
+    env.addGlobal('typeof', pytypeof);
     return env;
 }
 const HASS_GLOBALS = {
