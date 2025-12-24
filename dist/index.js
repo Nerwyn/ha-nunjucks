@@ -4,6 +4,8 @@ import { addFilters } from './filters';
 import { addGlobals } from './globals';
 import { compareVersions, handleWhenReady } from './helpers';
 import { addTests } from './tests';
+import { fetchConfigEntries } from './utils/config_entry';
+import { fetchEntityRegistry } from './utils/entities';
 import { fetchLabelRegistry } from './utils/labels';
 import { buildStatesObject } from './utils/states';
 const version = packageInfo.version;
@@ -13,18 +15,26 @@ if (compareVersions(version, window.haNunjucks.version || '0.0.0') > 0) {
         version,
         states: {},
         labelRegistry: {},
+        entityRegistry: {},
+        configEntries: {},
     };
     // Setup on first import
     handleWhenReady(() => {
         const ha = document.querySelector('home-assistant');
         // Label registry and states object
         window.haNunjucks.hass = ha.hass;
-        fetchLabelRegistry();
+        fetchLabelRegistry(ha.hass);
+        fetchEntityRegistry(ha.hass);
+        fetchConfigEntries(ha.hass);
         buildStatesObject();
         // Number and datetime translators
         window.haNunjucks.numberFormat = new Intl.NumberFormat(ha.hass.language);
-        window.haNunjucks.dateFormat = new Intl.DateTimeFormat(ha.hass.language, { dateStyle: 'full' });
-        window.haNunjucks.timeFormat = new Intl.DateTimeFormat(ha.hass.language, { timeStyle: 'long' });
+        window.haNunjucks.dateFormat = new Intl.DateTimeFormat(ha.hass.language, {
+            dateStyle: 'full',
+        });
+        window.haNunjucks.timeFormat = new Intl.DateTimeFormat(ha.hass.language, {
+            timeStyle: 'long',
+        });
         window.haNunjucks.datetimeFormat = new Intl.DateTimeFormat(ha.hass.language, { dateStyle: 'full', timeStyle: 'long' });
         window.haNunjucks.ordinalFormat = new Intl.PluralRules('en-US', // ha.hass.language, // Use english for proper numeric suffixes
         { type: 'ordinal' });

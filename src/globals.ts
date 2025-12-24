@@ -5,6 +5,7 @@ import {
 	area_name,
 	areas,
 } from './utils/areas';
+import { config_entry_attr, config_entry_id } from './utils/config_entry';
 import {
 	device_attr,
 	device_entities,
@@ -182,6 +183,10 @@ const HASS_GLOBALS: Record<string, CallableFunction> = {
 };
 
 const GLOBALS: Record<string, CallableFunction> = {
+	// Config Entries
+	config_entry_id,
+	config_entry_attr,
+
 	// Labels
 	label_id,
 	label_name,

@@ -7,6 +7,8 @@ import { addGlobals } from './globals';
 import { compareVersions, handleWhenReady } from './helpers';
 import { IHaNunjucks } from './models/types';
 import { addTests } from './tests';
+import { fetchConfigEntries } from './utils/config_entry';
+import { fetchEntityRegistry } from './utils/entities';
 import { fetchLabelRegistry } from './utils/labels';
 import { buildStatesObject } from './utils/states';
 
@@ -18,6 +20,8 @@ if (compareVersions(version, window.haNunjucks.version || '0.0.0') > 0) {
 		version,
 		states: {},
 		labelRegistry: {},
+		entityRegistry: {},
+		configEntries: {},
 	} as IHaNunjucks;
 
 	// Setup on first import
@@ -27,21 +31,19 @@ if (compareVersions(version, window.haNunjucks.version || '0.0.0') > 0) {
 
 			// Label registry and states object
 			window.haNunjucks.hass = ha.hass;
-			fetchLabelRegistry();
+			fetchLabelRegistry(ha.hass);
+			fetchEntityRegistry(ha.hass);
+			fetchConfigEntries(ha.hass);
 			buildStatesObject();
 
 			// Number and datetime translators
-			window.haNunjucks.numberFormat = new Intl.NumberFormat(
-				ha.hass.language,
-			);
-			window.haNunjucks.dateFormat = new Intl.DateTimeFormat(
-				ha.hass.language,
-				{ dateStyle: 'full' },
-			);
-			window.haNunjucks.timeFormat = new Intl.DateTimeFormat(
-				ha.hass.language,
-				{ timeStyle: 'long' },
-			);
+			window.haNunjucks.numberFormat = new Intl.NumberFormat(ha.hass.language);
+			window.haNunjucks.dateFormat = new Intl.DateTimeFormat(ha.hass.language, {
+				dateStyle: 'full',
+			});
+			window.haNunjucks.timeFormat = new Intl.DateTimeFormat(ha.hass.language, {
+				timeStyle: 'long',
+			});
 			window.haNunjucks.datetimeFormat = new Intl.DateTimeFormat(
 				ha.hass.language,
 				{ dateStyle: 'full', timeStyle: 'long' },

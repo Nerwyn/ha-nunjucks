@@ -1,7 +1,11 @@
 import { HassEntity } from 'home-assistant-js-websocket';
 import { Environment } from 'nunjucks';
 import { HomeAssistant } from '../interfaces/hass';
-import { LabelRegistryEntry } from '../interfaces/registries';
+import {
+	ConfigEntry,
+	EntityRegistryEntry,
+	LabelRegistryEntry,
+} from '../interfaces/registries';
 
 export {};
 
@@ -10,6 +14,8 @@ export interface IHaNunjucks {
 	env: Environment;
 	hass: HomeAssistant;
 	states: Record<string, Record<string, HassEntity>>;
+	entityRegistry: Record<string, EntityRegistryEntry>;
+	configEntries: Record<string, ConfigEntry>;
 	labelRegistry: Record<string, LabelRegistryEntry>;
 	numberFormat: Intl.NumberFormat;
 	dateFormat: Intl.DateTimeFormat;

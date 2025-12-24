@@ -174,6 +174,13 @@ Functions used to determine an entity's state or an attribute.
 | device_id       | function, filter | entity_id                                  | Returns the device ID for a given entity ID or device name.                                  |
 | device_name     | function, filter | device_or_entity_id                        | Returns the device name as defined by user or default for a give entity or device ID.        |
 
+### [Config Entries](https://www.home-assistant.io/docs/configuration/templating/#config-entries)
+
+| Name              | Type             | Arguments             | Description                                                                                                                                                         |
+| ----------------- | ---------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| config_entry_id   | function, filter | entity_id             | Returns the config entry ID for a given entity ID.                                                                                                                  |
+| config_entry_attr | function, filter | config_entry_id, attr | Returns the value of `attr` for the config entry of the given entity ID. The following attributes are allowed: `domain`, `title`, `state`, `source`, `disabled_by`. |
+
 ### [Floors](https://www.home-assistant.io/docs/configuration/templating/#floors)
 
 | Name           | Type             | Arguments        | Description                                                                                                 |

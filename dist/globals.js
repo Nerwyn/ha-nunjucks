@@ -1,4 +1,5 @@
 import { area_devices, area_entities, area_id, area_name, areas, } from './utils/areas';
+import { config_entry_attr, config_entry_id } from './utils/config_entry';
 import { device_attr, device_entities, device_id, device_name, is_device_attr, } from './utils/devices';
 import { closest, distance } from './utils/distance';
 import { is_hidden_entity } from './utils/entities';
@@ -84,6 +85,9 @@ const HASS_GLOBALS = {
     closest,
 };
 const GLOBALS = {
+    // Config Entries
+    config_entry_id,
+    config_entry_attr,
     // Labels
     label_id,
     label_name,

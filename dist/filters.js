@@ -1,4 +1,5 @@
 import { area_devices, area_entities, area_id, area_name } from './utils/areas';
+import { config_entry_attr, config_entry_id } from './utils/config_entry';
 import { contains } from './utils/contains';
 import { device_attr, device_entities, device_id, device_name, } from './utils/devices';
 import { closest } from './utils/distance';
@@ -64,6 +65,9 @@ const HASS_FILTERS = {
     closest,
 };
 const FILTERS = {
+    // Config Entries
+    config_entry_id,
+    config_entry_attr,
     // Labels
     label_id,
     label_name,
