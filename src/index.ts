@@ -18,6 +18,7 @@ const version = packageInfo.version;
 window.haNunjucks ||= {} as IHaNunjucks;
 if (compareVersions(version, window.haNunjucks.version || '0.0.0') > 0) {
 	window.haNunjucks = {
+		renderTemplate,
 		version,
 		states: {},
 		labelRegistry: {},

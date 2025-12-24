@@ -11,6 +11,13 @@ import {
 export {};
 
 export interface IHaNunjucks {
+	renderTemplate: (
+		hass: HomeAssistant,
+		str: string,
+		context: object,
+		validate: boolean = true,
+	) => string | boolean;
+
 	version: string;
 	env: Environment;
 	hass: HomeAssistant;
