@@ -176,6 +176,8 @@ Functions used to determine an entity's state or an attribute.
 
 ### [Config Entries](https://www.home-assistant.io/docs/configuration/templating/#config-entries)
 
+**NOTE**: Config entries are not available in the `hass` object and must be retrieved asynchronously from the Home Assistant backend the first time `ha-nunjucks` is imported. Since this package is otherwise synchronous, this can cause a race condition where no config entries are found the first time `renderTemplate` is run. This generally resolves itself once the template re-renders.
+
 | Name              | Type             | Arguments             | Description                                                                                                                                                         |
 | ----------------- | ---------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | config_entry_id   | function, filter | entity_id             | Returns the config entry ID for a given entity ID.                                                                                                                  |

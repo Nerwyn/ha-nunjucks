@@ -40,6 +40,13 @@ describe('config_entry_attr', () => {
 		);
 	});
 
+	it('should return undefined for an invalid config entry ID', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ "foobar" | config_entry_attr("domain") }}'),
+			'',
+		);
+	});
+
 	it('should throw an error if given an invalid attribute', () => {
 		assert.throws(() =>
 			renderTemplate(
