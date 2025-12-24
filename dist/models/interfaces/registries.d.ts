@@ -153,4 +153,19 @@ export interface ConfigEntry {
     error_reason_translation_key?: string;
     error_reason_translation_placeholders?: Record<string, string>;
 }
+export interface RepairsIssue {
+    domain: string;
+    issue_domain?: string;
+    issue_id: string;
+    active: boolean;
+    is_fixable: boolean;
+    severity: 'error' | 'warning' | 'critical';
+    breaks_in_ha_version?: string;
+    ignored: boolean;
+    created: string;
+    dismissed_version?: string;
+    learn_more_url?: string;
+    translation_key?: string;
+    translation_placeholders?: Record<string, string>;
+}
 export {};

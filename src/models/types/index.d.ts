@@ -5,6 +5,7 @@ import {
 	ConfigEntry,
 	EntityRegistryEntry,
 	LabelRegistryEntry,
+	RepairsIssue,
 } from '../interfaces/registries';
 
 export {};
@@ -14,9 +15,12 @@ export interface IHaNunjucks {
 	env: Environment;
 	hass: HomeAssistant;
 	states: Record<string, Record<string, HassEntity>>;
-	entityRegistry: Record<string, EntityRegistryEntry>;
-	configEntries: Record<string, ConfigEntry>;
-	labelRegistry: Record<string, LabelRegistryEntry>;
+
+	labelRegistry: LabelRegistryEntry[];
+	entityRegistry: EntityRegistryEntry[];
+	configEntries: ConfigEntry[];
+	repairIssues: RepairsIssue[];
+
 	numberFormat: Intl.NumberFormat;
 	dateFormat: Intl.DateTimeFormat;
 	timeFormat: Intl.DateTimeFormat;
