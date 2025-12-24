@@ -386,12 +386,12 @@ In addition to these functions, you have access to [a datetime library](https://
 
 ### [Hashing](https://www.home-assistant.io/docs/configuration/templating/#hashing)
 
-| Name   | Type             | Arguments | Description              |
-| ------ | ---------------- | --------- | ------------------------ |
-| md5    | function, filter | value     | Hash value to md5 hex    |
-| sha1   | function, filter | value     | Hash value to sha1 hex   |
-| sha256 | function, filter | value     | Hash value to sha256 hex |
-| sha512 | function, filter | value     | Hash value to sha512 hex |
+| Name   | Type             | Arguments | Description               |
+| ------ | ---------------- | --------- | ------------------------- |
+| md5    | function, filter | value     | Hash value to md5 hex.    |
+| sha1   | function, filter | value     | Hash value to sha1 hex.   |
+| sha256 | function, filter | value     | Hash value to sha256 hex. |
+| sha512 | function, filter | value     | Hash value to sha512 hex. |
 
 ### [Regular Expressions](https://www.home-assistant.io/docs/configuration/templating/#regular-expressions)
 
@@ -408,9 +408,9 @@ In addition to these functions, you have access to [a datetime library](https://
 
 ### [Shuffling](https://www.home-assistant.io/docs/configuration/templating/#shuffling)
 
-| Name    | Type             | Arguments               | Description                                                   |
-| ------- | ---------------- | ----------------------- | ------------------------------------------------------------- |
-| shuffle | function, filter | values, seed (optional) | Shuffle an array, either using a random seed or providing one |
+| Name    | Type             | Arguments               | Description                                                    |
+| ------- | ---------------- | ----------------------- | -------------------------------------------------------------- |
+| shuffle | function, filter | values, seed (optional) | Shuffle an array, either using a random seed or providing one. |
 
 ### [Flatten a List of Lists](https://www.home-assistant.io/docs/configuration/templating/#flatten-a-list-of-lists)
 
@@ -420,9 +420,9 @@ In addition to these functions, you have access to [a datetime library](https://
 
 ### [Find Common Elements Between Lists](https://www.home-assistant.io/docs/configuration/templating/#find-common-elements-between-lists)
 
-| Name      | Type             | Arguments    | Description                              |
-| --------- | ---------------- | ------------ | ---------------------------------------- |
-| intersect | function, filter | list1, list2 | Finds comment elements between two lists |
+| Name      | Type             | Arguments    | Description                               |
+| --------- | ---------------- | ------------ | ----------------------------------------- |
+| intersect | function, filter | list1, list2 | Finds comment elements between two lists. |
 
 ### [Find Elements In First List Not In Second List](https://www.home-assistant.io/docs/configuration/templating/#find-elements-in-first-list-not-in-second-list)
 
@@ -444,9 +444,9 @@ In addition to these functions, you have access to [a datetime library](https://
 
 ### [Combining Dictionaries](https://www.home-assistant.io/docs/configuration/templating/#combining-dictionaries)
 
-| Name    | Type             | Arguments | Description                 |
-| ------- | ---------------- | --------- | --------------------------- |
-| combine | function, filter | ...dicts  | Merge multiple dictionaries |
+| Name    | Type             | Arguments | Description                  |
+| ------- | ---------------- | --------- | ---------------------------- |
+| combine | function, filter | ...dicts  | Merge multiple dictionaries. |
 
 ### Miscellaneous
 

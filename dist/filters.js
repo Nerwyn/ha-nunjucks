@@ -147,6 +147,10 @@ const FILTERS = {
     sha1,
     sha256,
     sha512,
+    // Regular Expressions
+    regex_replace,
+    regex_findall,
+    regex_findall_index,
     // Lists
     shuffle,
     flatten,
@@ -156,8 +160,4 @@ const FILTERS = {
     union,
     // Dictionaries
     combine,
-    // Regular Expressions
-    regex_replace,
-    regex_findall,
-    regex_findall_index,
 };
