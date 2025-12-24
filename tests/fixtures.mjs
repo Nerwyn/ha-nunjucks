@@ -1,7 +1,6 @@
-require('global-jsdom/register');
-require('../dist/index.js');
+import 'global-jsdom/register';
 
-exports.mochaGlobalSetup = async () => {
+export async function mochaGlobalSetup() {
 	const ha = document.createElement('home-assistant');
 	ha.hass = {
 		connected: true,
@@ -56,4 +55,6 @@ exports.mochaGlobalSetup = async () => {
 		states: {},
 	};
 	document.body.appendChild(ha);
-};
+
+	await import('../src/index');
+}

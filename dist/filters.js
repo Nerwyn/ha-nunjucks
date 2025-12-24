@@ -8,7 +8,7 @@ import { iif } from './utils/iif';
 import { from_json, is_defined, to_json } from './utils/json';
 import { label_areas, label_description, label_devices, label_entities, label_id, label_name, labels, } from './utils/labels';
 import { str } from './utils/miscellaneous';
-import { acos, add, asin, atan, atan2, average, bitwise_and, bitwise_not, bitwise_or, bitwise_xor, bool, cos, is_number, log, max, median, min, multiply, ord, sin, sqrt, statistical_mode, tan, } from './utils/numeric';
+import { acos, add, asin, atan, atan2, average, bitwise_and, bitwise_not, bitwise_or, bitwise_xor, bool, clamp, cos, is_number, log, max, median, min, mod, multiply, ord, remap, sin, sqrt, statistical_mode, tan, wrap, } from './utils/numeric';
 import { regex_findall, regex_findall_index, regex_replace, } from './utils/regexp';
 import { attr_name_translated, attr_value_translated, date_translated, datetime_translated, number_translated, state_translated, time_translated, } from './utils/state_translated';
 import { has_value, state_attr, states } from './utils/states';
@@ -111,6 +111,10 @@ const FILTERS = {
     average,
     median,
     statistical_mode,
+    clamp,
+    mod,
+    wrap,
+    remap,
     bitwise_and,
     bitwise_or,
     bitwise_xor,

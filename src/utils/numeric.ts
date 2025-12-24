@@ -257,6 +257,117 @@ export function statistical_mode(values: number[], fallback?: string) {
 	}
 }
 
+export function clamp(v: number, min: number, max: number) {
+	try {
+		v = Number(v);
+		min = Number(min);
+		max = Number(max);
+		if ([v, min, max].some((x) => isNaN(x))) {
+			throw Error();
+		}
+	} catch {
+		throw TypeError(
+			`function requires numeric arguments, got v=${v}, min=${min}, max=${max}`,
+		);
+	}
+	return Math.max(min, Math.min(v, max));
+}
+
+export function mod(n: number, m: number) {
+	if (m == 0) {
+		throw Error('cannot divide by 0');
+	}
+	return ((n % m) + m) % m;
+}
+
+export function wrap(v: number, min: number, max: number) {
+	try {
+		v = Number(v);
+		min = Number(min);
+		max = Number(max);
+		if ([v, min, max].some((x) => isNaN(x))) {
+			throw Error();
+		}
+	} catch {
+		throw TypeError(
+			`function requires numeric arguments, got v=${v}, min=${min}, max=${max}`,
+		);
+	}
+
+	try {
+		return mod(v - min, max - min) + min;
+	} catch {
+		// Assume divide by zero error
+		return min;
+	}
+}
+
+export function remap(
+	v: number,
+	in_min: number,
+	in_max: number,
+	out_min: number,
+	out_max: number,
+	steps: number = 0,
+	edges: 'none' | 'clamp' | 'wrap' | 'mirror' = 'none',
+) {
+	try {
+		v = Number(v);
+		in_min = Number(in_min);
+		in_max = Number(in_max);
+		out_min = Number(out_min);
+		out_max = Number(out_max);
+		if ([v, in_min, in_max, out_min, out_max].some((x) => isNaN(x))) {
+			throw Error();
+		}
+	} catch {
+		throw TypeError(
+			`function requires numeric arguments, got v=${v}, in_min=${in_min}, in_max=${in_max}, out_min=${out_min}, out_max=${out_max}`,
+		);
+	}
+
+	switch (edges) {
+		case 'clamp':
+			v = clamp(v, in_min, in_max);
+			break;
+		case 'wrap':
+			if (in_min == in_max) {
+				throw RangeError(`in_min=${in_min} must not equal in_max=${in_max}`);
+			}
+			v = wrap(v, in_min, in_max);
+			break;
+		case 'mirror':
+			if (in_min == in_max) {
+				throw RangeError(`in_min=${in_min} must not equal in_max=${in_max}`);
+			}
+			const range = in_max - in_min;
+			const offset = v - in_min;
+			const period = Math.floor(offset / range);
+			let position = offset - period * range;
+			if (period < 0 || period % 2 != 0) {
+				position = range - position;
+			}
+			v = in_min + position;
+			break;
+		case 'none':
+		default:
+			break;
+	}
+
+	steps = Math.max(steps, 0);
+
+	if (!steps && in_min == out_min && in_max == out_max) {
+		return v;
+	}
+
+	let normalized = (v - in_min) / (in_max - in_min);
+	if (steps) {
+		normalized = Math.round(normalized * steps) / steps;
+	}
+
+	return out_min + normalized * (out_max - out_min);
+}
+
 export const e = Math.E;
 export const pi = Math.PI;
 export const tau = 2 * Math.PI;

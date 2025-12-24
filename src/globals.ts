@@ -41,6 +41,7 @@ import {
 	atan2,
 	average,
 	bool,
+	clamp,
 	cos,
 	e,
 	float,
@@ -51,12 +52,15 @@ import {
 	max,
 	median,
 	min,
+	mod,
 	pi,
+	remap,
 	sin,
 	sqrt,
 	statistical_mode,
 	tan,
 	tau,
+	wrap,
 } from './utils/numeric';
 import {
 	attr_name_translated,
@@ -218,6 +222,10 @@ const GLOBALS: Record<string, CallableFunction> = {
 	average,
 	median,
 	statistical_mode,
+	clamp,
+	mod,
+	wrap,
+	remap,
 	number_translated,
 
 	// Type Conversions

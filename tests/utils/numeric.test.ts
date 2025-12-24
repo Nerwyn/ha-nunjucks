@@ -89,17 +89,11 @@ describe('log', () => {
 	});
 
 	it('should return the log of argument 1 with base argument 2', () => {
-		assert.equal(
-			renderTemplate(hass, '{{ log(12, 2) }}'),
-			3.5849625007211565,
-		);
+		assert.equal(renderTemplate(hass, '{{ log(12, 2) }}'), 3.5849625007211565);
 	});
 
 	it('should return a fallback value on error', () => {
-		assert.equal(
-			renderTemplate(hass, '{{ log("foo", "baz", "bar") }}'),
-			'bar',
-		);
+		assert.equal(renderTemplate(hass, '{{ log("foo", "baz", "bar") }}'), 'bar');
 	});
 });
 
@@ -135,10 +129,7 @@ describe('tan', () => {
 
 describe('asin', () => {
 	it('should return the asin of a given value', () => {
-		assert.equal(
-			renderTemplate(hass, '{{ asin(0.2) }}'),
-			0.2013579207903308,
-		);
+		assert.equal(renderTemplate(hass, '{{ asin(0.2) }}'), 0.2013579207903308);
 	});
 
 	it('should return a fallback value on error', () => {
@@ -148,10 +139,7 @@ describe('asin', () => {
 
 describe('acos', () => {
 	it('should return the acos of a given value', () => {
-		assert.equal(
-			renderTemplate(hass, '{{ acos(0.2) }}'),
-			1.369438406004566,
-		);
+		assert.equal(renderTemplate(hass, '{{ acos(0.2) }}'), 1.369438406004566);
 	});
 
 	it('should return a fallback value on error', () => {
@@ -161,10 +149,7 @@ describe('acos', () => {
 
 describe('atan', () => {
 	it('should return the atan of a given value', () => {
-		assert.equal(
-			renderTemplate(hass, '{{ atan(0.2) }}'),
-			0.19739555984988078,
-		);
+		assert.equal(renderTemplate(hass, '{{ atan(0.2) }}'), 0.19739555984988078);
 	});
 
 	it('should return a fallback value on error', () => {
@@ -210,10 +195,7 @@ describe('max', () => {
 
 describe('min', () => {
 	it('should return the max value of a number of given values', () => {
-		assert.equal(
-			renderTemplate(hass, '{{ min(2, 4, 6, 9, -11, 7) }}'),
-			-11,
-		);
+		assert.equal(renderTemplate(hass, '{{ min(2, 4, 6, 9, -11, 7) }}'), -11);
 		assert.equal(
 			renderTemplate(hass, '{{ min([2, 4, 6], [9, [-11, 7]]) }}'),
 			-11,
@@ -230,10 +212,7 @@ describe('average', () => {
 
 		it('should return a fallback value on error', () => {
 			assert.equal(
-				renderTemplate(
-					hass,
-					'{{ average([2, 4, 6, "foo", -11, 7], "bar") }}',
-				),
+				renderTemplate(hass, '{{ average([2, 4, 6, "foo", -11, 7], "bar") }}'),
 				'bar',
 			);
 		});
@@ -242,10 +221,7 @@ describe('average', () => {
 
 describe('median', () => {
 	it('should return the median of a given array', () => {
-		assert.equal(
-			renderTemplate(hass, '{{ median([2, 4, 6, 9, -11, 8]) }}'),
-			5,
-		);
+		assert.equal(renderTemplate(hass, '{{ median([2, 4, 6, 9, -11, 8]) }}'), 5);
 		assert.equal(
 			renderTemplate(hass, '{{ median([2, 4, 6, 9, -11, 8, 8]) }}'),
 			6,
@@ -253,10 +229,7 @@ describe('median', () => {
 
 		it('should return a fallback value on error', () => {
 			assert.equal(
-				renderTemplate(
-					hass,
-					'{{ median([2, 4, 6, "foo", -11, 7], "bar") }}',
-				),
+				renderTemplate(hass, '{{ median([2, 4, 6, "foo", -11, 7], "bar") }}'),
 				'bar',
 			);
 		});
@@ -266,10 +239,7 @@ describe('median', () => {
 describe('statistical_mode', () => {
 	it('should return the first mode of a given array', () => {
 		assert.equal(
-			renderTemplate(
-				hass,
-				'{{ statistical_mode([2, 4, 6, 2, 9, -11, 8]) }}',
-			),
+			renderTemplate(hass, '{{ statistical_mode([2, 4, 6, 2, 9, -11, 8]) }}'),
 			2,
 		);
 		assert.equal(
@@ -296,6 +266,130 @@ describe('statistical_mode', () => {
 				'bar',
 			);
 		});
+	});
+});
+
+describe('clamp', () => {
+	it('should return the input value if in range inclusive', () => {
+		assert.equal(renderTemplate(hass, '{{ clamp(5, -10, 10) }}'), 5);
+		assert.equal(renderTemplate(hass, '{{ clamp(-5, -10, 10) }}'), -5);
+		assert.equal(renderTemplate(hass, '{{ -10 | clamp(-10, 10) }}'), -10);
+		assert.equal(renderTemplate(hass, '{{ 10 | clamp(-10, 10) }}'), 10);
+	});
+
+	it('should clamp values above or below range', () => {
+		assert.equal(renderTemplate(hass, '{{ clamp(-15, -10, 10) }}'), -10);
+		assert.equal(renderTemplate(hass, '{{ 15 | clamp(-10, 10) }}'), 10);
+	});
+
+	it('should work with invalid/non ranges', () => {
+		assert.equal(renderTemplate(hass, '{{ clamp(15, 10, 10) }}'), 10);
+	});
+
+	it('should throw an error if provided a non-numeric input', () => {
+		assert.throws(() => renderTemplate(hass, '{{ clamp("foo", -10, 10) }}'));
+		assert.throws(() => renderTemplate(hass, '{{ -15 | clamp("bar", 10) }}'));
+		assert.throws(() => renderTemplate(hass, '{{ clamp(-15, -10, "baz") }}'));
+	});
+});
+
+describe('mod', () => {
+	it('should return the mathematical modulo of the two values', () => {
+		assert.equal(renderTemplate(hass, '{{ mod(5, 10) }}'), 5);
+		assert.equal(renderTemplate(hass, '{{ mod(25, 4) }}'), 1);
+		assert.equal(renderTemplate(hass, '{{ mod(-25, 4) }}'), 3);
+	});
+
+	it('should return an error on divide by zero', () => {
+		assert.throws(() => renderTemplate(hass, '{{ mod(5, 0) }}'));
+	});
+});
+
+describe('wrap', () => {
+	it('should return the input value if in range inclusive of min and exclusive of max', () => {
+		assert.equal(renderTemplate(hass, '{{ wrap(5, -10, 10) }}'), 5);
+		assert.equal(renderTemplate(hass, '{{ -5 | wrap(-10, 10) }}'), -5);
+		assert.equal(renderTemplate(hass, '{{ wrap(-10, -10, 10) }}'), -10);
+		assert.equal(renderTemplate(hass, '{{ wrap(10, -10, 10) }}'), -10);
+	});
+
+	it('should properly wrap out of range values', () => {
+		assert.equal(renderTemplate(hass, '{{ wrap(-15, -10, 10) }}'), 5);
+		assert.equal(renderTemplate(hass, '{{ wrap(15, -10, 10) }}'), -5);
+		assert.equal(renderTemplate(hass, '{{ 120 | wrap(-10, 10) }}'), 0);
+	});
+
+	it('should return min range if an error occurs during calcuation', () => {
+		assert.equal(renderTemplate(hass, '{{ wrap(-15, -10, -10) }}'), -10);
+	});
+
+	it('should throw an error if provided a non-numeric input', () => {
+		assert.throws(() => renderTemplate(hass, '{{ wrap("foo", -10, 10) }}'));
+		assert.throws(() => renderTemplate(hass, '{{-15 | wrap("bar", 10) }}'));
+		assert.throws(() => renderTemplate(hass, '{{ wrap(-15, -10, "baz") }}'));
+	});
+});
+
+describe('remap', () => {
+	it('should remap values to new range', () => {
+		assert.equal(renderTemplate(hass, '{{ remap(10, 0, 100, 0, 10) }}'), 1);
+		assert.equal(renderTemplate(hass, '{{ 9 | remap(0, 10, 0, 100) }}'), 90);
+		assert.equal(renderTemplate(hass, '{{ remap(-1, 0, 10, 0, 100) }}'), -10);
+	});
+
+	it('should apply steps to normalized value if provided', () => {
+		assert.equal(renderTemplate(hass, '{{ remap(10, 0, 100, 0, 10, 20) }}'), 1);
+	});
+
+	it('should clamp value when edge mode set to clamp', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ remap(-10, 0, 100, 0, 10, 0, "clamp") }}'),
+			0,
+		);
+		assert.equal(
+			renderTemplate(hass, '{{ 110 | remap(0, 100, 0, 10, 0, "clamp") }}'),
+			10,
+		);
+	});
+
+	it('should wrap values when edges mode set to wrap', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ -10 | remap(0, 100, 0, 10, 0, "wrap") }}'),
+			9,
+		);
+		assert.equal(
+			renderTemplate(hass, '{{ remap(110, 0, 100, 0, 10, 0, "wrap") }}'),
+			1,
+		);
+	});
+
+	it('should mirror values when edges mode set to mirror', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ remap(-10, 0, 100, 0, 10, 0, "mirror") }}'),
+			1,
+		);
+		assert.equal(
+			renderTemplate(hass, '{{ remap(110, 0, 100, 0, 10, 0, "mirror") }}'),
+			9,
+		);
+	});
+
+	it('should throw an error if  provide a non-numeric input', () => {
+		assert.throws(() =>
+			renderTemplate(hass, '{{ remap("foo", 0, 100, 0, 10) }}'),
+		);
+		assert.throws(() =>
+			renderTemplate(hass, '{{-15 | remap("bar". 100, 0, 10) }}'),
+		);
+		assert.throws(() =>
+			renderTemplate(hass, '{{ remap(-15, 0, "baz", 0, 10) }}'),
+		);
+		assert.throws(() =>
+			renderTemplate(hass, '{{ remap(-15, 0, 100, "bah", 10) }}'),
+		);
+		assert.throws(() =>
+			renderTemplate(hass, '{{ remap(-15, 0, 100, 0, "bo") }}'),
+		);
 	});
 });
 
