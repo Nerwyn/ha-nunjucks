@@ -28,12 +28,14 @@
 	},
 	"homepage": "https://github.com/Nerwyn/ha-nunjucks#readme",
 	"dependencies": {
+		"create-hash": "latest",
 		"home-assistant-js-websocket": "latest",
 		"nunjucks": "latest",
 		"slugify": "latest",
 		"ts-py-datetime": "latest"
 	},
 	"devDependencies": {
+		"@types/create-hash": "latest",
 		"@types/mocha": "latest",
 		"@types/nunjucks": "latest",
 		"@typescript-eslint/eslint-plugin": "latest",

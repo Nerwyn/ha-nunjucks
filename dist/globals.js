@@ -5,6 +5,7 @@ import { closest, distance } from './utils/distance';
 import { is_hidden_entity } from './utils/entities';
 import { floor_areas, floor_entities, floor_id, floor_name, floors, } from './utils/floors';
 import { expand } from './utils/groups';
+import { md5, sha1, sha256, sha512 } from './utils/hashing';
 import { iif } from './utils/iif';
 import { integration_entities } from './utils/integrations';
 import { issue, issues } from './utils/issues';
@@ -141,8 +142,13 @@ const GLOBALS = {
     str,
     // Iterating Multiple Objects
     zip,
-    // String fitlers
+    // String filters
     slugify,
+    // Hashing
+    md5,
+    sha1,
+    sha256,
+    sha512,
     // Miscellaneous
     match_media,
 };

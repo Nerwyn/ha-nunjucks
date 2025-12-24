@@ -23,6 +23,7 @@ import {
 	floors,
 } from './utils/floors';
 import { expand } from './utils/groups';
+import { md5, sha1, sha256, sha512 } from './utils/hashing';
 import { iif } from './utils/iif';
 import { integration_entities } from './utils/integrations';
 import { issue, issues } from './utils/issues';
@@ -246,8 +247,14 @@ const GLOBALS: Record<string, CallableFunction> = {
 	// Iterating Multiple Objects
 	zip,
 
-	// String fitlers
+	// String filters
 	slugify,
+
+	// Hashing
+	md5,
+	sha1,
+	sha256,
+	sha512,
 
 	// Miscellaneous
 	match_media,

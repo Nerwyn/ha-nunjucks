@@ -5,6 +5,7 @@ import { device_attr, device_entities, device_id, device_name, } from './utils/d
 import { closest } from './utils/distance';
 import { floor_areas, floor_entities, floor_id, floor_name, } from './utils/floors';
 import { expand } from './utils/groups';
+import { md5, sha1, sha256, sha512 } from './utils/hashing';
 import { iif } from './utils/iif';
 import { from_json, is_defined, to_json } from './utils/json';
 import { label_areas, label_description, label_devices, label_entities, label_id, label_name, labels, } from './utils/labels';
@@ -135,6 +136,11 @@ const FILTERS = {
     ordinal,
     base64_encode,
     base64_decode,
+    // Hashing
+    md5,
+    sha1,
+    sha256,
+    sha512,
     // Regular Expressions
     regex_replace,
     regex_findall,

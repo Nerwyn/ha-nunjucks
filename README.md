@@ -377,6 +377,15 @@ In addition to these functions, you have access to [a datetime library](https://
 | base64_encode | filter | value                         | Encodes a string or bytes to a base 64 string.                                                           |
 | base64_decode | filter | value                         | Decodes a base 64 string to a UTF-8 string.                                                              |
 
+### [Hashing](https://www.home-assistant.io/docs/configuration/templating/#hashing)
+
+| Name   | Type             | Arguments | Description              |
+| ------ | ---------------- | --------- | ------------------------ |
+| md5    | function, filter | value     | Hash value to md5 hex    |
+| sha1   | function, filter | value     | Hash value to sha1 hex   |
+| sha256 | function, filter | value     | Hash value to sha256 hex |
+| sha512 | function, filter | value     | Hash value to sha512 hex |
+
 ### [Regular Expressions](https://www.home-assistant.io/docs/configuration/templating/#regular-expressions)
 
 **NOTE**: The format of regular expressions in nunjucks is different than jinja2. You may want to read the [Nunjucks](https://mozilla.github.io/nunjucks/templating.html#regular-expressions) and [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions) documentation.

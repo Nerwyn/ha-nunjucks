@@ -15,6 +15,7 @@ import {
 	floor_name,
 } from './utils/floors';
 import { expand } from './utils/groups';
+import { md5, sha1, sha256, sha512 } from './utils/hashing';
 import { iif } from './utils/iif';
 import { from_json, is_defined, to_json } from './utils/json';
 import {
@@ -234,6 +235,12 @@ const FILTERS: Record<string, CallableFunction> = {
 	ordinal,
 	base64_encode,
 	base64_decode,
+
+	// Hashing
+	md5,
+	sha1,
+	sha256,
+	sha512,
 
 	// Regular Expressions
 	regex_replace,
