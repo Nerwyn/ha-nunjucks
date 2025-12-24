@@ -2,11 +2,10 @@ import { HomeAssistant } from '../models/interfaces/hass';
 import { ConfigEntry } from '../models/interfaces/registries';
 
 export async function fetchConfigEntries(hass: HomeAssistant) {
-	const entries: ConfigEntry[] = await hass.connection.sendMessagePromise({
-		type: 'config_entries/list',
+	const entries: ConfigEntry[] = await hass.callWS({
+		type: 'config_entries/get',
 	});
 
-	entries.sort((ent1, ent2) => ent1.entry_id.localeCompare(ent2.entry_id));
 	for (const entry of entries) {
 		window.haNunjucks.configEntries[entry.entry_id] = entry;
 	}
