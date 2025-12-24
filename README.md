@@ -406,6 +406,12 @@ In addition to these functions, you have access to [a datetime library](https://
 | regex_findall       | filter | value, find (default '')                       | Finds all RegEx matches of the find expression in value and returns an array of matches.                                             |
 | regex_findall_index | filter | value, find (default ''), index (default 0)    | Performs a RegEx find all but returns the match at a provided index.                                                                 |
 
+### [Shuffling](https://www.home-assistant.io/docs/configuration/templating/#shuffling)
+
+| Name    | Type             | Arguments               | Description                                                   |
+| ------- | ---------------- | ----------------------- | ------------------------------------------------------------- |
+| shuffle | function, filter | values, seed (optional) | Shuffle an array, either using a random seed or providing one |
+
 ### Miscellaneous
 
 Functions that are not from the Home Assistant templating documentation.

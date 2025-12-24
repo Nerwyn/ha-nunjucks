@@ -12,6 +12,7 @@ import { label_areas, label_description, label_devices, label_entities, label_id
 import { str } from './utils/miscellaneous';
 import { acos, add, asin, atan, atan2, average, bitwise_and, bitwise_not, bitwise_or, bitwise_xor, bool, clamp, cos, is_number, log, max, median, min, mod, multiply, ord, remap, sin, sqrt, statistical_mode, tan, wrap, } from './utils/numeric';
 import { regex_findall, regex_findall_index, regex_replace, } from './utils/regexp';
+import { shuffle } from './utils/shuffling';
 import { attr_name_translated, attr_value_translated, date_translated, datetime_translated, number_translated, state_translated, time_translated, } from './utils/state_translated';
 import { has_value, state_attr, states } from './utils/states';
 import { base64_decode, base64_encode, ordinal, slugify, } from './utils/string_filters';
@@ -145,6 +146,8 @@ const FILTERS = {
     sha1,
     sha256,
     sha512,
+    // Shuffling
+    shuffle,
     // Regular Expressions
     regex_replace,
     regex_findall,

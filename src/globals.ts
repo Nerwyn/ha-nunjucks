@@ -65,6 +65,7 @@ import {
 	tau,
 	wrap,
 } from './utils/numeric';
+import { shuffle } from './utils/shuffling';
 import {
 	attr_name_translated,
 	attr_value_translated,
@@ -260,6 +261,9 @@ const GLOBALS: Record<string, CallableFunction> = {
 	sha1,
 	sha256,
 	sha512,
+
+	// Shuffling
+	shuffle,
 
 	// Miscellaneous
 	match_media,

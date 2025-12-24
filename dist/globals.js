@@ -12,6 +12,7 @@ import { issue, issues } from './utils/issues';
 import { label_areas, label_description, label_devices, label_entities, label_id, label_name, labels, } from './utils/labels';
 import { match_media, str } from './utils/miscellaneous';
 import { acos, asin, atan, atan2, average, bool, clamp, cos, e, float, inf, int, is_number, log, max, median, min, mod, pi, remap, sin, sqrt, statistical_mode, tan, tau, wrap, } from './utils/numeric';
+import { shuffle } from './utils/shuffling';
 import { attr_name_translated, attr_value_translated, date_translated, datetime_translated, number_translated, state_translated, time_translated, } from './utils/state_translated';
 import { has_value, is_state, is_state_attr, state_attr, states, } from './utils/states';
 import { slugify } from './utils/string_filters';
@@ -153,6 +154,8 @@ const GLOBALS = {
     sha1,
     sha256,
     sha512,
+    // Shuffling
+    shuffle,
     // Miscellaneous
     match_media,
 };

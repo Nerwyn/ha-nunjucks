@@ -62,6 +62,7 @@ import {
 	regex_findall_index,
 	regex_replace,
 } from './utils/regexp';
+import { shuffle } from './utils/shuffling';
 import {
 	attr_name_translated,
 	attr_value_translated,
@@ -246,6 +247,9 @@ const FILTERS: Record<string, CallableFunction> = {
 	sha1,
 	sha256,
 	sha512,
+
+	// Shuffling
+	shuffle,
 
 	// Regular Expressions
 	regex_replace,
