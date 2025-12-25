@@ -13,7 +13,7 @@ A wrapper for [nunjucks](https://www.npmjs.com/package/nunjucks) for use with Ho
 
 [Nunjucks](https://mozilla.github.io/nunjucks/) is a templating engine for JavaScript that is heavily inspired by jinja2. Home Assistant uses jinja2 to process templates in card configurations on the backend, so the syntax of jinja2 and Nunjucks is virtually the same. This makes it an excellent alternative to Home Assistant core jinja2 templating for custom cards.
 
-While some Home Assistant native cards support templating for certain fields, implementing proper Home Assistant jinja2 template support in custom cards can be difficult. Additionally Home Assistant jinja2 templates are processed by the Python backend, and use subscriptions which must be managed and do not play as well with dynamic custom variables. Nunjucks templates are processed by the frontend using the frontend [`hass`](https://developers.home-assistant.io/docs/frontend/data/) object before your custom card's HTML is rendered, making nunjucks templating synchronous, near instanteous, and easier to use than traditional jinja2 templates.
+While some Home Assistant native cards support templating for certain fields, implementing proper Home Assistant jinja2 template support in custom cards can be difficult. Additionally Home Assistant jinja2 templates are processed by the Python backend, and use subscriptions which must be managed and do not play as well with dynamic custom variables or synchronous frontend rendering. Nunjucks templates are processed by the frontend using the frontend [`hass`](https://developers.home-assistant.io/docs/frontend/data/) object before your custom card's HTML is rendered, making nunjucks templating synchronous, near instanteous, and easier to use than traditional jinja2 templates.
 
 ## Usage
 
@@ -31,9 +31,9 @@ import { renderTemplate } from 'ha-nunjucks';
 const renderedString = renderTemplate(this.hass, templateString);
 ```
 
-That's it! The result of `renderTemplate` is the rendered template for you to use. In unit and integration testing render time is under 1 ms and shouldn't cause any latency in your projects.
+That's it! The result of `renderTemplate` is the rendered template for you to use. In unit and integration testing render time for a single template is under 1 ms and shouldn't cause any latency in your projects.
 
-Rather than rendering templates on the backend, nunjucks renders templates on the frontend. This repository uses the Home Assistant object present in all custom cards to read entity state data. A single shared Nunjucks environment is used for the frontend across all custom element instances that use Nunjucks, which helps with initial load times.
+Rather than rendering templates on the backend, nunjucks renders templates on the frontend. This repository uses the Home Assistant object present in all custom cards to read entity state data. A single shared Nunjucks environment is used for the frontend across all custom element instances that use ha-unjucks, which helps with initial load times. If multiple frontend add-ons are installed which use different versions of ha-nunjucks, the global version will be overwritten with the latest available version.
 
 You can also provide context to the `renderTemplate` function to pass to nunjucks if you want to make additional variables or project specific functions available to your users for use in templates.
 
@@ -96,7 +96,7 @@ ha-nunjucks creates one global object on the browser window, which contains an n
 
 ## Available Extensions
 
-The vast majority of the [Home Assistant template extensions](https://www.home-assistant.io/docs/configuration/templating/#home-assistant-template-extensions) have been implemented into this package. If there are functions that you use that are not currently supported or don't behave exactly like their jinja2 versions, please make a feature request or try adding it to the project yourself and create a pull request.
+All of the [Home Assistant template extensions](https://www.home-assistant.io/docs/configuration/templating/#home-assistant-template-extensions) have been implemented into this package. If there are newer functions that you use that are not currently supported or behave unexpectedly, please make a feature request or try adding it to the project yourself and create a pull request. Do note that some template extensions behave differently from their Home Assistant backend jinja2 counterparts due to differences between Python and JavaScript and language feature constraints.
 
 Template extensions can be functions, tests, filters, and/or constants. Functions are called like a regular programming function, such as `states()` or `floors()`. Filters are added to the end of a string using a pipe character like `123.45 | int` or `"light.lounge" | state_attr("brightness")`. Tests are functions which return booleans and can be used in an if statement like `if "foo" is string_like`, not to be confused with functions that return booleans and can be used in if statements like `if is_state("light.lounge", "on")`. Contants are static values, and are just called as is like `{{ True }}` or `{{ pi }}`.
 
