@@ -30,18 +30,18 @@
 	"dependencies": {
 		"create-hash": "latest",
 		"home-assistant-js-websocket": "latest",
-		"mersenne-twister": "^1.1.0",
+		"mersenne-twister": "latest",
 		"nunjucks": "latest",
-		"python-struct": "^1.1.3",
+		"python-struct": "latest",
 		"slugify": "latest",
 		"ts-py-datetime": "latest"
 	},
 	"devDependencies": {
 		"@types/create-hash": "latest",
-		"@types/mersenne-twister": "^1.1.7",
+		"@types/mersenne-twister": "latest",
 		"@types/mocha": "latest",
 		"@types/nunjucks": "latest",
-		"@types/python-struct": "^1.0.5",
+		"@types/python-struct": "latest",
 		"@typescript-eslint/eslint-plugin": "latest",
 		"@typescript-eslint/parser": "latest",
 		"eslint": "latest",
