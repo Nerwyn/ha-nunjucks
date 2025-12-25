@@ -1,22 +1,20 @@
+function getFunction(name) {
+    for (const getter of ['getGlobal', 'getFilter', 'getTest']) {
+        try {
+            return window.haNunjucks.env[getter](name);
+        }
+        catch { }
+    }
+}
 export function map(arr, fn, ...args) {
     if (typeof fn == 'string') {
-        for (const getter of ['getGlobal', 'getFilter', 'getTest']) {
-            try {
-                fn = window.haNunjucks.env[getter](fn);
-            }
-            catch { }
-        }
+        fn = getFunction(fn);
     }
     return arr.map((item) => fn(item, ...args));
 }
 export function apply(value, fn, ...args) {
     if (typeof fn == 'string') {
-        for (const getter of ['getGlobal', 'getFilter', 'getTest']) {
-            try {
-                fn = window.haNunjucks.env[getter](fn);
-            }
-            catch { }
-        }
+        fn = getFunction(fn);
     }
     return fn(value, ...args);
 }
