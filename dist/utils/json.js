@@ -16,7 +16,7 @@ export function to_json(obj, ensure_ascii = false, pretty_print = false, sort_ke
     if (ensure_ascii) {
         res = res.replace(/[\u007F-\uFFFF]/g, (chr) => `\\u'${('0000' + chr.charCodeAt(0).toString(16)).substring(-4)}`);
     }
-    return res;
+    return window.haNunjucks.env.getFilter('safe')(res);
 }
 export function from_json(value) {
     return JSON.parse(value);
