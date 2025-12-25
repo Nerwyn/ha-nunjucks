@@ -35,7 +35,7 @@ describe('as_function', () => {
 				`{%- macro foo(args, returns=returns) -%}
 					{{ typeof(args) }}
 					{%- set return_value = args | map("multiply", 2) -%}
-					{%- set bar = returns(return_value) -%}
+					{%- set _ = returns(return_value) -%}
 				{%- endmacro -%}
 				{{ (foo | as_function)([1,2,3]) }}
 			`,

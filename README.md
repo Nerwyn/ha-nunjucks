@@ -459,11 +459,11 @@ In addition to these functions, you have access to [a datetime library](https://
 
 ### [Working With Macros](https://www.home-assistant.io/docs/configuration/templating/#working-with-macros)
 
-| Name        | Type         | Arguments                | Description                                                                                                                                                                                                   |
-| ----------- | ------------ | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| map         | filter       | arr, function, ...args   | Call a function on every item in an array and return the resulting array.                                                                                                                                     |
-| apply       | filter, test | value, function, ...args | Apply a function to a value. Useful for calling other functions within other filters                                                                                                                          |
-| as_function | filter       | macro                    | Convert a macro to a function to preserve underlying datatypes. The macro's first argument must be the callable parameter returns, which is called within the macro using `{%- do returns(return_value) -%}`. |
+| Name        | Type         | Arguments                | Description                                                                                                                                                                                                                 |
+| ----------- | ------------ | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| map         | filter       | arr, function, ...args   | Call a function on every item in an array and return the resulting array.                                                                                                                                                   |
+| apply       | filter, test | value, function, ...args | Apply a function to a value. Useful for calling other functions within other filters                                                                                                                                        |
+| as_function | filter       | macro                    | Convert a macro to a function to preserve underlying datatypes. The macro's first argument must be the callable parameter returns, which is silently called within the macro using `{%- set _ = returns(return_value) -%}`. |
 
 ### [Merge Action Responses](https://www.home-assistant.io/docs/configuration/templating/#merge-action-responses)
 
