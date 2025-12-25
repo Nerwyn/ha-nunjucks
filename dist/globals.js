@@ -23,6 +23,7 @@ import { pytypeof } from './utils/type_checking';
 import { list, set } from './utils/type_conversions';
 import { zip } from './utils/zip';
 import dt, { date, datetime, time, timedelta } from 'ts-py-datetime';
+import { merge_response } from './utils/merge_response';
 import { version } from './utils/version';
 export function addGlobals(env) {
     for (const func in GLOBALS) {
@@ -169,6 +170,8 @@ const GLOBALS = {
     union,
     // Dictionaries
     combine,
+    // Merge action responses
+    merge_response,
     // Miscellaneous
     match_media,
 };

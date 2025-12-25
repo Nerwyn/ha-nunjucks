@@ -456,6 +456,12 @@ In addition to these functions, you have access to [a datetime library](https://
 | ------- | ---------------- | --------- | ---------------------------- |
 | combine | function, filter | ...dicts  | Merge multiple dictionaries. |
 
+### [Merge Action Responses](https://www.home-assistant.io/docs/configuration/templating/#merge-action-responses)
+
+| Name           | Type     | Arguments | Description                                 |
+| -------------- | -------- | --------- | ------------------------------------------- |
+| merge_response | function | value     | Merge several responses into a single array |
+
 ### [Determining Types](https://www.home-assistant.io/docs/configuration/templating/#determining-types)
 
 | Name   | Type             | Arguments | Description                                   |
@@ -464,7 +470,7 @@ In addition to these functions, you have access to [a datetime library](https://
 
 ### Miscellaneous
 
-Functions that are not from the Home Assistant templating documentation.
+Functions that are not from or related to functions in the Home Assistant templating documentation.
 
 | Name        | Type     | Arguments | Description                                                                                                                                           |
 | ----------- | -------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
