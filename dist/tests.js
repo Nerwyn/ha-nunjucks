@@ -1,4 +1,5 @@
 import { contains } from './utils/contains';
+import { apply } from './utils/macros';
 import { match, search, test } from './utils/regexp';
 import { is_datetime, list, set, string_like } from './utils/type_checking';
 export function addTests(env) {
@@ -21,4 +22,6 @@ const TESTS = {
     match,
     search,
     test,
+    // Macros
+    apply,
 };

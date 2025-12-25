@@ -20,6 +20,7 @@ import { base64_decode, base64_encode, ordinal, slugify, } from './utils/string_
 import { pack, unpack } from './utils/struct';
 import { as_datetime, as_local, as_timedelta, as_timestamp, relative_time, time_since, time_until, timestamp_custom, timestamp_local, timestamp_utc, today_at, } from './utils/time';
 import { pytypeof } from './utils/type_checking';
+import { apply, as_function, map } from './utils/macros';
 import { version } from './utils/version';
 export function addFilters(env) {
     for (const func in FILTERS) {
@@ -165,4 +166,8 @@ const FILTERS = {
     union,
     // Dictionaries
     combine,
+    // Macros
+    map,
+    apply,
+    as_function,
 };

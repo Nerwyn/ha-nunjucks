@@ -104,6 +104,7 @@ import {
 import { pytypeof } from './utils/type_checking';
 
 import { Environment } from 'nunjucks';
+import { apply, as_function, map } from './utils/macros';
 import { version } from './utils/version';
 
 export function addFilters(env: Environment) {
@@ -278,4 +279,9 @@ const FILTERS: Record<string, CallableFunction> = {
 
 	// Dictionaries
 	combine,
+
+	// Macros
+	map,
+	apply,
+	as_function,
 };
