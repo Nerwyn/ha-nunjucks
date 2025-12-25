@@ -23,6 +23,7 @@ import { pytypeof } from './utils/type_checking';
 import { list, set } from './utils/type_conversions';
 import { zip } from './utils/zip';
 import dt, { date, datetime, time, timedelta } from 'ts-py-datetime';
+import { version } from './utils/version';
 export function addGlobals(env) {
     for (const func in GLOBALS) {
         env.addGlobal(func, function (...args) {
@@ -117,6 +118,8 @@ const GLOBALS = {
     date_translated,
     time_translated,
     datetime_translated,
+    // Version
+    version,
     // Numeric,
     float,
     is_number,

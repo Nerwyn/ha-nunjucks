@@ -104,6 +104,7 @@ import {
 import { pytypeof } from './utils/type_checking';
 
 import { Environment } from 'nunjucks';
+import { version } from './utils/version';
 
 export function addFilters(env: Environment) {
 	for (const func in FILTERS) {
@@ -200,6 +201,9 @@ const FILTERS: Record<string, CallableFunction> = {
 
 	// Is Defined
 	is_defined,
+
+	// Version
+	version,
 
 	// Distance
 	closest,

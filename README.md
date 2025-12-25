@@ -294,6 +294,12 @@ In addition to these functions, you have access to [a datetime library](https://
 | ---------- | ------ | --------- | -------------------------------------------------------------- |
 | is_defined | filter | value     | Returns the value if it is defined, otherwise throws an error. |
 
+### [Version](https://www.home-assistant.io/docs/configuration/templating/#version)
+
+| Name    | Type             | Arguments | Description                       |
+| ------- | ---------------- | --------- | --------------------------------- |
+| version | function, filter | version   | Returns a SemanticVersion object. |
+
 ### [Distance](https://www.home-assistant.io/docs/configuration/templating/#distance)
 
 | Name     | Type             | Arguments | Description                                                                                                                                                                        |

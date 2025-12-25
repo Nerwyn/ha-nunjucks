@@ -111,6 +111,7 @@ import { zip } from './utils/zip';
 
 import { Environment } from 'nunjucks';
 import dt, { date, datetime, time, timedelta } from 'ts-py-datetime';
+import { version } from './utils/version';
 
 export function addGlobals(env: Environment) {
 	for (const func in GLOBALS) {
@@ -226,6 +227,9 @@ const GLOBALS: Record<string, CallableFunction> = {
 	date_translated,
 	time_translated,
 	datetime_translated,
+
+	// Version
+	version,
 
 	// Numeric,
 	float,

@@ -20,6 +20,7 @@ import { base64_decode, base64_encode, ordinal, slugify, } from './utils/string_
 import { pack, unpack } from './utils/struct';
 import { as_datetime, as_local, as_timedelta, as_timestamp, relative_time, time_since, time_until, timestamp_custom, timestamp_local, timestamp_utc, today_at, } from './utils/time';
 import { pytypeof } from './utils/type_checking';
+import { version } from './utils/version';
 export function addFilters(env) {
     for (const func in FILTERS) {
         env.addFilter(func, function (...args) {
@@ -98,6 +99,8 @@ const FILTERS = {
     from_json,
     // Is Defined
     is_defined,
+    // Version
+    version,
     // Distance
     closest,
     // Contains

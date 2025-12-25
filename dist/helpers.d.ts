@@ -9,10 +9,3 @@
  * @param {number} delay The initial delay in milliseconds, defaults to 10
  */
 export declare function handleWhenReady(handler: () => void | Promise<void>, handleReady: () => boolean | Promise<boolean>, timeout?: number, delay?: number, errorMessage?: string): Promise<void>;
-/**
- * Compare two semantic versions
- * @param {string} v1
- * @param {string} v2
- * @returns {1 | 0 | -1}
- */
-export declare function compareVersions(v1: string, v2: string): 1 | 0 | -1;

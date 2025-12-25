@@ -2,19 +2,19 @@ import nunjucks from 'nunjucks';
 import packageInfo from '../package.json';
 import { addFilters } from './filters';
 import { addGlobals } from './globals';
-import { compareVersions, handleWhenReady } from './helpers';
+import { handleWhenReady } from './helpers';
 import { addTests } from './tests';
 import { fetchConfigEntries } from './utils/config_entry';
 import { fetchEntityRegistry } from './utils/entities';
 import { fetchRepairsIssues } from './utils/issues';
 import { fetchLabelRegistry } from './utils/labels';
 import { buildStatesObject } from './utils/states';
-const version = packageInfo.version;
+import { version } from './utils/version';
 window.haNunjucks ||= {};
-if (compareVersions(version, window.haNunjucks.version || '0.0.0') > 0) {
+if (version(packageInfo.version).compare(window.haNunjucks.version || '0.0.0') > 0) {
     window.haNunjucks = {
         renderTemplate,
-        version,
+        version: packageInfo.version,
         states: {},
         labelRegistry: {},
         entityRegistry: {},
