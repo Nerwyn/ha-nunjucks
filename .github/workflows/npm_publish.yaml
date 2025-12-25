@@ -6,22 +6,16 @@ permissions:
   id-token: write
   contents: read
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: '18.x'
+          node-version: '24'
           registry-url: 'https://registry.npmjs.org'
-      - name: Set git username
-        run: git config --global user.name ${{ github.actor }}
-      - name: Set git user email
-        run: git config --global user.email "github-action-${{ github.actor }}.users.noreply.github.com"
-      - name: Install dependencies and build
-        run: npm ci
-      - name: Publish package to npm
-        run: |
+      - run: npm ci
+      - run: |
           if
             [[ ${{ github.event.release.tag_name }} == *'alpha'* ]];
           then
