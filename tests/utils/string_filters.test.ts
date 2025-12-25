@@ -17,6 +17,15 @@ describe('ordinal', () => {
 	});
 });
 
+describe('from_hex', () => {
+	it('should convert a hex string to a bytestring', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ "0F010003" | from_hex }}'),
+			'\x0f\x01\x00\x03',
+		);
+	});
+});
+
 describe('base64_encode', () => {
 	it('should return the base64 encoded string', () => {
 		assert.equal(

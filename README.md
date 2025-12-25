@@ -389,6 +389,7 @@ In addition to these functions, you have access to [a datetime library](https://
 | urlencode     | filter | value                         | Convert an object to a percent-encoded ASCII text string.                                                |
 | slugify       | filter | value, separator (default \_) | Convert a given string into a "slug".                                                                    |
 | ordinal       | filter | value                         | Convert an integer into a number defining a position in a series (e.g. `1st`, `2nd`, `3rd`, `4th`, etc). |
+| from_hex      | filter | value                         | Decodes a hex string to raw bytes.                                                                       |
 | base64_encode | filter | value                         | Encodes a string or bytes to a base 64 string.                                                           |
 | base64_decode | filter | value                         | Decodes a base 64 string to a UTF-8 string.                                                              |
 

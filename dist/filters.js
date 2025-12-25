@@ -16,7 +16,7 @@ import { acos, add, asin, atan, atan2, average, bitwise_and, bitwise_not, bitwis
 import { regex_findall, regex_findall_index, regex_replace, } from './utils/regexp';
 import { attr_name_translated, attr_value_translated, date_translated, datetime_translated, number_translated, state_translated, time_translated, } from './utils/state_translated';
 import { has_value, state_attr, states } from './utils/states';
-import { base64_decode, base64_encode, ordinal, slugify, } from './utils/string_filters';
+import { base64_decode, base64_encode, from_hex, ordinal, slugify, } from './utils/string_filters';
 import { pack, unpack } from './utils/struct';
 import { as_datetime, as_local, as_timedelta, as_timestamp, relative_time, time_since, time_until, timestamp_custom, timestamp_local, timestamp_utc, today_at, } from './utils/time';
 import { pytypeof } from './utils/type_checking';
@@ -146,6 +146,7 @@ const FILTERS = {
     // urlencode filter is built into nunjucks
     slugify,
     ordinal,
+    from_hex,
     base64_encode,
     base64_decode,
     // Hashing

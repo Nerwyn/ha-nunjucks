@@ -84,6 +84,7 @@ import { has_value, state_attr, states } from './utils/states';
 import {
 	base64_decode,
 	base64_encode,
+	from_hex,
 	ordinal,
 	slugify,
 } from './utils/string_filters';
@@ -255,6 +256,7 @@ const FILTERS: Record<string, CallableFunction> = {
 	// urlencode filter is built into nunjucks
 	slugify,
 	ordinal,
+	from_hex,
 	base64_encode,
 	base64_decode,
 
