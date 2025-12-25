@@ -27,9 +27,9 @@ export function pytypeof(value) {
             return 'bool';
         case 'function':
             return 'function';
+        case 'symbol':
         case 'object':
             return Array.isArray(value) ? 'list' : 'dict';
-        case 'symbol':
         case 'undefined':
         default:
             return 'NoneType';
