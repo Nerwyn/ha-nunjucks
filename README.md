@@ -132,13 +132,13 @@ You do have to use bracket notation for arrays within state objects.
 
 Functions used to determine an entity's state or an attribute.
 
-| Name          | Type             | Arguments                                           | Description                                                                                                         |
-| ------------- | ---------------- | --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| states        | function, filter | entity_id, rounded (optional), with_unit (optional) | Returns the state string of the given entity. Optionally round numerical states and append the unit of measurement. |
-| is_state      | function,        | entity_id, value                                    | Compares an entity's state with a specified state or list of states and returns `true` or `false`.                  |
-| state_attr    | function, filter | entity_id, attribute                                | Returns the value of the attribute or `undefined` if it doesn't exist.                                              |
-| is_state_attr | function         | entity_id, attribute, value                         | Tests if the given entity attribute is the specified value.                                                         |
-| has_value     | function, filter | entity_id                                           | Tests if the given entity is not unknown or unavailable.                                                            |
+| Name          | Type             | Arguments                                                     | Description                                                                                                         |
+| ------------- | ---------------- | ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| states        | function, filter | entity_id, rounded (default false), with_unit (default false) | Returns the state string of the given entity. Optionally round numerical states and append the unit of measurement. |
+| is_state      | function         | entity_id, value                                              | Compares an entity's state with a specified state or list of states and returns `true` or `false`.                  |
+| state_attr    | function, filter | entity_id, attribute                                          | Returns the value of the attribute or `undefined` if it doesn't exist.                                              |
+| is_state_attr | function         | entity_id, attribute, value                                   | Tests if the given entity attribute is the specified value.                                                         |
+| has_value     | function, filter | entity_id                                                     | Tests if the given entity is not unknown or unavailable.                                                            |
 
 ### [State Translated](https://www.home-assistant.io/docs/configuration/templating/#state-translated)
 
@@ -176,7 +176,7 @@ Functions used to determine an entity's state or an attribute.
 
 ### [Config Entries](https://www.home-assistant.io/docs/configuration/templating/#config-entries)
 
-**NOTE**: Config entries are not available in the `hass` object and must be retrieved asynchronously from the Home Assistant backend the first time `ha-nunjucks` is imported. Since this package is otherwise synchronous, this can cause a race condition where no config entries are found the first time `renderTemplate` is run. This generally resolves itself once the template re-renders.
+**NOTE**: Relies on async request on initial page load. May return nothing on first render.
 
 | Name              | Type             | Arguments             | Description                                                                                                                                                         |
 | ----------------- | ---------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -205,13 +205,15 @@ Functions used to determine an entity's state or an attribute.
 
 ### [Entities For An Integration](https://www.home-assistant.io/docs/configuration/templating/#entities-for-an-integration)
 
-| Name                 | Type     | Arguments   | Description                                                              |
-| -------------------- | -------- | ----------- | ------------------------------------------------------------------------ |
-| integration_entities | function | integration | Returns a list of entities that are associated with a given integration. |
+**NOTE**: Relies on async request on initial page load. May return nothing on first render.
+
+| Name                 | Type     | Arguments                         | Description                                                                                    |
+| -------------------- | -------- | --------------------------------- | ---------------------------------------------------------------------------------------------- |
+| integration_entities | function | integration_or_config_entry_title | Returns a list of entities that are associated with a given integration or config entry title. |
 
 ### [Labels](https://www.home-assistant.io/docs/configuration/templating/#labels)
 
-**NOTE**: Labels are not available in the `hass` object and must be retrieved asynchronously from the Home Assistant backend the first time `ha-nunjucks` is imported. Since this package is otherwise synchronous, this can cause a race condition where no labels are found the first time `renderTemplate` is run. This generally resolves itself once the template re-renders.
+**NOTE**: Relies on async request on initial page load. May return nothing on first render.
 
 | Name              | Type             | Arguments               | Description                                                                                |
 | ----------------- | ---------------- | ----------------------- | ------------------------------------------------------------------------------------------ |
@@ -225,7 +227,7 @@ Functions used to determine an entity's state or an attribute.
 
 ### [Issues](https://www.home-assistant.io/docs/configuration/templating/#issues)
 
-**NOTE**: Issues are not available in the `hass` object and must be retrieved asynchronously from the Home Assistant backend the first time `ha-nunjucks` is imported. Since this package is otherwise synchronous, this can cause a race condition where no issues are found the first time `renderTemplate` is run. This generally resolves itself once the template re-renders.
+**NOTE**: Relies on async request on initial page load. May return nothing on first render.
 
 | Name   | Type     | Arguments        | Description                                                                            |
 | ------ | -------- | ---------------- | -------------------------------------------------------------------------------------- |
@@ -236,9 +238,9 @@ Functions used to determine an entity's state or an attribute.
 
 A shorthand for an if else statement.
 
-| Name | Type             | Arguments                             | Description                                                                                                                                                                                                                                                          |
-| ---- | ---------------- | ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| iif  | function, filter | condition, if_true, if_false, if_none | Immediate if. Returns the value of `if_true` if the condition is true, the value of `if_false` if it's false, and the value of `if_none` if it's `undefined`, `null`, or an empty string. All arguments except `condition` are optional. Cannot be used as a filter. |
+| Name | Type             | Arguments                                                              | Description                                                                                                                                                                                                                                                          |
+| ---- | ---------------- | ---------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| iif  | function, filter | condition, if_true (optional), if_false (optional), if_none (optional) | Immediate if. Returns the value of `if_true` if the condition is true, the value of `if_false` if it's false, and the value of `if_none` if it's `undefined`, `null`, or an empty string. All arguments except `condition` are optional. Cannot be used as a filter. |
 
 ### [Time](https://www.home-assistant.io/docs/configuration/templating/#time)
 
