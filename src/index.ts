@@ -1,4 +1,5 @@
-import process from 'process';
+// @ts-ignore
+import process from 'process/browser';
 window.process ||= process;
 
 import nunjucks from 'nunjucks';
