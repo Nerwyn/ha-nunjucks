@@ -1,7 +1,4 @@
 import createHash from 'create-hash';
-import process from 'process';
-
-window.process ||= process;
 
 function hash(value: string, algorithm: createHash.algorithm) {
 	const hash = createHash(algorithm);

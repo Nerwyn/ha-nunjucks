@@ -1,3 +1,4 @@
+window.process ||= await import('process');
 import nunjucks from 'nunjucks';
 import packageInfo from '../package.json';
 import { addFilters } from './filters';
