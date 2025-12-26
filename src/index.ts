@@ -1,7 +1,3 @@
-// @ts-ignore
-import process from 'process/browser';
-window.process ||= process;
-
 import nunjucks from 'nunjucks';
 import packageInfo from '../package.json';
 import { HassElement, HomeAssistant } from './models/interfaces/hass';
