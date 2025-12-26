@@ -1,4 +1,5 @@
-window.process ||= await import('process');
+import process from 'process';
+window.process ||= process;
 
 import nunjucks from 'nunjucks';
 import packageInfo from '../package.json';
