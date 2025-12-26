@@ -28,6 +28,7 @@
 	},
 	"homepage": "https://github.com/Nerwyn/ha-nunjucks#readme",
 	"dependencies": {
+		"buffer": "latest",
 		"create-hash": "latest",
 		"home-assistant-js-websocket": "latest",
 		"mersenne-twister": "latest",
