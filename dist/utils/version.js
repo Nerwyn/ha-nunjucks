@@ -40,6 +40,9 @@ class SemanticVersion {
     get release_candidate() {
         return this.modifierTypeEnum == ModifierType.rc;
     }
+    get simple() {
+        return this.modifierTypeEnum == ModifierType.release;
+    }
     get year() {
         return this.major;
     }

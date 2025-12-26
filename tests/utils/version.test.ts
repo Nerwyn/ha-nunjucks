@@ -66,9 +66,11 @@ describe('version', () => {
 			renderTemplate(hass, '{{ version("1.2.3-rc.123").release_candidate }}'),
 			true,
 		);
+		assert.equal(renderTemplate(hass, '{{ version("1.2.3").simple }}'), true);
 
 		assert.equal(renderTemplate(hass, '{{ version("1.2.3-foo").alpha }}'), '');
 		assert.equal(renderTemplate(hass, '{{ version("1.2.3-foo").rc }}'), '');
+		assert.equal(renderTemplate(hass, '{{ version("1.2.3").simple }}'), true);
 	});
 
 	it('should support SemanticVersion compare', () => {

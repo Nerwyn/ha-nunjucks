@@ -13,6 +13,7 @@ declare class SemanticVersion {
     get beta(): boolean;
     get dev(): boolean;
     get release_candidate(): boolean;
+    get simple(): boolean;
     get year(): number;
     /**
      * Compare to another semantic versions
