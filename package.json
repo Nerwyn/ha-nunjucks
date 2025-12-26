@@ -33,6 +33,7 @@
 		"home-assistant-js-websocket": "latest",
 		"mersenne-twister": "latest",
 		"nunjucks": "latest",
+		"process": "latest",
 		"python-struct": "latest",
 		"slugify": "latest",
 		"stream": "npm:stream-browserify@latest",
