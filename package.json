@@ -35,6 +35,7 @@
 		"nunjucks": "latest",
 		"python-struct": "latest",
 		"slugify": "latest",
+		"stream-browserify": "latest",
 		"ts-py-datetime": "latest"
 	},
 	"devDependencies": {
