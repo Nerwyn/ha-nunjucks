@@ -20,7 +20,8 @@ export declare function statistical_mode(values: number[], fallback?: string): s
 export declare function clamp(v: number, min: number, max: number): number;
 export declare function mod(n: number, m: number): number;
 export declare function wrap(v: number, min: number, max: number): number;
-export declare function remap(v: number, in_min: number, in_max: number, out_min: number, out_max: number, steps?: number, edges?: 'none' | 'clamp' | 'wrap' | 'mirror'): number;
+type RemapEdge = 'none' | 'clamp' | 'wrap' | 'mirror';
+export declare function remap(v: number, in_min: number, in_max: number, out_min: number, out_max: number, steps?: number | Record<string, RemapEdge | number>, edges?: RemapEdge): number;
 export declare const e: number;
 export declare const pi: number;
 export declare const tau: number;
@@ -32,3 +33,4 @@ export declare function bitwise_not(value: number): number;
 export declare function ord(value: string): number | undefined;
 export declare function multiply(value: string, arg: number): number;
 export declare function add(value: string, arg: number): number;
+export {};

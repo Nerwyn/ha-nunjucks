@@ -302,15 +302,22 @@ export function wrap(v: number, min: number, max: number) {
 	}
 }
 
+type RemapEdge = 'none' | 'clamp' | 'wrap' | 'mirror';
+
 export function remap(
 	v: number,
 	in_min: number,
 	in_max: number,
 	out_min: number,
 	out_max: number,
-	steps: number = 0,
-	edges: 'none' | 'clamp' | 'wrap' | 'mirror' = 'none',
+	steps: number | Record<string, RemapEdge | number> = 0,
+	edges: RemapEdge = 'none',
 ) {
+	if (typeof steps == 'object') {
+		edges = (steps['edges'] as RemapEdge) || 'none';
+		steps = (steps['steps'] as number) || 0;
+	}
+
 	try {
 		v = Number(v);
 		in_min = Number(in_min);

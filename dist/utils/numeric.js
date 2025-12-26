@@ -294,6 +294,10 @@ export function wrap(v, min, max) {
     }
 }
 export function remap(v, in_min, in_max, out_min, out_max, steps = 0, edges = 'none') {
+    if (typeof steps == 'object') {
+        edges = steps['edges'] || 'none';
+        steps = steps['steps'] || 0;
+    }
     try {
         v = Number(v);
         in_min = Number(in_min);

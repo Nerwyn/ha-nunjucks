@@ -347,7 +347,7 @@ describe('remap', () => {
 			0,
 		);
 		assert.equal(
-			renderTemplate(hass, '{{ 110 | remap(0, 100, 0, 10, 0, "clamp") }}'),
+			renderTemplate(hass, '{{ 110 | remap(0, 100, 0, 10, edges="clamp") }}'),
 			10,
 		);
 	});
@@ -358,7 +358,7 @@ describe('remap', () => {
 			9,
 		);
 		assert.equal(
-			renderTemplate(hass, '{{ remap(110, 0, 100, 0, 10, 0, "wrap") }}'),
+			renderTemplate(hass, '{{ remap(110, 0, 100, 0, 10, edges="wrap") }}'),
 			1,
 		);
 	});
@@ -369,7 +369,7 @@ describe('remap', () => {
 			1,
 		);
 		assert.equal(
-			renderTemplate(hass, '{{ remap(110, 0, 100, 0, 10, 0, "mirror") }}'),
+			renderTemplate(hass, '{{ remap(110, 0, 100, 0, 10, edges="mirror") }}'),
 			9,
 		);
 	});
