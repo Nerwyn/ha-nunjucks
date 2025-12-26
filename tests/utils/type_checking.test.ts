@@ -44,6 +44,6 @@ describe('typeof', () => {
 		assert.equal(renderTemplate(hass, '{{ True | typeof }}'), 'bool');
 		assert.equal(renderTemplate(hass, '{{ [1,2,"foo"] | typeof }}'), 'list');
 		assert.equal(renderTemplate(hass, '{{ typeof({"foo": "bar"}) }}'), 'dict');
-		assert.equal(renderTemplate(hass, '{{ typeof() }}'), 'NoneType');
+		assert.equal(renderTemplate(hass, '{{ typeof(None) }}'), 'NoneType');
 	});
 });

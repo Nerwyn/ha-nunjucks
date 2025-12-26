@@ -25,6 +25,7 @@ export function string_like(value: object) {
 
 export function pytypeof(value: any) {
 	switch (typeof value) {
+		case 'symbol':
 		case 'string':
 			return 'str';
 		case 'bigint':
@@ -34,9 +35,10 @@ export function pytypeof(value: any) {
 			return 'bool';
 		case 'function':
 			return 'function';
-		case 'symbol':
 		case 'object':
-			return Array.isArray(value) ? 'list' : 'dict';
+			if (value != null) {
+				return Array.isArray(value) ? 'list' : 'dict';
+			}
 		case 'undefined':
 		default:
 			return 'NoneType';
