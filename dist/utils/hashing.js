@@ -1,4 +1,6 @@
 import createHash from 'create-hash';
+import process from 'process';
+window.process ||= process;
 function hash(value, algorithm) {
     const hash = createHash(algorithm);
     hash.update(value);
