@@ -33,7 +33,6 @@ describe('as_function', () => {
 			renderTemplate(
 				hass,
 				`{%- macro foo(args, returns=returns) -%}
-					{{ typeof(args) }}
 					{%- set return_value = args | map("multiply", 2) -%}
 					{%- set _ = returns(return_value) -%}
 				{%- endmacro -%}
