@@ -15,7 +15,11 @@ A wrapper for [nunjucks](https://www.npmjs.com/package/nunjucks) for use with Ho
 
 While some Home Assistant native cards support templating for certain fields, implementing proper Home Assistant jinja2 template support in custom cards can be difficult. Additionally Home Assistant jinja2 templates are processed by the Python backend, and use subscriptions which must be managed and do not play as well with dynamic custom variables or synchronous frontend rendering. Nunjucks templates are processed by the frontend using the frontend [`hass`](https://developers.home-assistant.io/docs/frontend/data/) object before your custom card's HTML is rendered, making nunjucks templating synchronous, near instanteous, and easier to use than traditional jinja2 templates.
 
-## Usage
+## Installation and Usage
+
+If you are not a developer, skip this section. This module has to be installed as a dependency of a Home Assistant frontend add-on like a custom card.
+
+### Installation
 
 Install using npm:
 
@@ -23,7 +27,56 @@ Install using npm:
 npm install ha-nunjucks
 ```
 
-Then import `renderTemplate` from `ha-nunjucks` and provide it with the `hass` object and a template string you want to process.
+#### Bundling Requirements
+
+This package depends on node polyfills for the hashing extensions. While these polyfill packages are included as dependencies of this package, you will need to include a node process polyfill in your bundler. The method of doing so varies by bundler.
+
+##### Webpack
+
+Install the process polyfill package.
+
+```shell
+npm i process
+```
+
+Then update your webpack config to include the process browser polyfill as a plugin.
+
+```typescript
+import webpack from '@webpack/core'
+
+export default defineConfig([
+  {
+    ...
+		plugins: [
+			new webpack.ProvidePlugin({
+				process: 'process/browser',
+			}),
+		],
+  }
+])
+```
+
+##### Rollup
+
+Install the Rollup node polyfill package.
+
+```shell
+npm i --save-dev @rollup-plugin-node-polyfills
+```
+
+Then update your rollup config to include the node polyfill plugin.
+
+```typescript
+import nodePolyfills from 'rollup-plugin-node-polyfills';
+
+export default {
+  plugins: [nodePolyfills()],
+};
+```
+
+### Usage
+
+Import `renderTemplate` from `ha-nunjucks` and provide it with the `hass` object and a template string you want to process.
 
 ```typescript
 import { renderTemplate } from 'ha-nunjucks';
