@@ -3,7 +3,6 @@ import { Environment } from 'nunjucks';
 import { HomeAssistant } from '../interfaces/hass';
 import {
 	ConfigEntry,
-	EntityRegistryEntry,
 	LabelRegistryEntry,
 	RepairsIssue,
 } from '../interfaces/registries';
@@ -23,9 +22,18 @@ export interface IHaNunjucks {
 	hass: HomeAssistant;
 	states: Record<string, Record<string, HassEntity>>;
 
-	labelRegistry: LabelRegistryEntry[];
-	entityRegistry: EntityRegistryEntry[];
-	configEntries: ConfigEntry[];
+	labelRegistry: {
+		labelId: Record<string, LabelRegistryEntry>;
+		name2LabelId: Record<string, string>;
+	};
+	entityRegistry: {
+		entityId2ConfigEntryId: Record<string, string>;
+		configEntryId2EntityIds: Record<string, string[]>;
+	};
+	configEntries: {
+		entryId: Record<string, ConfigEntry>;
+		title2EntryId: Record<string, string[]>;
+	};
 	repairsIssues: Record<string, RepairsIssue>;
 
 	numberFormat: Intl.NumberFormat;

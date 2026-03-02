@@ -7,7 +7,7 @@ export function integration_entities(hass: HomeAssistant, integration: string) {
 		}
 
 		// Integration
-		const entityIds = [];
+		const entityIds: string[] = [];
 		for (const entityId in hass.entities) {
 			if (hass.entities[entityId].platform == integration) {
 				entityIds.push(entityId);
@@ -19,14 +19,11 @@ export function integration_entities(hass: HomeAssistant, integration: string) {
 		}
 
 		// Config entry title
-		const configEntryIds = window.haNunjucks.configEntries
-			.filter((entry) => entry.title == integration)
-			.map((entry) => entry.entry_id);
+		const configEntryIds =
+			window.haNunjucks.configEntries.title2EntryId[integration];
 		for (const entryId of configEntryIds) {
 			entityIds.push(
-				window.haNunjucks.entityRegistry.find(
-					(entity) => entity.config_entry_id == entryId,
-				)?.entity_id,
+				...window.haNunjucks.entityRegistry.configEntryId2EntityIds[entryId],
 			);
 		}
 		entityIds.sort();

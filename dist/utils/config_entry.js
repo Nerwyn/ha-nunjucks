@@ -1,10 +1,18 @@
 export async function fetchConfigEntries(hass) {
-    window.haNunjucks.configEntries = await hass.callWS({
+    const entries = await hass.callWS({
         type: 'config_entries/get',
     });
+    const entryId = {};
+    const title2EntryId = {};
+    for (const entry of entries) {
+        entryId[entry.entry_id] = entry;
+        title2EntryId[entry.title] ??= [];
+        title2EntryId[entry.title].push(entry.entry_id);
+    }
+    window.haNunjucks.configEntries = { entryId, title2EntryId };
 }
 export function config_entry_id(entity_id) {
-    return window.haNunjucks.entityRegistry.find((entry) => entry.entity_id == entity_id)?.config_entry_id;
+    return window.haNunjucks.entityRegistry.entityId2ConfigEntryId[entity_id];
 }
 const ConfigEntryAttributes = [
     'domain',
@@ -17,5 +25,5 @@ export function config_entry_attr(config_entry_id, attr) {
     if (!ConfigEntryAttributes.includes(attr)) {
         throw Error('Invalid config entry attribute');
     }
-    return window.haNunjucks.configEntries.find((entry) => entry.entry_id == config_entry_id)?.[attr];
+    return window.haNunjucks.configEntries.entryId[config_entry_id]?.[attr];
 }
