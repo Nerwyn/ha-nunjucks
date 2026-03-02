@@ -23,18 +23,32 @@ export interface IHaNunjucks {
 	states: Record<string, Record<string, HassEntity>>;
 
 	labelRegistry: {
+		timeout?: NodeJS.Timeout;
+		event: string;
+		fetchRegistry: CallableFunction;
 		labelId: Record<string, LabelRegistryEntry>;
 		name2LabelId: Record<string, string>;
 	};
 	entityRegistry: {
+		timeout?: NodeJS.Timeout;
+		event: string;
+		fetchRegistry: CallableFunction;
 		entityId2ConfigEntryId: Record<string, string>;
 		configEntryId2EntityIds: Record<string, string[]>;
 	};
 	configEntries: {
+		timeout?: NodeJS.Timeout;
+		event: string;
+		fetchRegistry: CallableFunction;
 		entryId: Record<string, ConfigEntry>;
 		title2EntryId: Record<string, string[]>;
 	};
-	repairsIssues: Record<string, RepairsIssue>;
+	repairsIssues: {
+		timeout?: NodeJS.Timeout;
+		event: string;
+		fetchRegistry: CallableFunction;
+		issues: Record<string, RepairsIssue>;
+	};
 
 	numberFormat: Intl.NumberFormat;
 	dateFormat: Intl.DateTimeFormat;

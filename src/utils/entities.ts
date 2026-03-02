@@ -18,6 +18,7 @@ export async function fetchEntityRegistry(hass: HomeAssistant) {
 	}
 
 	window.haNunjucks.entityRegistry = {
+		...window.haNunjucks.entityRegistry,
 		entityId2ConfigEntryId,
 		configEntryId2EntityIds,
 	};

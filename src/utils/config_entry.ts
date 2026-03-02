@@ -14,7 +14,11 @@ export async function fetchConfigEntries(hass: HomeAssistant) {
 		title2EntryId[entry.title].push(entry.entry_id);
 	}
 
-	window.haNunjucks.configEntries = { entryId, title2EntryId };
+	window.haNunjucks.configEntries = {
+		...window.haNunjucks.configEntries,
+		entryId,
+		title2EntryId,
+	};
 }
 
 export function config_entry_id(entity_id: string) {

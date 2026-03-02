@@ -12,6 +12,7 @@ export async function fetchEntityRegistry(hass) {
         }
     }
     window.haNunjucks.entityRegistry = {
+        ...window.haNunjucks.entityRegistry,
         entityId2ConfigEntryId,
         configEntryId2EntityIds,
     };

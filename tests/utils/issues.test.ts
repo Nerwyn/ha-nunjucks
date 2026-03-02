@@ -6,7 +6,7 @@ describe('issues', () => {
 	it('should return the issues registry', () => {
 		assert.equal(
 			renderTemplate(hass, '{{ issues() | dump | safe }}'),
-			JSON.stringify(window.haNunjucks.repairsIssues),
+			JSON.stringify(window.haNunjucks.repairsIssues.issues),
 		);
 	});
 });
@@ -19,7 +19,9 @@ describe('issue', () => {
 				'{{ issue("mass", "move_integration_to_ha_coremass") | dump | safe }}',
 			),
 			JSON.stringify(
-				window.haNunjucks.repairsIssues['mass,move_integration_to_ha_coremass'],
+				window.haNunjucks.repairsIssues.issues[
+					'mass,move_integration_to_ha_coremass'
+				],
 			),
 		);
 	});

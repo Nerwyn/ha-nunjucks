@@ -9,7 +9,11 @@ export async function fetchConfigEntries(hass) {
         title2EntryId[entry.title] ??= [];
         title2EntryId[entry.title].push(entry.entry_id);
     }
-    window.haNunjucks.configEntries = { entryId, title2EntryId };
+    window.haNunjucks.configEntries = {
+        ...window.haNunjucks.configEntries,
+        entryId,
+        title2EntryId,
+    };
 }
 export function config_entry_id(entity_id) {
     return window.haNunjucks.entityRegistry.entityId2ConfigEntryId[entity_id];

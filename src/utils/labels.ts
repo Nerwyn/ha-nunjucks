@@ -16,7 +16,11 @@ export async function fetchLabelRegistry(hass: HomeAssistant) {
 		name2LabelId[label.name] = label.label_id;
 	}
 
-	window.haNunjucks.labelRegistry = { labelId, name2LabelId };
+	window.haNunjucks.labelRegistry = {
+		...window.haNunjucks.labelRegistry,
+		labelId,
+		name2LabelId,
+	};
 }
 
 export function labels(hass: HomeAssistant, lookup_value?: string) {

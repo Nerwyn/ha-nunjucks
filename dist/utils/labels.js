@@ -9,7 +9,11 @@ export async function fetchLabelRegistry(hass) {
         labelId[label.label_id] = label;
         name2LabelId[label.name] = label.label_id;
     }
-    window.haNunjucks.labelRegistry = { labelId, name2LabelId };
+    window.haNunjucks.labelRegistry = {
+        ...window.haNunjucks.labelRegistry,
+        labelId,
+        name2LabelId,
+    };
 }
 export function labels(hass, lookup_value) {
     try {

@@ -24,12 +24,50 @@ if (version(packageInfo.version).compare(window.haNunjucks.version || '0.0.0') >
     // Setup on first import
     handleWhenReady(() => {
         const ha = document.querySelector('home-assistant');
-        // Label registry and states object
-        window.haNunjucks.hass = ha.hass;
-        fetchLabelRegistry(ha.hass);
-        fetchEntityRegistry(ha.hass);
-        fetchConfigEntries(ha.hass);
-        fetchRepairsIssues(ha.hass);
+        // Initialize window object
+        window.haNunjucks = {
+            ...window.haNunjucks,
+            hass: ha.hass,
+            labelRegistry: {
+                event: 'label_registry_updated',
+                fetchRegistry: fetchLabelRegistry,
+                labelId: {},
+                name2LabelId: {},
+            },
+            entityRegistry: {
+                event: 'entity_registry_updated',
+                fetchRegistry: fetchEntityRegistry,
+                entityId2ConfigEntryId: {},
+                configEntryId2EntityIds: {},
+            },
+            configEntries: {
+                event: 'config_entries/subscribe',
+                fetchRegistry: fetchConfigEntries,
+                entryId: {},
+                title2EntryId: {},
+            },
+            repairsIssues: {
+                event: 'repairs/list_issues',
+                fetchRegistry: fetchRepairsIssues,
+                issues: {},
+            },
+        };
+        const registries = [
+            'labelRegistry',
+            'entityRegistry',
+            'configEntries',
+            'repairsIssues',
+        ];
+        for (const registry of registries) {
+            window.haNunjucks[registry].fetchRegistry(ha.hass);
+            ha.hass.connection.subscribeEvents(() => {
+                clearTimeout(window.haNunjucks[registry].timeout);
+                window.haNunjucks[registry].timeout = setTimeout(() => {
+                    window.haNunjucks[registry].fetchRegistry(ha.hass);
+                }, 500);
+            }, window.haNunjucks[registry].event);
+        }
+        // States object
         buildStatesObject();
         // Number and datetime translators
         window.haNunjucks.numberFormat = new Intl.NumberFormat(ha.hass.language);
@@ -45,7 +83,7 @@ if (version(packageInfo.version).compare(window.haNunjucks.version || '0.0.0') >
     }, () => {
         const ha = document.querySelector('home-assistant');
         return ha?.hass?.connected && ha?.hass?.connection?.connected;
-    }, 10000, 1, 'ha-nunjucks failed to initialize - Home Assistant connection timeout');
+    }, 10000, 10, 'ha-nunjucks failed to initialize - Home Assistant connection timeout');
     // Initialize global ha-nunjucks environment
     nunjucks.installJinjaCompat();
     window.haNunjucks.env = addTests(addFilters(addGlobals(nunjucks.configure(`${window.location.origin}/local`))));
