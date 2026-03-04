@@ -3,7 +3,6 @@ import { Environment } from 'nunjucks';
 import { HomeAssistant } from '../interfaces/hass';
 import {
 	ConfigEntry,
-	EntityRegistryEntry,
 	LabelRegistryEntry,
 	RepairsIssue,
 } from '../interfaces/registries';
@@ -23,10 +22,33 @@ export interface IHaNunjucks {
 	hass: HomeAssistant;
 	states: Record<string, Record<string, HassEntity>>;
 
-	labelRegistry: LabelRegistryEntry[];
-	entityRegistry: EntityRegistryEntry[];
-	configEntries: ConfigEntry[];
-	repairsIssues: Record<string, RepairsIssue>;
+	labelRegistry: {
+		timeout?: NodeJS.Timeout;
+		event: string;
+		fetchRegistry: CallableFunction;
+		labelId: Record<string, LabelRegistryEntry>;
+		name2LabelId: Record<string, string>;
+	};
+	entityRegistry: {
+		timeout?: NodeJS.Timeout;
+		event: string;
+		fetchRegistry: CallableFunction;
+		entityId2ConfigEntryId: Record<string, string>;
+		configEntryId2EntityIds: Record<string, string[]>;
+	};
+	configEntries: {
+		timeout?: NodeJS.Timeout;
+		event: string;
+		fetchRegistry: CallableFunction;
+		entryId: Record<string, ConfigEntry>;
+		title2EntryId: Record<string, string[]>;
+	};
+	repairsIssues: {
+		timeout?: NodeJS.Timeout;
+		event: string;
+		fetchRegistry: CallableFunction;
+		issues: Record<string, RepairsIssue>;
+	};
 
 	numberFormat: Intl.NumberFormat;
 	dateFormat: Intl.DateTimeFormat;

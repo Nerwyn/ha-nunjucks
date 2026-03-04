@@ -33,12 +33,53 @@ if (
 		() => {
 			const ha = document.querySelector('home-assistant') as HassElement;
 
-			// Label registry and states object
-			window.haNunjucks.hass = ha.hass;
-			fetchLabelRegistry(ha.hass);
-			fetchEntityRegistry(ha.hass);
-			fetchConfigEntries(ha.hass);
-			fetchRepairsIssues(ha.hass);
+			// Initialize window object
+			window.haNunjucks = {
+				...window.haNunjucks,
+				hass: ha.hass,
+				labelRegistry: {
+					event: 'label_registry_updated',
+					fetchRegistry: fetchLabelRegistry,
+					labelId: {},
+					name2LabelId: {},
+				},
+				entityRegistry: {
+					event: 'entity_registry_updated',
+					fetchRegistry: fetchEntityRegistry,
+					entityId2ConfigEntryId: {},
+					configEntryId2EntityIds: {},
+				},
+				configEntries: {
+					event: 'config_entries/subscribe',
+					fetchRegistry: fetchConfigEntries,
+					entryId: {},
+					title2EntryId: {},
+				},
+				repairsIssues: {
+					event: 'repairs/list_issues',
+					fetchRegistry: fetchRepairsIssues,
+					issues: {},
+				},
+			};
+
+			const registries = [
+				'labelRegistry',
+				'entityRegistry',
+				'configEntries',
+				'repairsIssues',
+			] as const;
+			for (const registry of registries) {
+				window.haNunjucks[registry].fetchRegistry(ha.hass);
+
+				ha.hass.connection.subscribeEvents(() => {
+					clearTimeout(window.haNunjucks[registry].timeout);
+					window.haNunjucks[registry].timeout = setTimeout(() => {
+						window.haNunjucks[registry].fetchRegistry(ha.hass);
+					}, 500);
+				}, window.haNunjucks[registry].event);
+			}
+
+			// States object
 			buildStatesObject();
 
 			// Number and datetime translators
@@ -63,7 +104,7 @@ if (
 			return ha?.hass?.connected && ha?.hass?.connection?.connected;
 		},
 		10000,
-		1,
+		10,
 		'ha-nunjucks failed to initialize - Home Assistant connection timeout',
 	);
 

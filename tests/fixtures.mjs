@@ -157,6 +157,7 @@ export async function mochaGlobalSetup() {
 						return [];
 				}
 			},
+			subscribeEvents: () => {},
 		},
 		callWS: (request) => {
 			switch (request.type) {

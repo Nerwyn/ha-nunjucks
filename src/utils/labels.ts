@@ -8,13 +8,25 @@ export async function fetchLabelRegistry(hass: HomeAssistant) {
 		},
 	);
 	labels.sort((ent1, ent2) => ent1.name.localeCompare(ent2.name));
-	window.haNunjucks.labelRegistry = labels;
+
+	const labelId: Record<string, LabelRegistryEntry> = {};
+	const name2LabelId: Record<string, string> = {};
+	for (const label of labels) {
+		labelId[label.label_id] = label;
+		name2LabelId[label.name] = label.label_id;
+	}
+
+	window.haNunjucks.labelRegistry = {
+		...window.haNunjucks.labelRegistry,
+		labelId,
+		name2LabelId,
+	};
 }
 
 export function labels(hass: HomeAssistant, lookup_value?: string) {
 	try {
 		if (!lookup_value) {
-			return window.haNunjucks.labelRegistry.map((entry) => entry.label_id);
+			return Object.keys(window.haNunjucks.labelRegistry.labelId);
 		}
 		return (
 			hass.entities[lookup_value]?.labels ??
@@ -28,21 +40,15 @@ export function labels(hass: HomeAssistant, lookup_value?: string) {
 }
 
 export function label_id(lookup_value: string) {
-	return window.haNunjucks.labelRegistry.find(
-		(entry) => entry.name == lookup_value,
-	)?.label_id;
+	return window.haNunjucks.labelRegistry.name2LabelId[lookup_value];
 }
 
 export function label_name(lookup_value: string) {
-	return window.haNunjucks.labelRegistry.find(
-		(entry) => entry.label_id == lookup_value,
-	)?.name;
+	return window.haNunjucks.labelRegistry.labelId[lookup_value]?.name;
 }
 
 export function label_description(lookup_value: string) {
-	return window.haNunjucks.labelRegistry.find(
-		(entry) => entry.label_id == lookup_value,
-	)?.description;
+	return window.haNunjucks.labelRegistry.labelId[lookup_value]?.description;
 }
 
 export function label_areas(hass: HomeAssistant, label_name_or_id: string) {
@@ -50,11 +56,7 @@ export function label_areas(hass: HomeAssistant, label_name_or_id: string) {
 		const areaIds = [];
 		let labelId: string | undefined = undefined;
 		if (label_name_or_id) {
-			if (
-				window.haNunjucks.labelRegistry.find(
-					(entry) => entry.label_id == label_name_or_id,
-				)
-			) {
+			if (window.haNunjucks.labelRegistry.labelId[label_name_or_id]) {
 				labelId = label_name_or_id;
 			} else {
 				labelId = label_id(label_name_or_id);
@@ -80,11 +82,7 @@ export function label_devices(hass: HomeAssistant, label_name_or_id: string) {
 		const deviceIds = [];
 		if (label_name_or_id) {
 			let labelId: string | undefined = undefined;
-			if (
-				window.haNunjucks.labelRegistry.find(
-					(entry) => entry.label_id == label_name_or_id,
-				)
-			) {
+			if (window.haNunjucks.labelRegistry.labelId[label_name_or_id]) {
 				labelId = label_name_or_id;
 			} else {
 				labelId = label_id(label_name_or_id);
@@ -110,11 +108,7 @@ export function label_entities(hass: HomeAssistant, label_name_or_id: string) {
 		const entityIds = [];
 		if (label_name_or_id) {
 			let labelId: string | undefined = undefined;
-			if (
-				window.haNunjucks.labelRegistry.find(
-					(entry) => entry.label_id == label_name_or_id,
-				)
-			) {
+			if (window.haNunjucks.labelRegistry.labelId[label_name_or_id]) {
 				labelId = label_name_or_id;
 			} else {
 				labelId = label_id(label_name_or_id);
