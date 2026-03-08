@@ -153,6 +153,10 @@ export interface ConfigEntry {
     error_reason_translation_key?: string;
     error_reason_translation_placeholders?: Record<string, string>;
 }
+export interface ConfigEntryUpdate {
+    type: null | 'added' | 'removed' | 'updated';
+    entry: ConfigEntry;
+}
 export interface RepairsIssue {
     domain: string;
     issue_domain?: string;

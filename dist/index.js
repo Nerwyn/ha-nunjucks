@@ -4,7 +4,7 @@ import { addFilters } from './filters';
 import { addGlobals } from './globals';
 import { handleWhenReady } from './helpers';
 import { addTests } from './tests';
-import { fetchConfigEntries } from './utils/config_entry';
+import { subscribeConfigEntries } from './utils/config_entry';
 import { fetchEntityRegistry } from './utils/entities';
 import { fetchRepairsIssues } from './utils/issues';
 import { fetchLabelRegistry } from './utils/labels';
@@ -40,37 +40,31 @@ if (version(packageInfo.version).compare(window.haNunjucks.version || '0.0.0') >
                 entityId2ConfigEntryId: {},
                 configEntryId2EntityIds: {},
             },
+            repairsIssues: {
+                updateEvent: 'repairs_issue_registry_updated',
+                fetchRegistry: fetchRepairsIssues,
+                issues: {},
+            },
             configEntries: {
-                updateEvent: 'config_entries/subscribe',
-                fetchRegistry: fetchConfigEntries,
-                adminOnly: true,
                 entryId: {},
                 title2EntryId: {},
-            },
-            repairsIssues: {
-                updateEvent: 'repairs/list_issues',
-                fetchRegistry: fetchRepairsIssues,
-                adminOnly: true,
-                issues: {},
             },
         };
         const registries = [
             'labelRegistry',
             'entityRegistry',
-            'configEntries',
             'repairsIssues',
         ];
         for (const registry of registries) {
             window.haNunjucks[registry].fetchRegistry(ha.hass);
-            if (!(window.haNunjucks[registry].adminOnly && !ha.hass.user?.is_admin)) {
-                ha.hass.connection.subscribeEvents(() => {
-                    clearTimeout(window.haNunjucks[registry].timeout);
-                    window.haNunjucks[registry].timeout = setTimeout(() => {
-                        window.haNunjucks[registry].fetchRegistry(ha.hass);
-                    }, 500);
-                }, window.haNunjucks[registry].updateEvent);
-            }
+            ha.hass.connection.subscribeEvents(() => {
+                clearTimeout(window.haNunjucks[registry].timeout);
+                window.haNunjucks[registry].timeout = setTimeout(() => {
+                    window.haNunjucks[registry].fetchRegistry(ha.hass);
+                }, 500);
+            }, window.haNunjucks[registry].updateEvent);
         }
+        subscribeConfigEntries(ha.hass);
         // States object
         buildStatesObject();
         // Number and datetime translators
@@ -84,6 +78,7 @@ if (version(packageInfo.version).compare(window.haNunjucks.version || '0.0.0') >
         window.haNunjucks.datetimeFormat = new Intl.DateTimeFormat(ha.hass.language, { dateStyle: 'full', timeStyle: 'long' });
         window.haNunjucks.ordinalFormat = new Intl.PluralRules('en-US', // ha.hass.language, // Use english for proper numeric suffixes
         { type: 'ordinal' });
+        console.info(`%c HA-NUNJUCKS v${packageInfo.version}`, 'color: white; font-weight: bold; background: darkgreen');
     }, () => {
         const ha = document.querySelector('home-assistant');
         return ha?.hass?.connected && ha?.hass?.connection?.connected;

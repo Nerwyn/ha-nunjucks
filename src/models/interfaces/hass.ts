@@ -49,7 +49,7 @@ export interface HomeAssistant {
 	dockedSidebar: 'docked' | 'always_hidden' | 'auto';
 	defaultPanel: string;
 	moreInfoEntityId: string | null;
-	user?: CurrentUser;
+	// user?: CurrentUser;
 	// userData?: CoreFrontendUserData | null;
 	// hassUrl(path?): string;
 	// callService(
@@ -88,13 +88,4 @@ export interface HomeAssistant {
 
 export interface HassElement extends HTMLElement {
 	hass: HomeAssistant;
-}
-
-export interface CurrentUser {
-	id: string;
-	is_owner: boolean;
-	is_admin: boolean;
-	name: string;
-	// credentials: Credential[];
-	// mfa_modules: MFAModule[];
 }

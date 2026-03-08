@@ -29,7 +29,6 @@ export interface HomeAssistant {
     dockedSidebar: 'docked' | 'always_hidden' | 'auto';
     defaultPanel: string;
     moreInfoEntityId: string | null;
-    user?: CurrentUser;
     callApi<T>(method: 'GET' | 'POST' | 'PUT' | 'DELETE', path: string, parameters?: Record<string, any>, headers?: Record<string, string>): Promise<T>;
     fetchWithAuth(path: string, init?: Record<string, any>): Promise<Response>;
     sendWS(msg: MessageBase): void;
@@ -40,10 +39,4 @@ export interface HomeAssistant {
 }
 export interface HassElement extends HTMLElement {
     hass: HomeAssistant;
-}
-export interface CurrentUser {
-    id: string;
-    is_owner: boolean;
-    is_admin: boolean;
-    name: string;
 }

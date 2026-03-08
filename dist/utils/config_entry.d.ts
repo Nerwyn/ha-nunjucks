@@ -1,5 +1,5 @@
 import { HomeAssistant } from '../models/interfaces/hass';
-export declare function fetchConfigEntries(hass: HomeAssistant): Promise<void>;
+export declare function subscribeConfigEntries(hass: HomeAssistant): Promise<void>;
 export declare function config_entry_id(entity_id: string): string;
 declare const ConfigEntryAttributes: readonly ["domain", "title", "state", "source", "disabled_by"];
 type ConfigEntryAttribute = (typeof ConfigEntryAttributes)[number];

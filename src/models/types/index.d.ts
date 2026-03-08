@@ -13,7 +13,6 @@ interface RegistryConfig {
 	updateEvent: string;
 	fetchRegistry: CallableFunction;
 	timeout?: NodeJS.Timeout;
-	adminOnly?: boolean;
 }
 
 export interface IHaNunjucks {
@@ -37,12 +36,12 @@ export interface IHaNunjucks {
 		entityId2ConfigEntryId: Record<string, string>;
 		configEntryId2EntityIds: Record<string, string[]>;
 	};
-	configEntries: RegistryConfig & {
-		entryId: Record<string, ConfigEntry>;
-		title2EntryId: Record<string, string[]>;
-	};
 	repairsIssues: RegistryConfig & {
 		issues: Record<string, RepairsIssue>;
+	};
+	configEntries: {
+		entryId: Record<string, ConfigEntry>;
+		title2EntryId: Record<string, string[]>;
 	};
 
 	numberFormat: Intl.NumberFormat;

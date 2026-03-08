@@ -1,5 +1,5 @@
 import 'global-jsdom/register';
-import { fetchConfigEntries } from '../src/utils/config_entry';
+import { subscribeConfigEntries } from '../src/utils/config_entry';
 import { fetchEntityRegistry } from '../src/utils/entities';
 import { fetchRepairsIssues } from '../src/utils/issues';
 import { fetchLabelRegistry } from '../src/utils/labels';
@@ -175,58 +175,66 @@ export async function mochaGlobalSetup() {
 						return [];
 				}
 			},
+			subscribeMessage: (callback, params) => {
+				let updates = [];
+				switch (params.type) {
+					case 'config_entries/subscribe':
+						updates = [
+							{
+								entry: {
+									created_at: 0,
+									entry_id: '6e90d52c9ed31698e6be9a5b2df42c74',
+									domain: 'meross_lan',
+									modified_at: 1765689454.941518,
+									title: 'Ceiling Light 1',
+									source: 'user',
+									state: 'loaded',
+									supports_options: true,
+									supports_remove_device: false,
+									supports_unload: true,
+									supports_reconfigure: false,
+									supported_subentry_types: {},
+									pref_disable_new_entities: false,
+									pref_disable_polling: false,
+									disabled_by: null,
+									reason: null,
+									error_reason_translation_key: null,
+									error_reason_translation_placeholders: null,
+									num_subentries: 0,
+								},
+								type: null,
+							},
+							{
+								entry: {
+									created_at: 0,
+									entry_id: 'b2a208c58f6ed7b83b83e0ced9392303',
+									domain: 'meross_lan',
+									modified_at: 1765689449.76734,
+									title: 'Ceiling Light 2',
+									source: 'user',
+									state: 'loaded',
+									supports_options: true,
+									supports_remove_device: false,
+									supports_unload: true,
+									supports_reconfigure: false,
+									supported_subentry_types: {},
+									pref_disable_new_entities: false,
+									pref_disable_polling: false,
+									disabled_by: null,
+									reason: null,
+									error_reason_translation_key: null,
+									error_reason_translation_placeholders: null,
+									num_subentries: 0,
+								},
+								type: null,
+							},
+						];
+					default:
+						break;
+				}
+				callback(updates);
+			},
 			subscribeEvents: () => {},
-		},
-		callWS: (request) => {
-			switch (request.type) {
-				case 'config_entries/get':
-					return [
-						{
-							created_at: 0,
-							entry_id: '6e90d52c9ed31698e6be9a5b2df42c74',
-							domain: 'meross_lan',
-							modified_at: 1765689454.941518,
-							title: 'Ceiling Light 1',
-							source: 'user',
-							state: 'loaded',
-							supports_options: true,
-							supports_remove_device: false,
-							supports_unload: true,
-							supports_reconfigure: false,
-							supported_subentry_types: {},
-							pref_disable_new_entities: false,
-							pref_disable_polling: false,
-							disabled_by: null,
-							reason: null,
-							error_reason_translation_key: null,
-							error_reason_translation_placeholders: null,
-							num_subentries: 0,
-						},
-						{
-							created_at: 0,
-							entry_id: 'b2a208c58f6ed7b83b83e0ced9392303',
-							domain: 'meross_lan',
-							modified_at: 1765689449.76734,
-							title: 'Ceiling Light 2',
-							source: 'user',
-							state: 'loaded',
-							supports_options: true,
-							supports_remove_device: false,
-							supports_unload: true,
-							supports_reconfigure: false,
-							supported_subentry_types: {},
-							pref_disable_new_entities: false,
-							pref_disable_polling: false,
-							disabled_by: null,
-							reason: null,
-							error_reason_translation_key: null,
-							error_reason_translation_placeholders: null,
-							num_subentries: 0,
-						},
-					];
-				default:
-					return [];
-			}
 		},
 		states: {},
 	};
@@ -235,6 +243,6 @@ export async function mochaGlobalSetup() {
 	await import('../src/index');
 	await fetchLabelRegistry(ha.hass);
 	await fetchEntityRegistry(ha.hass);
-	await fetchConfigEntries(ha.hass);
 	await fetchRepairsIssues(ha.hass);
+	await subscribeConfigEntries(ha.hass);
 }
