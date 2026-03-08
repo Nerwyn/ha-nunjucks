@@ -16,10 +16,28 @@ export async function mochaGlobalSetup() {
 						return {
 							issues: [
 								{
+									breaks_in_ha_version: '2023.12.0',
+									created: '2022-12-05T01:42:25.001221+00:00',
+									dismissed_version: '2023.12.0',
+									ignored: true,
+									domain: 'mass',
+									is_fixable: false,
+									issue_domain: 'mass',
+									issue_id: 'move_integration_to_ha_coremass',
+									learn_more_url:
+										'https://music-assistant.io/integration/installation/#migrating-from-the-hacs-integration-to-the-ha-integration',
+									severity: 'warning',
+									translation_key: 'move_integration_to_ha_core',
+									translation_placeholders: {
+										domain: 'mass',
+										integration_title: 'mass',
+									},
+								},
+								{
 									breaks_in_ha_version: '2024.12.0',
 									created: '2024-12-05T01:42:25.001221+00:00',
 									dismissed_version: '2024.12.0',
-									ignored: true,
+									ignored: false,
 									domain: 'mass',
 									is_fixable: false,
 									issue_domain: 'mass',

@@ -4,7 +4,9 @@ export async function fetchRepairsIssues(hass) {
     })).issues;
     const issues = {};
     for (const issue of repairsIssues) {
-        issues[`${issue.issue_domain || issue.domain},${issue.issue_id}`] = issue;
+        if (!issue.ignored) {
+            issues[`${issue.issue_domain || issue.domain},${issue.issue_id}`] = issue;
+        }
     }
     window.haNunjucks.repairsIssues.issues = issues;
 }

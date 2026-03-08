@@ -38,26 +38,28 @@ if (
 				...window.haNunjucks,
 				hass: ha.hass,
 				labelRegistry: {
-					event: 'label_registry_updated',
+					updateEvent: 'label_registry_updated',
 					fetchRegistry: fetchLabelRegistry,
 					labelId: {},
 					name2LabelId: {},
 				},
 				entityRegistry: {
-					event: 'entity_registry_updated',
+					updateEvent: 'entity_registry_updated',
 					fetchRegistry: fetchEntityRegistry,
 					entityId2ConfigEntryId: {},
 					configEntryId2EntityIds: {},
 				},
 				configEntries: {
-					event: 'config_entries/subscribe',
+					updateEvent: 'config_entries/subscribe',
 					fetchRegistry: fetchConfigEntries,
+					adminOnly: true,
 					entryId: {},
 					title2EntryId: {},
 				},
 				repairsIssues: {
-					event: 'repairs/list_issues',
+					updateEvent: 'repairs/list_issues',
 					fetchRegistry: fetchRepairsIssues,
+					adminOnly: true,
 					issues: {},
 				},
 			};
@@ -71,12 +73,16 @@ if (
 			for (const registry of registries) {
 				window.haNunjucks[registry].fetchRegistry(ha.hass);
 
-				ha.hass.connection.subscribeEvents(() => {
-					clearTimeout(window.haNunjucks[registry].timeout);
-					window.haNunjucks[registry].timeout = setTimeout(() => {
-						window.haNunjucks[registry].fetchRegistry(ha.hass);
-					}, 500);
-				}, window.haNunjucks[registry].event);
+				if (
+					!(window.haNunjucks[registry].adminOnly && !ha.hass.user?.is_admin)
+				) {
+					ha.hass.connection.subscribeEvents(() => {
+						clearTimeout(window.haNunjucks[registry].timeout);
+						window.haNunjucks[registry].timeout = setTimeout(() => {
+							window.haNunjucks[registry].fetchRegistry(ha.hass);
+						}, 500);
+					}, window.haNunjucks[registry].updateEvent);
+				}
 			}
 
 			// States object

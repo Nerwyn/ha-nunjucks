@@ -9,6 +9,13 @@ import {
 
 export {};
 
+interface RegistryConfig {
+	updateEvent: string;
+	fetchRegistry: CallableFunction;
+	timeout?: NodeJS.Timeout;
+	adminOnly?: boolean;
+}
+
 export interface IHaNunjucks {
 	renderTemplate: (
 		hass: HomeAssistant,
@@ -22,31 +29,19 @@ export interface IHaNunjucks {
 	hass: HomeAssistant;
 	states: Record<string, Record<string, HassEntity>>;
 
-	labelRegistry: {
-		timeout?: NodeJS.Timeout;
-		event: string;
-		fetchRegistry: CallableFunction;
+	labelRegistry: RegistryConfig & {
 		labelId: Record<string, LabelRegistryEntry>;
 		name2LabelId: Record<string, string>;
 	};
-	entityRegistry: {
-		timeout?: NodeJS.Timeout;
-		event: string;
-		fetchRegistry: CallableFunction;
+	entityRegistry: RegistryConfig & {
 		entityId2ConfigEntryId: Record<string, string>;
 		configEntryId2EntityIds: Record<string, string[]>;
 	};
-	configEntries: {
-		timeout?: NodeJS.Timeout;
-		event: string;
-		fetchRegistry: CallableFunction;
+	configEntries: RegistryConfig & {
 		entryId: Record<string, ConfigEntry>;
 		title2EntryId: Record<string, string[]>;
 	};
-	repairsIssues: {
-		timeout?: NodeJS.Timeout;
-		event: string;
-		fetchRegistry: CallableFunction;
+	repairsIssues: RegistryConfig & {
 		issues: Record<string, RepairsIssue>;
 	};
 
