@@ -45,6 +45,8 @@ const HASS_FILTERS = {
     state_translated,
     attr_name_translated,
     attr_value_translated,
+    // Time
+    date_translated,
     // Groups
     expand,
     // Devices
@@ -92,7 +94,6 @@ const FILTERS = {
     timestamp_local,
     timestamp_utc,
     timestamp_custom,
-    date_translated,
     time_translated,
     datetime_translated,
     // To/From JSON

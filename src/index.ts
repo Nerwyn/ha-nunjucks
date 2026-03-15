@@ -11,6 +11,7 @@ import { subscribeConfigEntries } from './utils/config_entry';
 import { fetchEntityRegistry } from './utils/entities';
 import { fetchRepairsIssues } from './utils/issues';
 import { fetchLabelRegistry } from './utils/labels';
+import { getNumberFormatter } from './utils/state_translated';
 import { buildStatesObject } from './utils/states';
 import { version } from './utils/version';
 
@@ -81,21 +82,22 @@ if (
 			buildStatesObject();
 
 			// Number and datetime translators
-			window.haNunjucks.numberFormat = new Intl.NumberFormat(ha.hass.language);
+			window.haNunjucks.numberFormat = getNumberFormatter(ha.hass);
 			window.haNunjucks.dateFormat = new Intl.DateTimeFormat(ha.hass.language, {
-				dateStyle: 'full',
+				dateStyle: 'long',
 			});
 			window.haNunjucks.timeFormat = new Intl.DateTimeFormat(ha.hass.language, {
 				timeStyle: 'long',
 			});
 			window.haNunjucks.datetimeFormat = new Intl.DateTimeFormat(
 				ha.hass.language,
-				{ dateStyle: 'full', timeStyle: 'long' },
+				{ dateStyle: 'long', timeStyle: 'long' },
 			);
 			window.haNunjucks.ordinalFormat = new Intl.PluralRules(
 				'en-US', // ha.hass.language, // Use english for proper numeric suffixes
 				{ type: 'ordinal' },
 			);
+			console.log(window.haNunjucks);
 
 			console.info(
 				`%c HA-NUNJUCKS v${packageInfo.version}`,

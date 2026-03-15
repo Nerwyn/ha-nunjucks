@@ -22,6 +22,7 @@ export interface HomeAssistant {
     panelUrl: string;
     language: string;
     selectedLanguage: string | null;
+    locale: FrontendLocaleData;
     suspendWhenHidden: boolean;
     enableShortcuts: boolean;
     vibrate: boolean;
@@ -40,3 +41,48 @@ export interface HomeAssistant {
 export interface HassElement extends HTMLElement {
     hass: HomeAssistant;
 }
+interface FrontendLocaleData {
+    language: string;
+    number_format: NumberFormat;
+    time_format: TimeFormat;
+    date_format: DateFormat;
+    first_weekday: FirstWeekday;
+    time_zone: TimeZone;
+}
+export declare enum NumberFormat {
+    language = "language",
+    system = "system",
+    comma_decimal = "comma_decimal",
+    decimal_comma = "decimal_comma",
+    quote_decimal = "quote_decimal",
+    space_comma = "space_comma",
+    none = "none"
+}
+export declare enum TimeFormat {
+    language = "language",
+    system = "system",
+    am_pm = "12",
+    twenty_four = "24"
+}
+export declare enum TimeZone {
+    local = "local",
+    server = "server"
+}
+export declare enum DateFormat {
+    language = "language",
+    system = "system",
+    DMY = "DMY",
+    MDY = "MDY",
+    YMD = "YMD"
+}
+export declare enum FirstWeekday {
+    language = "language",
+    monday = "monday",
+    tuesday = "tuesday",
+    wednesday = "wednesday",
+    thursday = "thursday",
+    friday = "friday",
+    saturday = "saturday",
+    sunday = "sunday"
+}
+export {};

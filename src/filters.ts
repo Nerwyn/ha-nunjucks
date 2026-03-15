@@ -137,6 +137,9 @@ const HASS_FILTERS: Record<string, CallableFunction> = {
 	attr_name_translated,
 	attr_value_translated,
 
+	// Time
+	date_translated,
+
 	// Groups
 	expand,
 
@@ -193,7 +196,6 @@ const FILTERS: Record<string, CallableFunction> = {
 	timestamp_local,
 	timestamp_utc,
 	timestamp_custom,
-	date_translated,
 	time_translated,
 	datetime_translated,
 

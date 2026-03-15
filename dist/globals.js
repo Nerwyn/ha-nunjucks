@@ -58,6 +58,8 @@ const HASS_GLOBALS = {
     state_translated,
     attr_name_translated,
     attr_value_translated,
+    // Time
+    date_translated,
     // Groups
     expand,
     // Entities
@@ -116,7 +118,6 @@ const GLOBALS = {
     time_since,
     time_until,
     as_timedelta,
-    date_translated,
     time_translated,
     datetime_translated,
     // Version

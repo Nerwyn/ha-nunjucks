@@ -155,6 +155,9 @@ const HASS_GLOBALS: Record<string, CallableFunction> = {
 	attr_name_translated,
 	attr_value_translated,
 
+	// Time
+	date_translated,
+
 	// Groups
 	expand,
 
@@ -225,7 +228,6 @@ const GLOBALS: Record<string, CallableFunction> = {
 	time_since,
 	time_until,
 	as_timedelta,
-	date_translated,
 	time_translated,
 	datetime_translated,
 
