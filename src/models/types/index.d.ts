@@ -47,7 +47,6 @@ export interface IHaNunjucks {
 	numberFormat: Intl.NumberFormat;
 	dateFormat: Intl.DateTimeFormat;
 	timeFormat: Intl.DateTimeFormat;
-	datetimeFormat: Intl.DateTimeFormat;
 	ordinalFormat: Intl.PluralRules;
 }
 

@@ -136,9 +136,9 @@ const HASS_FILTERS: Record<string, CallableFunction> = {
 	state_translated,
 	attr_name_translated,
 	attr_value_translated,
-
-	// Time
+	number_translated,
 	date_translated,
+	datetime_translated,
 
 	// Groups
 	expand,
@@ -197,7 +197,6 @@ const FILTERS: Record<string, CallableFunction> = {
 	timestamp_utc,
 	timestamp_custom,
 	time_translated,
-	datetime_translated,
 
 	// To/From JSON
 	to_json,
@@ -245,7 +244,6 @@ const FILTERS: Record<string, CallableFunction> = {
 	ord,
 	multiply,
 	add,
-	number_translated,
 
 	// Type conversions
 	str,

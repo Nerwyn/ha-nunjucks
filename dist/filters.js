@@ -45,8 +45,9 @@ const HASS_FILTERS = {
     state_translated,
     attr_name_translated,
     attr_value_translated,
-    // Time
+    number_translated,
     date_translated,
+    datetime_translated,
     // Groups
     expand,
     // Devices
@@ -95,7 +96,6 @@ const FILTERS = {
     timestamp_utc,
     timestamp_custom,
     time_translated,
-    datetime_translated,
     // To/From JSON
     to_json,
     from_json,
@@ -137,7 +137,6 @@ const FILTERS = {
     ord,
     multiply,
     add,
-    number_translated,
     // Type conversions
     str,
     // Functions and Filters to Process Raw Data
