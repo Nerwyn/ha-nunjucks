@@ -101,7 +101,7 @@ export function date_translated(
 	try {
 		let date: Date;
 		if (typeof value === 'string') {
-			date = new Date(value);
+			date = new Date(`${value}T00:00:00`);
 		} else if (value instanceof Date) {
 			date = value;
 		} else {

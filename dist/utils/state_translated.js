@@ -63,7 +63,7 @@ export function date_translated(hass, value) {
     try {
         let date;
         if (typeof value === 'string') {
-            date = new Date(value);
+            date = new Date(`${value}T00:00:00`);
         }
         else if (value instanceof Date) {
             date = value;
