@@ -76,7 +76,6 @@ if (version(packageInfo.version).compare(window.haNunjucks.version || '0.0.0') >
         window.haNunjucks.timeFormat = getTimeFormatter(ha.hass);
         window.haNunjucks.ordinalFormat = new Intl.PluralRules('en-US', // ha.hass.language, // Use english for proper numeric suffixes
         { type: 'ordinal' });
-        console.log(window.haNunjucks);
         console.info(`%c HA-NUNJUCKS v${packageInfo.version}`, 'color: white; font-weight: bold; background: darkgreen');
     }, () => {
         const ha = document.querySelector('home-assistant');

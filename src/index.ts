@@ -91,7 +91,6 @@ if (
 				'en-US', // ha.hass.language, // Use english for proper numeric suffixes
 				{ type: 'ordinal' },
 			);
-			console.log(window.haNunjucks);
 
 			console.info(
 				`%c HA-NUNJUCKS v${packageInfo.version}`,
