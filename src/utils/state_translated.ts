@@ -180,7 +180,6 @@ export function getTimeFormatter(hass: HomeAssistant) {
 	const options: Intl.DateTimeFormatOptions = {
 		hour: AMPM ? 'numeric' : '2-digit',
 		minute: '2-digit',
-		second: '2-digit',
 		hourCycle: AMPM ? 'h12' : 'h23',
 		timeZone: resolveTimeZone(hass),
 	};

@@ -129,7 +129,6 @@ export function getTimeFormatter(hass) {
     const options = {
         hour: AMPM ? 'numeric' : '2-digit',
         minute: '2-digit',
-        second: '2-digit',
         hourCycle: AMPM ? 'h12' : 'h23',
         timeZone: resolveTimeZone(hass),
     };
