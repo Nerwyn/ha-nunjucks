@@ -5,7 +5,7 @@ export declare function attr_name_translated(hass: HomeAssistant, entity_id: str
 export declare function attr_value_translated(hass: HomeAssistant, entity_id: string, attr_name: string, attr_value?: string): any;
 export declare function getNumberFormatter(hass: HomeAssistant): Intl.NumberFormat;
 export declare function number_translated(hass: HomeAssistant, value: number, precision?: number): string | number;
-export declare function date_translated(hass: HomeAssistant, value: date | datetime): string | date | datetime;
+export declare function date_translated(hass: HomeAssistant, value: date | datetime | Date | string): string | date | datetime | Date;
 export declare function getTimeFormatter(hass: HomeAssistant): Intl.DateTimeFormat;
-export declare function time_translated(value: time | datetime): string | datetime | time;
-export declare function datetime_translated(hass: HomeAssistant, value: datetime): string | datetime;
+export declare function time_translated(value: time | datetime | Date | string): string | datetime | Date | time;
+export declare function datetime_translated(hass: HomeAssistant, value: datetime | Date | string): string | datetime | Date;

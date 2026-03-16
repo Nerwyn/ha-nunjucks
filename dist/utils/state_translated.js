@@ -61,6 +61,16 @@ export function number_translated(hass, value, precision) {
 export function date_translated(hass, value) {
     // https://github.com/home-assistant/frontend/blob/52ac052baf139e94b7ed6891eb0beace7e2f47d3/src/common/datetime/format_date.ts#L59
     try {
+        let date;
+        if (typeof value === 'string') {
+            date = new Date(value);
+        }
+        else if (value instanceof Date) {
+            date = value;
+        }
+        else {
+            date = value.jsDate;
+        }
         let order;
         switch (hass.locale.date_format) {
             case DateFormat.DMY:
@@ -73,9 +83,9 @@ export function date_translated(hass, value) {
                 order = ['year', 'month', 'day'];
                 break;
             default:
-                return window.haNunjucks.dateFormat.format(value.jsDate);
+                return window.haNunjucks.dateFormat.format(date);
         }
-        const parts = window.haNunjucks.dateFormat.formatToParts(value.jsDate);
+        const parts = window.haNunjucks.dateFormat.formatToParts(date);
         const partsObj = {
             literal: parts.find((value) => value.type === 'literal')?.value,
             day: parts.find((value) => value.type === 'day')?.value,
@@ -127,7 +137,17 @@ export function getTimeFormatter(hass) {
 }
 export function time_translated(value) {
     try {
-        return window.haNunjucks.timeFormat.format(value.jsDate);
+        let time;
+        if (typeof value === 'string') {
+            time = new Date(`1970-01-01T${value}`);
+        }
+        else if (value instanceof Date) {
+            time = value;
+        }
+        else {
+            time = value.jsDate;
+        }
+        return window.haNunjucks.timeFormat.format(time);
     }
     catch {
         return value;
@@ -135,7 +155,17 @@ export function time_translated(value) {
 }
 export function datetime_translated(hass, value) {
     try {
-        return `${date_translated(hass, value)} at ${time_translated(value)}`;
+        let datetime;
+        if (typeof value === 'string') {
+            datetime = new Date(value);
+        }
+        else if (value instanceof Date) {
+            datetime = value;
+        }
+        else {
+            datetime = value.jsDate;
+        }
+        return `${date_translated(hass, datetime)} at ${time_translated(datetime)}`;
     }
     catch {
         return value;
