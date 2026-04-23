@@ -66,8 +66,6 @@ if (version(packageInfo.version).compare(window.haNunjucks.version || '0.0.0') >
             }, window.haNunjucks[registry].updateEvent);
         }
         subscribeConfigEntries(ha.hass);
-        // States object
-        buildStatesObject();
         // Number and datetime translators
         window.haNunjucks.numberFormat = getNumberFormatter(ha.hass);
         window.haNunjucks.dateFormat = new Intl.DateTimeFormat(ha.hass.language, {
@@ -98,7 +96,9 @@ export function renderTemplate(hass, str, context, validate = true) {
         return str;
     }
     window.haNunjucks.hass = hass;
-    buildStatesObject();
+    if (str.includes('_states.')) {
+        buildStatesObject();
+    }
     str = window.haNunjucks.env
         .renderString(structuredClone(str), {
         hass,

@@ -173,7 +173,7 @@ Because entity IDs contain periods in them, you cannot use dot notation when acc
 
 `{{ hass.states["light.sunroom_ceiling"].state }}`
 
-For convenience, the `hass.states` object is rebuilt as a separate object that can be accessed with dot notation. Because of JavaScript limitations not allowing for functions and object to share the same name, it has been named `_states`.
+For convenience, the `hass.states` object is rebuilt as a separate object that can be accessed with dot notation. Because of JavaScript limitations not allowing for functions and object to share the same name, it has been named `_states`. Note that this object is only rebuilt as needed and can cause a performance hit. It is preferable to use `hass.states` or a template function instead.
 
 `{{ _states.light.sunroom_ceiling.state }}`
 

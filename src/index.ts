@@ -78,9 +78,6 @@ if (
 
 			subscribeConfigEntries(ha.hass);
 
-			// States object
-			buildStatesObject();
-
 			// Number and datetime translators
 			window.haNunjucks.numberFormat = getNumberFormatter(ha.hass);
 			window.haNunjucks.dateFormat = new Intl.DateTimeFormat(ha.hass.language, {
@@ -134,7 +131,9 @@ export function renderTemplate(
 	}
 
 	window.haNunjucks.hass = hass;
-	buildStatesObject();
+	if (str.includes('_states.')) {
+		buildStatesObject();
+	}
 	str = window.haNunjucks.env
 		.renderString(structuredClone(str), {
 			hass,
