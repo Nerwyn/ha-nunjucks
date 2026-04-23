@@ -96,7 +96,7 @@ export function renderTemplate(hass, str, context, validate = true) {
         return str;
     }
     window.haNunjucks.hass = hass;
-    if (str.includes('_states.')) {
+    if (str.includes('_states')) {
         buildStatesObject();
     }
     str = window.haNunjucks.env

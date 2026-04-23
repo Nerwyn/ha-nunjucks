@@ -131,7 +131,7 @@ export function renderTemplate(
 	}
 
 	window.haNunjucks.hass = hass;
-	if (str.includes('_states.')) {
+	if (str.includes('_states')) {
 		buildStatesObject();
 	}
 	str = window.haNunjucks.env
