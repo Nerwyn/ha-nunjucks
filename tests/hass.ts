@@ -1,7 +1,7 @@
 import { MessageBase } from 'home-assistant-js-websocket';
 import { HomeAssistant } from '../src/models/interfaces/hass';
 
-export const hass: Partial<HomeAssistant> = {
+export const hass: HomeAssistant = {
 	states: {
 		'light.lounge': {
 			entity_id: 'light.lounge',
