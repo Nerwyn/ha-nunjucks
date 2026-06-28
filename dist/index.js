@@ -23,65 +23,77 @@ if (version(packageInfo.version).compare(window.haNunjucks.version || '0.0.0') >
         repairsIssues: {},
     };
     // Setup on first import
-    handleWhenReady(() => {
-        const ha = document.querySelector('home-assistant');
-        // Initialize window object
-        window.haNunjucks = {
-            ...window.haNunjucks,
-            hass: ha.hass,
-            labelRegistry: {
-                updateEvent: 'label_registry_updated',
-                fetchRegistry: fetchLabelRegistry,
-                labelId: {},
-                name2LabelId: {},
-            },
-            entityRegistry: {
-                updateEvent: 'entity_registry_updated',
-                fetchRegistry: fetchEntityRegistry,
-                entityId2ConfigEntryId: {},
-                configEntryId2EntityIds: {},
-            },
-            repairsIssues: {
-                updateEvent: 'repairs_issue_registry_updated',
-                fetchRegistry: fetchRepairsIssues,
-                issues: {},
-            },
-            configEntries: {
-                entryId: {},
-                title2EntryId: {},
-            },
-        };
-        const registries = [
-            'labelRegistry',
-            'entityRegistry',
-            'repairsIssues',
-        ];
-        for (const registry of registries) {
-            window.haNunjucks[registry].fetchRegistry(ha.hass);
-            ha.hass.connection.subscribeEvents(() => {
-                clearTimeout(window.haNunjucks[registry].timeout);
-                window.haNunjucks[registry].timeout = setTimeout(() => {
-                    window.haNunjucks[registry].fetchRegistry(ha.hass);
-                }, 500);
-            }, window.haNunjucks[registry].updateEvent);
-        }
-        subscribeConfigEntries(ha.hass);
-        // Number and datetime translators
-        window.haNunjucks.numberFormat = getNumberFormatter(ha.hass);
-        window.haNunjucks.dateFormat = new Intl.DateTimeFormat(ha.hass.language, {
-            dateStyle: 'long',
-        });
-        window.haNunjucks.timeFormat = getTimeFormatter(ha.hass);
-        window.haNunjucks.ordinalFormat = new Intl.PluralRules('en-US', // ha.hass.language, // Use english for proper numeric suffixes
-        { type: 'ordinal' });
-        console.info(`%c HA-NUNJUCKS v${packageInfo.version}`, 'color: white; font-weight: bold; background: darkgreen');
-    }, () => {
-        const ha = document.querySelector('home-assistant');
-        return ha?.hass?.connected && ha?.hass?.connection?.connected;
-    }, 10000, 10, 'ha-nunjucks failed to initialize - Home Assistant connection timeout');
-    // Initialize global ha-nunjucks environment
-    nunjucks.installJinjaCompat();
-    window.haNunjucks.env = addTests(addFilters(addGlobals(nunjucks.configure(`${window.location.origin}/local`))));
+    try {
+        const ready = handleWhenReady(() => {
+            const hass = document.querySelector('home-assistant')
+                ?.hass;
+            if (!hass) {
+                throw Error('hass object has disappeared after connection was established!');
+            }
+            // Initialize window object
+            window.haNunjucks = {
+                ...window.haNunjucks,
+                hass,
+                labelRegistry: {
+                    updateEvent: 'label_registry_updated',
+                    fetchRegistry: fetchLabelRegistry,
+                    labelId: {},
+                    name2LabelId: {},
+                },
+                entityRegistry: {
+                    updateEvent: 'entity_registry_updated',
+                    fetchRegistry: fetchEntityRegistry,
+                    entityId2ConfigEntryId: {},
+                    configEntryId2EntityIds: {},
+                },
+                repairsIssues: {
+                    updateEvent: 'repairs_issue_registry_updated',
+                    fetchRegistry: fetchRepairsIssues,
+                    issues: {},
+                },
+                configEntries: {
+                    entryId: {},
+                    title2EntryId: {},
+                },
+            };
+            const registries = [
+                'labelRegistry',
+                'entityRegistry',
+                'repairsIssues',
+            ];
+            for (const registry of registries) {
+                (window.haNunjucks[registry].fetchRegistry(hass),
+                    hass.connection.subscribeEvents(() => {
+                        clearTimeout(window.haNunjucks[registry].timeout);
+                        window.haNunjucks[registry].timeout = setTimeout(() => {
+                            window.haNunjucks[registry].fetchRegistry(hass);
+                        }, 500);
+                    }, window.haNunjucks[registry].updateEvent));
+            }
+            subscribeConfigEntries(hass);
+            // Number and datetime translators
+            window.haNunjucks.numberFormat = getNumberFormatter(hass);
+            window.haNunjucks.dateFormat = new Intl.DateTimeFormat(hass.language, {
+                dateStyle: 'long',
+            });
+            window.haNunjucks.timeFormat = getTimeFormatter(hass);
+            window.haNunjucks.ordinalFormat = new Intl.PluralRules('en-US', // ha.hass.language, // Use english for proper numeric suffixes
+            { type: 'ordinal' });
+            console.info(`%c HA-NUNJUCKS v${packageInfo.version}`, 'color: white; font-weight: bold; background: darkgreen');
+        }, () => {
+            const ha = document.querySelector('home-assistant');
+            return ha?.hass?.connected && ha?.hass?.connection?.connected;
+        }, 10000, 10, 'ha-nunjucks failed to initialize - Home Assistant connection timeout');
+        // Initialize global ha-nunjucks environment
+        nunjucks.installJinjaCompat();
+        window.haNunjucks.env = addTests(addFilters(addGlobals(nunjucks.configure(`${window.location.origin}/local`))));
+        await ready;
+    }
+    catch (e) {
+        // @ts-ignore
+        delete window.haNunjucks;
+        throw e;
+    }
 }
 /**
  * Render a Home Assistant template string using nunjucks
