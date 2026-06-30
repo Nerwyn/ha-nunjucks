@@ -1,4 +1,5 @@
-import createHash from 'create-hash';
+// @ts-ignore
+import createHash from 'create-hash/browser';
 
 function hash(value: string, algorithm: createHash.algorithm) {
 	const hash = createHash(algorithm);
