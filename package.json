@@ -29,7 +29,6 @@
 	"homepage": "https://github.com/Nerwyn/ha-nunjucks#readme",
 	"dependencies": {
 		"buffer": "^6.0.3",
-		"create-hash": "^1.2.0",
 		"home-assistant-js-websocket": "latest",
 		"jscrypto": "^1.0.3",
 		"mersenne-twister": "^1.1.0",
@@ -40,7 +39,6 @@
 		"ts-py-datetime": "latest"
 	},
 	"devDependencies": {
-		"@types/create-hash": "^1.2.6",
 		"@types/mersenne-twister": "^1.1.7",
 		"@types/mocha": "^10.0.10",
 		"@types/nunjucks": "^3.2.6",
