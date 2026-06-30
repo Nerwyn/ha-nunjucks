@@ -27,53 +27,6 @@ Install using npm:
 npm install ha-nunjucks
 ```
 
-#### Bundling Requirements
-
-This package depends on node polyfills for the hashing extensions. While these polyfill packages are included as dependencies of this package, you will need to include a node process polyfill in your bundler. The method of doing so varies by bundler.
-
-##### Webpack
-
-Install the process polyfill package.
-
-```shell
-npm i process
-```
-
-Then update your webpack config to include the process browser polyfill as a plugin.
-
-```typescript
-import webpack from '@webpack/core'
-
-export default defineConfig([
-  {
-    ...
-		plugins: [
-			new webpack.ProvidePlugin({
-				process: 'process/browser',
-			}),
-		],
-  }
-])
-```
-
-##### Rollup
-
-Install the Rollup node polyfill package.
-
-```shell
-npm i --save-dev @rollup-plugin-node-polyfills
-```
-
-Then update your rollup config to include the node polyfill plugin.
-
-```typescript
-import nodePolyfills from 'rollup-plugin-node-polyfills';
-
-export default {
-  plugins: [nodePolyfills()],
-};
-```
-
 ### Usage
 
 Import `renderTemplate` from `ha-nunjucks` and provide it with the `hass` object and a template string you want to process.
