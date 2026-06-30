@@ -31,6 +31,7 @@
 		"buffer": "^6.0.3",
 		"create-hash": "^1.2.0",
 		"home-assistant-js-websocket": "latest",
+		"jscrypto": "^1.0.3",
 		"mersenne-twister": "^1.1.0",
 		"nunjucks": "^3.2.4",
 		"python-struct": "^1.1.3",

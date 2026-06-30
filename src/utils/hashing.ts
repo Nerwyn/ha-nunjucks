@@ -1,24 +1,20 @@
-// @ts-ignore
-import createHash from 'create-hash/browser';
-
-function hash(value: string, algorithm: createHash.algorithm) {
-	const hash = createHash(algorithm);
-	hash.update(value);
-	return hash.digest('hex');
-}
+import MD5 from 'jscrypto/MD5';
+import SHA1 from 'jscrypto/SHA1';
+import SHA256 from 'jscrypto/SHA256';
+import SHA512 from 'jscrypto/SHA512';
 
 export function md5(value: string) {
-	return hash(value, 'md5');
+	return MD5.MD5.hash(value).toString();
 }
 
 export function sha1(value: string) {
-	return hash(value, 'sha1');
+	return SHA1.SHA1.hash(value).toString();
 }
 
 export function sha256(value: string) {
-	return hash(value, 'sha256');
+	return SHA256.SHA256.hash(value).toString();
 }
 
 export function sha512(value: string) {
-	return hash(value, 'sha512');
+	return SHA512.SHA512.hash(value).toString();
 }
