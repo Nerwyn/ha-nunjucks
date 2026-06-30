@@ -1,26 +1,28 @@
-// import { md5 as md5_0, sha1 as sha1_0 } from '@noble/hashes/legacy.js';
-// import { sha256 as sha256_0, sha512 as sha512_0 } from '@noble/hashes/sha2.js';
+import { md5 as md5_0, sha1 as sha1_0 } from '@noble/hashes/legacy.js';
+import { sha256 as sha256_0, sha512 as sha512_0 } from '@noble/hashes/sha2.js';
 
-// @ts-ignore
-import Hashes from 'jshashes';
-
-const MD5 = new Hashes.MD5();
-const SHA1 = new Hashes.SHA1();
-const SHA256 = new Hashes.SHA256();
-const SHA512 = new Hashes.SHA512();
+function hash(value: string, algorithm: CallableFunction) {
+	const msgUint8 = new TextEncoder().encode(value);
+	const hashBuffer = algorithm(msgUint8);
+	const hashArray = Array.from(new Uint8Array(hashBuffer));
+	const hashHex = hashArray
+		.map((b) => b.toString(16).padStart(2, '0'))
+		.join('');
+	return hashHex;
+}
 
 export function md5(value: string) {
-	return MD5.hex(value);
+	return hash(value, md5_0);
 }
 
 export function sha1(value: string) {
-	return SHA1.hex(value);
+	return hash(value, sha1_0);
 }
 
 export function sha256(value: string) {
-	return SHA256.hex(value);
+	return hash(value, sha256_0);
 }
 
 export function sha512(value: string) {
-	return SHA512.hex(value);
+	return hash(value, sha512_0);
 }
