@@ -9,8 +9,9 @@
 	"type": "module",
 	"scripts": {
 		"test": "ts-mocha tests/**/*.test.ts --require tests/fixtures.mjs",
-		"build": "tsc",
-		"prelint": "tsc --noemit",
+		"clean": "rm -rf ./dist",
+		"build": "npm run clean && tsc --project tsconfig.build.json",
+		"prelint": "tsc --noemit --project tsconfig.build.json",
 		"lint": "eslint --config ./eslint.config.js",
 		"setup": "git config --add core.hooksPath githooks && chmod +x githooks/pre-commit && npm i"
 	},
