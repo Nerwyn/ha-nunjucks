@@ -31,6 +31,7 @@
 	"dependencies": {
 		"@noble/hashes": "^2.2.0",
 		"buffer": "^6.0.3",
+		"hasha": "^7.0.0",
 		"home-assistant-js-websocket": "latest",
 		"mersenne-twister": "^1.1.0",
 		"nunjucks": "^3.2.4",
