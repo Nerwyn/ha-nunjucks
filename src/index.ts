@@ -123,7 +123,7 @@ if (
 	} catch (e) {
 		// @ts-ignore
 		delete window.haNunjucks;
-		throw e;
+		console.error(e);
 	}
 }
 
@@ -141,7 +141,7 @@ export function renderTemplate(
 	context?: object,
 	validate: boolean = true,
 ): string | boolean {
-	if (validate && !hasTemplate(str)) {
+	if ((validate && !hasTemplate(str)) || !window.haNunjucks) {
 		return str;
 	}
 

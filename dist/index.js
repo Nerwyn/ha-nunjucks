@@ -92,7 +92,7 @@ if (version(packageInfo.version).compare(window.haNunjucks.version || '0.0.0') >
     catch (e) {
         // @ts-ignore
         delete window.haNunjucks;
-        throw e;
+        console.error(e);
     }
 }
 /**
@@ -104,7 +104,7 @@ if (version(packageInfo.version).compare(window.haNunjucks.version || '0.0.0') >
  * @returns {string | boolean} The rendered template string if a string was provided, otherwise the unaltered input
  */
 export function renderTemplate(hass, str, context, validate = true) {
-    if (validate && !hasTemplate(str)) {
+    if ((validate && !hasTemplate(str)) || !window.haNunjucks) {
         return str;
     }
     window.haNunjucks.hass = hass;
