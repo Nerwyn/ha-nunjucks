@@ -1,4 +1,5 @@
 import slugifyLib from 'slugify';
+
 export function slugify(str: string, separator: string = '_') {
 	return slugifyLib(str, {
 		replacement: separator,
