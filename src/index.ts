@@ -150,7 +150,7 @@ export function renderTemplate(
 		buildStatesObject();
 	}
 	str = window.haNunjucks.env
-		.renderString(structuredClone(str), {
+		.renderString(str, {
 			hass,
 			_states: window.haNunjucks.states,
 			...context,
