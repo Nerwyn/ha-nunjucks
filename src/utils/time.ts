@@ -48,11 +48,7 @@ export function as_datetime(
 				];
 				for (const format of formats) {
 					try {
-						res = dt.datetime.strptime(
-							value,
-							format,
-							utc,
-						) as datetime;
+						res = dt.datetime.strptime(value, format, utc) as datetime;
 						break;
 					} catch {}
 				}
@@ -76,10 +72,7 @@ export function as_datetime(
 		isNaNCheck((res ?? 'NaN').toString());
 		return res;
 	} catch (e) {
-		if (fallback) {
-			return fallback;
-		}
-		throw e;
+		return fallback;
 	}
 }
 
@@ -96,18 +89,14 @@ export function as_timestamp(
 			res = Date.parse(value) / 1000;
 		} else if (typeof value == 'number') {
 			res =
-				dt.datetime.utcfromtimestamp(value as number).jsDate.getTime() /
-				1000;
+				dt.datetime.utcfromtimestamp(value as number).jsDate.getTime() / 1000;
 		} else {
 			res = value.jsDate.getTime() / 1000;
 		}
 		isNaNCheck(res.toString());
 		return res;
 	} catch (e) {
-		if (fallback) {
-			return fallback;
-		}
-		throw e;
+		return fallback;
 	}
 }
 
@@ -140,10 +129,7 @@ export function strptime(
 		isNaNCheck(res.toString());
 		return res;
 	} catch (e) {
-		if (fallback) {
-			return fallback;
-		}
-		throw e;
+		return fallback;
 	}
 }
 
@@ -274,10 +260,7 @@ export function timestamp_local(value: number, fallback?: string) {
 		isNaNCheck(res);
 		return res;
 	} catch (e) {
-		if (fallback) {
-			return fallback;
-		}
-		throw e;
+		return fallback;
 	}
 }
 
@@ -289,10 +272,7 @@ export function timestamp_utc(value: number, fallback?: string) {
 		isNaNCheck(res);
 		return res;
 	} catch (e) {
-		if (fallback) {
-			return fallback;
-		}
-		throw e;
+		return fallback;
 	}
 }
 
@@ -315,9 +295,6 @@ export function timestamp_custom(
 		isNaNCheck(res);
 		return res;
 	} catch (e) {
-		if (fallback) {
-			return fallback;
-		}
-		throw e;
+		return fallback;
 	}
 }

@@ -58,10 +58,7 @@ describe('as_datetime', () => {
 				'10',
 			);
 			assert.notEqual(
-				renderTemplate(
-					hass,
-					'{{ as_datetime(199999990, utc=false).hour }}',
-				),
+				renderTemplate(hass, '{{ as_datetime(199999990, utc=false).hour }}'),
 				'19',
 			);
 		});
@@ -76,10 +73,7 @@ describe('as_datetime', () => {
 		it('should accept a datetime object and not mutate it', () => {
 			assert.equal(
 				renderTemplate(hass, '{{ as_datetime(512345151) }}'),
-				renderTemplate(
-					hass,
-					'{{ as_datetime(as_datetime(512345151)) }}',
-				),
+				renderTemplate(hass, '{{ as_datetime(as_datetime(512345151)) }}'),
 			);
 		});
 
@@ -95,10 +89,7 @@ describe('as_datetime', () => {
 
 		it('should parse a datetime string in format YYYY-MM-DD HH:MM:SS', () => {
 			assert.equal(
-				renderTemplate(
-					hass,
-					'{{ as_datetime("2020-04-06 14:32:12") }}',
-				),
+				renderTemplate(hass, '{{ as_datetime("2020-04-06 14:32:12") }}'),
 				'2020-04-06 14:32:12',
 			);
 			assert.equal(
@@ -112,10 +103,7 @@ describe('as_datetime', () => {
 
 		it('should parse a datetime string in format YYYY-MM-DD HH:MM:SS+0400', () => {
 			assert.equal(
-				renderTemplate(
-					hass,
-					'{{ as_datetime("2020-04-06 14:32:12+0400") }}',
-				),
+				renderTemplate(hass, '{{ as_datetime("2020-04-06 14:32:12+0400") }}'),
 				'2020-04-06 10:32:12',
 			);
 			assert.equal(
@@ -129,10 +117,7 @@ describe('as_datetime', () => {
 
 		it('should parse a datetime string in format YYYY-MM-DD HH:MM:SS.ffffff', () => {
 			assert.equal(
-				renderTemplate(
-					hass,
-					'{{ as_datetime("2020-04-06 14:32:12.123000") }}',
-				),
+				renderTemplate(hass, '{{ as_datetime("2020-04-06 14:32:12.123000") }}'),
 				'2020-04-06 14:32:12.123000',
 			);
 			assert.equal(
@@ -162,6 +147,7 @@ describe('as_datetime', () => {
 		});
 
 		it('should return a fallback value on error', () => {
+			assert.equal(renderTemplate(hass, '{{ as_datetime("foo") }}'), '');
 			assert.equal(
 				renderTemplate(hass, '{{ as_datetime("foo", "bar") }}'),
 				'bar',
@@ -173,10 +159,7 @@ describe('as_datetime', () => {
 describe('as_timestamp', () => {
 	it('should convert a datetime object into a timestamp', () => {
 		assert.equal(
-			renderTemplate(
-				hass,
-				'{{ as_timestamp(as_datetime(15123412512)) }}',
-			),
+			renderTemplate(hass, '{{ as_timestamp(as_datetime(15123412512)) }}'),
 			'15123412512',
 		);
 		assert.equal(
@@ -212,22 +195,17 @@ describe('as_timestamp', () => {
 			'574955592',
 		);
 		assert.equal(
-			renderTemplate(
-				hass,
-				'{{ as_timestamp("1988-03-21T08:53:12+00:00") }}',
-			),
+			renderTemplate(hass, '{{ as_timestamp("1988-03-21T08:53:12+00:00") }}'),
 			'574937592',
 		);
 		assert.equal(
-			renderTemplate(
-				hass,
-				'{{ as_timestamp("1988-03-21T08:53:12+05:30") }}',
-			),
+			renderTemplate(hass, '{{ as_timestamp("1988-03-21T08:53:12+05:30") }}'),
 			'574917792',
 		);
 	});
 
 	it('should return a fallback value on error', () => {
+		assert.equal(renderTemplate(hass, '{{ as_timestamp("foo") }}'), '');
 		assert.equal(
 			renderTemplate(hass, '{{ as_timestamp("foo", "bar") }}'),
 			'bar',
@@ -259,6 +237,10 @@ describe('strptime', () => {
 	});
 
 	it('should return a fallback value on error', () => {
+		assert.equal(
+			renderTemplate(hass, '{{ strptime("not a date", "%Y-%m-%dT%H:%M:%S") }}'),
+			'',
+		);
 		assert.equal(
 			renderTemplate(
 				hass,
@@ -419,10 +401,7 @@ describe('time_since', () => {
 	});
 
 	it('should return the input if it is not a datetime', () => {
-		assert.equal(
-			renderTemplate(hass, '{{ time_since("foobar") }}'),
-			'foobar',
-		);
+		assert.equal(renderTemplate(hass, '{{ time_since("foobar") }}'), 'foobar');
 	});
 });
 
@@ -514,10 +493,7 @@ describe('time_until', () => {
 	});
 
 	it('should return the input if it is not a datetime', () => {
-		assert.equal(
-			renderTemplate(hass, '{{ time_until("foobar") }}'),
-			'foobar',
-		);
+		assert.equal(renderTemplate(hass, '{{ time_until("foobar") }}'), 'foobar');
 	});
 });
 
@@ -593,10 +569,7 @@ describe('as_timedelta', () => {
 
 		it('D days HH:MM:SS.fff', () => {
 			assert.equal(
-				renderTemplate(
-					hass,
-					'{{ as_timedelta("2 days 8:20:40.123") }}',
-				),
+				renderTemplate(hass, '{{ as_timedelta("2 days 8:20:40.123") }}'),
 				'2 days, 8:20:40.123000',
 			);
 		});
@@ -644,10 +617,7 @@ describe('as_timedelta', () => {
 		});
 
 		it('SS', () => {
-			assert.equal(
-				renderTemplate(hass, '{{ as_timedelta("40") }}'),
-				'0:00:40',
-			);
+			assert.equal(renderTemplate(hass, '{{ as_timedelta("40") }}'), '0:00:40');
 		});
 
 		it('HH:MM:SS.fff', () => {
@@ -714,6 +684,7 @@ describe('timestamp_local', () => {
 	});
 
 	it('should return a fallback value on error', () => {
+		assert.equal(renderTemplate(hass, '{{ "bar" | timestamp_local }}'), '');
 		assert.equal(
 			renderTemplate(hass, '{{ "bar" | timestamp_local("foo") }}'),
 			'foo',
@@ -730,6 +701,7 @@ describe('timestamp_utc', () => {
 	});
 
 	it('should return a fallback value on error', () => {
+		assert.equal(renderTemplate(hass, '{{ "bar" | timestamp_utc }}'), '');
 		assert.equal(
 			renderTemplate(hass, '{{ "bar" | timestamp_utc("foo") }}'),
 			'foo',
@@ -768,6 +740,13 @@ describe('timestamp_custom', () => {
 		assert.equal(
 			renderTemplate(
 				hass,
+				'{{ "bar" | timestamp_custom("%Y%m%d %H%M%S", true) }}',
+			),
+			'',
+		);
+		assert.equal(
+			renderTemplate(
+				hass,
 				'{{ "bar" | timestamp_custom("%Y%m%d %H%M%S", true, "foo") }}',
 			),
 			'foo',
@@ -798,10 +777,7 @@ describe('dt', () => {
 			'2020-06-12 11:34:22',
 		);
 		assert.equal(
-			renderTemplate(
-				hass,
-				'{{ dt.datetime(2020, 6, 12, 11, 34, 22, 987) }} ',
-			),
+			renderTemplate(hass, '{{ dt.datetime(2020, 6, 12, 11, 34, 22, 987) }} '),
 			'2020-06-12 11:34:22.987000',
 		);
 		assert.equal(

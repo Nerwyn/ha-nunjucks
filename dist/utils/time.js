@@ -62,10 +62,7 @@ export function as_datetime(value, fallback = undefined, utc = true) {
         return res;
     }
     catch (e) {
-        if (fallback) {
-            return fallback;
-        }
-        throw e;
+        return fallback;
     }
 }
 export function as_timestamp(value, fallback) {
@@ -79,8 +76,7 @@ export function as_timestamp(value, fallback) {
         }
         else if (typeof value == 'number') {
             res =
-                dt.datetime.utcfromtimestamp(value).jsDate.getTime() /
-                    1000;
+                dt.datetime.utcfromtimestamp(value).jsDate.getTime() / 1000;
         }
         else {
             res = value.jsDate.getTime() / 1000;
@@ -89,10 +85,7 @@ export function as_timestamp(value, fallback) {
         return res;
     }
     catch (e) {
-        if (fallback) {
-            return fallback;
-        }
-        throw e;
+        return fallback;
     }
 }
 export function as_local(value) {
@@ -113,10 +106,7 @@ export function strptime(value, format, fallback = undefined, utc = false) {
         return res;
     }
     catch (e) {
-        if (fallback) {
-            return fallback;
-        }
-        throw e;
+        return fallback;
     }
 }
 function timeDiff(input, precision = 1, until = false) {
@@ -226,10 +216,7 @@ export function timestamp_local(value, fallback) {
         return res;
     }
     catch (e) {
-        if (fallback) {
-            return fallback;
-        }
-        throw e;
+        return fallback;
     }
 }
 export function timestamp_utc(value, fallback) {
@@ -241,10 +228,7 @@ export function timestamp_utc(value, fallback) {
         return res;
     }
     catch (e) {
-        if (fallback) {
-            return fallback;
-        }
-        throw e;
+        return fallback;
     }
 }
 export function timestamp_custom(value, format_string, local = true, fallback = undefined) {
@@ -260,9 +244,6 @@ export function timestamp_custom(value, format_string, local = true, fallback = 
         return res;
     }
     catch (e) {
-        if (fallback) {
-            return fallback;
-        }
-        throw e;
+        return fallback;
     }
 }
